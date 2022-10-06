@@ -3,6 +3,7 @@ layout: default
 title: About
 nav_order: 1
 description: "Spatio-temporal analysis of univariate or multivariate data, e.g., standardizing data for multiple species or stages"
+has_children: true
 permalink: /
 ---
 
