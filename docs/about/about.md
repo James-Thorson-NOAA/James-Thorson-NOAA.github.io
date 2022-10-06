@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Background & Resources
+title: Learn More
 nav_order: 2
 description: "Spatio-temporal analysis of univariate or multivariate data, e.g., standardizing data for multiple species or stages"
 permalink: /about
@@ -40,4 +40,3 @@ If there are questions that arise after this, please look for a [VAST Point-of-C
 Regions available in the [example script](https://github.com/james-thorson/VAST/blob/master/examples/Example--simple.R):
 ![alt text](https://github.com/nwfsc-assess/geostatistical_delta-GLMM/raw/master/examples/global_coverage.png "Global data coverage")
 and see [FishViz.org](http://www.FishViz.org) for visualization of results for regions with a public API for their data.
-
