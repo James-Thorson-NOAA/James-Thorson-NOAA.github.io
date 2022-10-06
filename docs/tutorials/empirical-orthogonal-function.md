@@ -12,7 +12,7 @@ nav_order: 2
 
 It is possible to use VAST to fit a generalization of empirical orthogonal function (EOF) analysis, while accounting for the noisy, zero-inflated and multivariate data that we have in fisheries. To do so, take a univariate or multivariate model and perform rank-reduction (a.k.a. ordination) on years; this contrasts with "conventional" joint dynamic species distribution models, which ordinate on species. In this case, the model will then estimate spatial variability for each species, one or more annual indices of variability, as well a map for each mode and species indicating the deviation from uniform distribution associated with a positive value of each index for each species. It is possible to visualize the statistical significance of each model component, e.g., to visualize whether index variability is "significant" or to identify locations that are "significantly" associated with a given index.
 
-In this example, we apply EOF to five groundfishes in the eastern Bering Sea. The 1st index (primary mode of variability) is highly correlated with the cold-pool extent. This was initially explored and documented in Thorson Ciannelli & Litzow (2020). Since that paper, however, we have improved the interface and model structure to control for persistent variability using the spatial term; this requires VAST release >= 3.4.0. This improvement has resulted in cold-pool extent being correlated with the primary mode of spatio-temporal variability, rather than the 3rd factor in the Thorson Ciannelli & Litzow (2020).
+In this example, we apply EOF to five groundfishes in the eastern Bering Sea. This was initially explored and documented in Thorson Ciannelli & Litzow (2020).
 
 ## Works cited
 
@@ -28,7 +28,7 @@ library(VAST)
 example = load_example( data_set="five_species_ordination" )
 
 # Make settings:
-# including modifications from default settings to match 
+# including modifications from default settings to match
 # analysis in original paper
 settings = make_settings( n_x=50,
   Region=example$Region,
@@ -54,7 +54,19 @@ results = plot( fit,
   check_residuals=FALSE,
   plot_set=c(3,16),
   category_names = c("pollock", "cod", "arrowtooth", "snow_crab", "yellowfin") )
+```
 
+The 2nd index is highly correlated with the cold-pool extent:
+
+![EOF indices](/assets/images/index-standardization/Factor_loadings--EpsilonTime1.png)
+
+and the estimated response maps show the expected response for pollock and cod, e.g., where a year with large cold-pool extent has decreased densities in the northern portion of the eastern Bering Sea:
+
+![EOF responses](/assets/images/epsilon_1--Time_2-predicted.png)
+
+We can further explore these patterns by visualizing factor loadings in in relation to the cold-pool extent:
+
+```js
 # Load Cold-pool-extent
 example2 = load_example( data_set="EBS_pollock" )
 CPE = example2$covariate_data[match(fit$year_labels,example2$covariate_data$Year),'AREA_SUM_KM2_LTE2']
@@ -62,17 +74,29 @@ CPE = example2$covariate_data[match(fit$year_labels,example2$covariate_data$Year
 # use `ecodist` to display ordination
 index1_tf = results$Factors$Rotated_loadings$EpsilonTime1
 cpe_vf = ecodist::vf(index1_tf, data.frame("CPE"=CPE), nperm=1000)
-plot( index1_tf, type="n" )
-text( index1_tf, labels=rownames(index1_tf) )
-plot( cpe_vf )
+png( "year_ordination.png", width=6, height=6, res=200, units="in")
+  plot( index1_tf, type="n" )
+  text( index1_tf, labels=rownames(index1_tf) )
+  plot( cpe_vf )
+dev.off()
 
 # Plot against cold-pool extent index
-index1 = results$Factors$Rotated_loadings$EpsilonTime1[,2]
-index1 = sign(cor(index1,CPE)) * index1
-matplot( x=fit$year_labels, y=scale(cbind(index1,CPE,index1_tf)),
-  type="l", lty="solid", col=c("blue","black","red"), lwd=2 )
-legend( "bottom", ncol=3, fill=c("blue","black","red"), legend=c("factor-2","CPE","vf_index"))
+index2 = results$Factors$Rotated_loadings$EpsilonTime1[,2]
+index2 = sign(cor(index2,CPE)) * index2
+png( "EOF_index.png", width=6, height=6, res=200, units="in")
+  matplot( x=fit$year_labels, y=scale(cbind(CPE,index2)),
+    type="l", lty="solid", col=c("blue","black"), lwd=2, ylab="Index", xlab="Year" )
+  legend( "bottom", ncol=2, fill=c("blue","black"), legend=c("CPE","factor-2"), bty="n")
+dev.off()
 ```
+
+This exercise shows that the cold-pool is associated with an axis that is strongly associated with EOF-2 and to a lesser extent EOF-1
+
+![EOF indices](/assets/images/index-standardization/year_ordination.png)
+
+Plotting the optimal rotation of these factors then provides a biological index that is consistent with cold-pool extent in most years:
+
+![EOF indices](/assets/images/index-standardization/EOF_index.png)
 
 However, as with any multivariate model this model may take a long time (hours-days) to fit. If this is happening please try one or more ways to simplify the problem:
 
