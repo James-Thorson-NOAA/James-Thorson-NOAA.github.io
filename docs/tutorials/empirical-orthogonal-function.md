@@ -58,11 +58,11 @@ results = plot( fit,
 
 The 2nd index is highly correlated with the cold-pool extent:
 
-![EOF indices](/assets/images/index-standardization/Factor_loadings--EpsilonTime1.png)
+![EOF indices](/assets/images/empirical-orthogonal-function/Factor_loadings--EpsilonTime1.png)
 
 and the estimated response maps show the expected response for pollock and cod, e.g., where a year with large cold-pool extent has decreased densities in the northern portion of the eastern Bering Sea:
 
-![EOF responses](/assets/images/epsilon_1--Time_2-predicted.png)
+![EOF responses](/assets/images/empirical-orthogonal-function/epsilon_1--Time_2-predicted.png)
 
 We can further explore these patterns by visualizing factor loadings in in relation to the cold-pool extent:
 
@@ -92,11 +92,11 @@ dev.off()
 
 This exercise shows that the cold-pool is associated with an axis that is strongly associated with EOF-2 and to a lesser extent EOF-1
 
-![EOF indices](/assets/images/index-standardization/year_ordination.png)
+![EOF indices](/assets/images/empirical-orthogonal-function/year_ordination.png)
 
 Plotting the optimal rotation of these factors then provides a biological index that is consistent with cold-pool extent in most years:
 
-![EOF indices](/assets/images/index-standardization/EOF_index.png)
+![EOF indices](/assets/images/empirical-orthogonal-function/EOF_index.png)
 
 However, as with any multivariate model this model may take a long time (hours-days) to fit. If this is happening please try one or more ways to simplify the problem:
 
