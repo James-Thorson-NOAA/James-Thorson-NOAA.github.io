@@ -69,14 +69,28 @@ There are eleven main resources for learning about VAST:
 If there are questions that arise after this, please look for a [VAST Point-of-Contact](https://docs.google.com/spreadsheets/d/1YfYeHHTLwHPxh_5jz4_-hhaRd4gbTq-Cvmii84vxWw0/edit) at your institution and consider contacting them prior to posting an issue.
 
 
-###Database
+### Database
 
 Regions available in the [example script](https://github.com/james-thorson/VAST/blob/master/examples/Example--simple.R):
 ![alt text](https://github.com/nwfsc-assess/geostatistical_delta-GLMM/raw/master/examples/global_coverage.png "Global data coverage")
 and see [FishViz.org](http://www.FishViz.org) for visualization of results for regions with a public API for their data.
 
+### Steering Committee
 
-###Funding and support for the tool
+Updates to VAST will be planned with input from a Steering Committee. The Steering Committee will include Jim Thorson and three rotating members, where each rotating member will serve as long as they have time and interest, and new members will be identified as needed by existing committee members. Member duties will be:
+
+* some occasional discussion (<1 per month) regarding any externally suggested modifications (i.e., through the issue tracker), to prioritize which are important vs. could be postponed or ignored.
+* availability and effort to help brainstorm changes, perhaps 1-3 times per year.
+
+Current members are:
+
+* Jim Thorson
+* Christine Stawitz
+* Cole Monnahan
+* Eric Ward
+
+
+### Funding and support for the tool
 
 * Ongoing:  Support from Fisheries Resource Analysis and Monitoring Division (FRAM), Northwest Fisheries Science Center, National Marine Fisheries Service, NOAA
 * Ongoing:  Support from Danish Technical University (in particular Kasper Kristensen) for  development of Template Model Builder software, URL: https://www.jstatsoft.org/article/view/v070i05
