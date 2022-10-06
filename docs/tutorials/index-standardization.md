@@ -72,4 +72,4 @@ Plot results. Add some more info here.
 plot( fit )
 ```
 
-![Predicted density of Alaska pollock in the eastern Bering Sea for each year](/assets/images/ln_density-predicted.png)
+![Predicted density of Alaska pollock in the eastern Bering Sea for each year](/assets/images/index-standardization/ln_density-predicted.png)
