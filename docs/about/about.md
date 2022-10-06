@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Background & Resources
-nav_order: 1
+nav_order: 2
 description: "Spatio-temporal analysis of univariate or multivariate data, e.g., standardizing data for multiple species or stages"
-has_children: true
 permalink: /about
 ---
 
