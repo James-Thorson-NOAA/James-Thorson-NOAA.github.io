@@ -21,22 +21,22 @@ This example will provide an abundance index for Alaska pollock in the eastern B
 # Set up
 
 Install the latest version of VAST
-```js
+```R
 devtools::install_github("James-Thorson-NOAA/VAST")
 ```
 
 Set local working directory (change for your machine)
-```js
+```R
 setwd( "Enter directory location here" )
 ```
 
 Load VAST
-```js
+```R
 library(VAST)
 ```
 
 Load data set
-```js
+```R
 example = load_example( data_set="EBS_pollock" )
 ```
 
@@ -46,7 +46,7 @@ Additional datasets are available in `load_example`. See `?load_example` for lis
 # Configure model settings
 
 Make settings (turning off bias.correct to save time for example). Add some more info here.
-```js
+```R
 settings = make_settings( n_x = 100, 
   Region = example$Region, 
   purpose = "index2", 
@@ -56,7 +56,7 @@ settings = make_settings( n_x = 100,
 # Run the model
 
 Run model. Add some more info here.
-```js
+```R
 fit = fit_model( settings = settings, 
   Lat_i = example$sampling_data[,'Lat'], 
   Lon_i = example$sampling_data[,'Lon'], 
@@ -68,7 +68,7 @@ fit = fit_model( settings = settings,
 # See the model results
 
 Plot results. Add some more info here.
-```js
+```R
 plot( fit )
 ```
 
