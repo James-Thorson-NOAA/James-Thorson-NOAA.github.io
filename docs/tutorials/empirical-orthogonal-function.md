@@ -20,7 +20,7 @@ Thorson, J. T., Ciannelli, L., & Litzow, M. A. (2020). Defining indices of ecosy
 
 # Example code
 
-```js
+```R
 # Load packages
 library(VAST)
 
@@ -66,7 +66,7 @@ and the estimated response maps show the expected response for pollock and cod, 
 
 We can further explore these patterns by visualizing factor loadings in in relation to the cold-pool extent:
 
-```js
+```R
 # Load Cold-pool-extent
 example2 = load_example( data_set="EBS_pollock" )
 CPE = example2$covariate_data[match(fit$year_labels,example2$covariate_data$Year),'AREA_SUM_KM2_LTE2']
