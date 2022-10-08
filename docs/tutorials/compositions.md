@@ -51,7 +51,7 @@ results = plot( fit,
 
 This automatically yields a plot of compositions for each size-bin and year, where results could then be included in a size-structured stock assessment model
 
-![Expanded length compositions](/assets/images/composition/Proportion.png)
+![Expanded length compositions](/assets/images/compositions/Proportion.png)
 
 ## Works cited
 
