@@ -12,7 +12,7 @@ nav_order: 4
 
 # Expanding age/length composition data for use in stock assessments
 
-It is possible to use `VAST` to expand subsamples of age/length composition obtained during fishery or survey sampling.  To do so, we first perform first-stage expansion and then fit a spatio-temporal model to those expanded samples:
+It is possible to use `VAST` to expand subsamples of age/length composition obtained during fishery or survey sampling.  To do so, we first perform first-stage expansion prior to fitting the model, i.e., expand from animals that were subsampled for length in a given tow to the predicted numbers-at-length in that entire tow.  We then fit a spatio-temporal model to those expanded samples.
 
 In this example, we use data for the lingcod survey off the US West Coast for Oregon and Washington.  For this simplified demonstrate, we fit to 32 size bins over four years.
 
@@ -51,7 +51,7 @@ results = plot( fit,
 
 This automatically yields a plot of compositions for each size-bin and year, where results could then be included in a size-structured stock assessment model
 
-![EOF indices](/assets/images/empirical-orthogonal-function/year_ordination.png)
+![Expanded length compositions](/assets/images/composition/Proportion.png)
 
 ## Works cited
 
