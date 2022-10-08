@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Composition data
+title: Compositional data
 parent: Tutorials
 nav_order: 4
 ---

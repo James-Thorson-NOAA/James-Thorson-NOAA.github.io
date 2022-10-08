@@ -103,6 +103,8 @@ nav_external_links:
     url: https://github.com/James-Thorson-NOAA/VAST/issues
   - title: VAST on Github
     url: https://github.com/James-Thorson-NOAA/VAST
+  - title: Applications
+    url: https://github.com/pfmc-assessments/geostatistical_delta-GLMM/wiki/Applications
 
 # Footer content
 # appears at the bottom of every page's main content
