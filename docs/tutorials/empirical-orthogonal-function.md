@@ -14,10 +14,6 @@ It is possible to use VAST to fit a generalization of empirical orthogonal funct
 
 In this example, we apply EOF to five groundfishes in the eastern Bering Sea. This was initially explored and documented in Thorson Ciannelli & Litzow (2020).
 
-## Works cited
-
-Thorson, J. T., Ciannelli, L., & Litzow, M. A. (2020). Defining indices of ecosystem variability using biological samples of fish communities: A generalization of empirical orthogonal functions. Progress in Oceanography, 181, 102244. https://doi.org/10.1016/j.pocean.2019.102244
-
 # Example code
 
 ```R
@@ -98,6 +94,8 @@ Plotting the optimal rotation of these factors then provides a biological index 
 
 ![EOF indices](/assets/images/empirical-orthogonal-function/EOF_index.png)
 
+## Caveats
+
 However, as with any multivariate model this model may take a long time (hours-days) to fit. If this is happening please try one or more ways to simplify the problem:
 
 * Use fewer extrapolation-grid cells. With recent versions of VAST, this can be done e.g., using max_cells=1000 for 1000 extrapolation-grid cells.
@@ -107,3 +105,8 @@ However, as with any multivariate model this model may take a long time (hours-d
 * Eliminate bias-correction and/or run without getting standard errors.
 * Get access to a better computer
 * Use MRAN for windows, or other version of R that uses parallelization.
+
+## Works cited
+
+Thorson, J. T., Ciannelli, L., & Litzow, M. A. (2020). Defining indices of ecosystem variability using biological samples of fish communities: A generalization of empirical orthogonal functions. Progress in Oceanography, 181, 102244. https://doi.org/10.1016/j.pocean.2019.102244
+

@@ -73,3 +73,9 @@ plot( fit )
 ```
 
 ![Predicted density of Alaska pollock in the eastern Bering Sea for each year](/assets/images/index-standardization/ln_density-predicted.png)
+
+## Works cited
+
+Thorson, J. T., Shelton, A. O., Ward, E. J., and Skaug, H. J. 2015. Geostatistical delta-generalized linear mixed models improve precision for estimated abundance indices for West Coast groundfishes. ICES Journal of Marine Science: Journal du Conseil, 72: 1297–1310.
+
+
