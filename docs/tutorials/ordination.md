@@ -85,8 +85,4 @@ dev.off()
 
 ![Predicted density of Alaska pollock in the eastern Bering Sea for each year](/assets/images/ordination/correlations.png)
 
-## Works cited
-
-Thorson, Scheuerell, M. D., Shelton, A. O., See, K. E., Skaug, H. J., and Kristensen, K. 2015. Spatial factor analysis: a new tool for estimating joint species distributions and correlations in species range. Methods in Ecology and Evolution, 6: 627–637.
-
 
