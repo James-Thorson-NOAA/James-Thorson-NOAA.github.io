@@ -3,12 +3,10 @@ layout: default
 title: Learn More
 nav_order: 2
 description: "Spatio-temporal analysis of univariate or multivariate data, e.g., standardizing data for multiple species or stages"
-permalink: /about
+permalink: /learn_more
 ---
 
 ## User resources for learning about VAST
-
-**Need to update this**
 
 There are eleven main resources for learning about VAST:
 
