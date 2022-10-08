@@ -16,7 +16,7 @@
 title: VAST
 description: VAST in R
 baseurl:  # the subpath of your site, e.g. /blog keep blank unless this is a project under username
-url: "https://jlmorano.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://James-Thorson-NOAA.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 
