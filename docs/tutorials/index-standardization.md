@@ -51,7 +51,7 @@ settings = make_settings( n_x = 100,
   Region = example$Region, 
   purpose = "index2", 
   bias.correct = FALSE )
-  ```
+```
 
 # Run the model
 
