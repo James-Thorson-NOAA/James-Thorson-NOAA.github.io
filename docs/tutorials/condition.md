@@ -13,7 +13,7 @@ nav_order: 5
 # Joint model for fish condition and density
 We developed a multivariate spatio-temporal modeling approach that jointly estimates population density (measured as numbers per area) and fish condition (the relative weight of an individual fish given its body length); the model is then used to predict density-weighted average condition by summing over the product of population density, local condition, and surface area. Density-weighted average condition corrects for biases that would arise when condition (weight-at-length) samples are not distributed proportional to population densities.  Our approach treats both density and condition as “categories” in VAST.  In models that estimate a covariance between these categories (i.e., using a factor-model for Omega and/or Epsilon), the correlation between the density and condition variables can be interpreted as density dependence (i.e., the causal impact of changing density on changing condition).
 
-This model is based on an allometric equation for weight at length, $W = a L^b$, where $a$ is condition factor and $b$ is allometric scaling of weight-at-length. We then take the log of both sides, $log(W) = log(a) + b log(L)$, and seek to estimate log-condition factor $log(a)$.  To do so, we fit a log-linked spatio-temporal model and include $log(L)$ as a catchability covariate thereby estimating the allometric term $log(b)$ and condition $log(a)$ simultaneously.  Here, we demonstrate our approach for the arrowtooth flounder stock in the Gulf of Alaska. The model developed here does not include any environmental covariates, but is simplified from Grüss et al. (2020). 
+This model is based on an allometric equation for weight at length, $W = a L^b$, where $a$ is condition factor and $b$ is allometric scaling of weight-at-length. We then take the log of both sides, $log(W) = log(a) + b * log(L)$, and seek to estimate log-condition factor $log(a)$.  To do so, we fit a log-linked spatio-temporal model and include $log(L)$ as a catchability covariate thereby estimating the allometric term $b$ and condition $log(a)$ simultaneously.  Here, we demonstrate our approach for the arrowtooth flounder stock in the Gulf of Alaska. The model developed here does not include any environmental covariates, but is simplified from Grüss et al. (2020). 
 
 One key step for the estimation of density-dependent fish condition is the definition of the `Expansion_cz` object. In our case: ` Expansion_cz = matrix( c( 0,0, 2,0 ), ncol = 2, byrow=TRUE )` which specifies that the annual index fish condition will be calculated as the weighted average of local condition, weighted by local densities. 
 
@@ -62,11 +62,11 @@ plot( fit,
   category_names=c("Biomass","Condition (grams per cm^power)") )
 ```
 
-Inspecting results, we see that that condition (weight-at-length in grams per allometric length) has declined for Gulf of Alaska arrowtooth from the 1980s to 2010s.  These trends largely differ from the oscillating increase and decrease in total biomass 1990-1996 and again 2003-2009. 
+Inspecting results, we see that that biomass-weighted condition (weight-at-length in grams per allometric length) has declined for Gulf of Alaska arrowtooth from the 1980s to 2010s.  These trends largely differ from the oscillating increase and decrease in total biomass 1990-1996 and again 2003-2009. 
 
 ![Condition index](/assets/images/condition/Index.png)
 
-Inspecting maps of condition gives context for these changes, where mapped condition differs more across years (panels) than among locations within a given year.  
+Inspecting maps of log-condition $log(a)$ provides ecological context for these interannual changes.  Specifically, we see that log-condition differs more across years (panels) than among locations within a given year.  
 
 ![Condition maps](/assets/images/condition/ln_density--Condition-predicted.png)
 
