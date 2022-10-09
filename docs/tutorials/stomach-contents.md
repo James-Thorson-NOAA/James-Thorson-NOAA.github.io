@@ -115,11 +115,11 @@ Indices of predator biomass and predator-expanded stomach contents shows that pr
 
 To better interpret these patterns, we first inspect the predator biomass landscale and see that red grouper consistently has highest density in the southern portion of our spatial domain, but densities in the northern portion have declined faster than the south.  
 
-![Expanded length compositions](/assets/images/ln_density--Red_grouper-predicted.png)
+![Expanded length compositions](/assets/images/stomach-contents/ln_density--Red_grouper-predicted.png)
 
 Finally, (and using crab as single example) the per-biomass consumption of crabs is higher near the Florida keys and low in the northern portion of red grouper distribution. This per-biomass consumption has rapidly increased from 2011-2015 with proportional increases throughout the spatial domain.   
 
-![Expanded length compositions](/assets/images/ln_density--Crabs-predicted.png)
+![Expanded length compositions](/assets/images/stomach-contents/ln_density--Crabs-predicted.png)
 
 ## Works cited
 
