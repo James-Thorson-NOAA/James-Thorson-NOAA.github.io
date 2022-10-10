@@ -18,15 +18,18 @@ As a simple example, I show code for combining three data types for red snapper 
 * encounter/non-encounter data from the NMFS Red Snapper/Shark Bottom Longline Survey (“BLL”) dataset;
 * count data from the National Marine Fisheries Service (NMFS) Pelagic Acoustic Trawl Survey (“PELACTR”) dataset;
 * biomass data from the SEAMAP Groundfish Trawl Survey (“TRAWL”) dataset;
-This example is fully documented in Grüss and Thorson (2019). 
+This example is fully documented in Grüss and Thorson (2019).  Inspecting the distribution of data (encounter: blue;  count: red;  biomass: green) shows, e.g.:
+* that biomass data are generally lacking in the eastern Gulf of Mexico in 2006-2008, such that other data sources are needed to inform densities and 
+* that count data are typically hte primary source of information for offshore densities prior to 2014;
+
+![Expanded length compositions](/assets/images/combined-data/Data_by_year.png)
 
 In this example, the key change is specifying `settings$ObsModel = cbind( c(13,14,2), 1 )`.  This indicates that observations with:
 * `e_i=0` are encounter/non-encounter samples that follow a complementary log-log link from a Poisson point process of numerical density;
 * `e_i=1` are count-data samples that follow a log-linked Poisson point process of numerical density; 
 * `e_i=2` are biomass samples that follow an approximately Tweedie distribution, with numerical densities that follow a Poisson point process and a gamma distribution for individual weight;
 These three processes then share information about numerical densities (1st linear predictor), while the biomass samples are the only source of information for converting counts to biomass (2nd linear predictor). 
- 
-
+  
 ```R
 # Load packages
 library(VAST)
@@ -65,13 +68,8 @@ fit = fit_model( settings = settings,
 plot( fit,
       plot_set = c(1,2,3) ) #, col = c("blue","red","green")[catchability_data$Data_type] )
 ```
-Inspecting the distribution of data (encounter: blue;  count: red;  biomass: green) shows, e.g.:
-* that biomass data are generally lacking in the eastern Gulf of Mexico in 2006-2008, such that other data sources are needed to inform densities and 
-* that count data are typically hte primary source of information for offshore densities prior to 2014;
 
-![Expanded length compositions](/assets/images/combined-data/Data_by_year.png)
- 
-Given these multiple data sets, we can obtain precise estimates of total biomass as well as maps of biomass:
+Given these multiple data sets, we can obtain precise estimates of total biomass as well as maps of biomass-density:
 
 ![Expanded length compositions](/assets/images/combined-data/Index.png)
 ![Expanded length compositions](/assets/images/combined-data/ln_density-predicted.png)
@@ -82,7 +80,7 @@ Predicted biomass is itself the product of predicted numerical density and indiv
 
 and then showing individual weight:
 
-![Expanded length compositions](/assets/images/combined-data/pos-catch-predicted.png)
+![Expanded length compositions](/assets/images/combined-data/pos_catch-predicted.png)
 
 Importantly, encounter probability (resulting from the 1st linear predictor) is informed by all three data sets, but individual weight (resulting from the 2nd linear predictor) is informed only by biomass-sampling data.  We can therefore calculate the uncertainty in these two variables:
 
@@ -96,7 +94,7 @@ plot( fit,
 
 Uncertainty in individual weight then shows higher uncertainty in the eastern Gulf of Mexico in 2006-2007 in particular:
 
-![Expanded length compositions](/assets/images/combined-data/pos-catch-transformed.png)
+![Expanded length compositions](/assets/images/combined-data/pos_catch-transformed.png)
 
 However, a plot of the standard deviation for log-biomass density shows that estimates are relatively imprecise in offshore portions of the modeled domain.  
 
