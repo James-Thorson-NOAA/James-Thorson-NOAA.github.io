@@ -71,12 +71,15 @@ plot( fit,
       plot_set = c(1,2,3) ) #, col = c("blue","red","green")[catchability_data$Data_type] )
 ```
 
-Given these multiple data sets, we can obtain precise estimates of total biomass as well as maps of biomass-density:
+Given these multiple data sets, we can obtain precise estimates of total biomass:
 
 ![Expanded length compositions](/assets/images/combined-data/Index.png)
+
+as well as maps of biomass-density:
+
 ![Expanded length compositions](/assets/images/combined-data/ln_density-predicted.png)
 
-Predicted biomass is itself the product of predicted numerical density and individual weight, which can each be plotted individually, showing encounter probability:
+Predicted biomass $d_{s,t} = n_{s,t} w_{s,t}$ is itself the product of predicted numerical density $n_{s,t}$ and individual weight $w_{s,t}$, and these can each be plotted individually by first showing encounter probability:
 
 ![Expanded length compositions](/assets/images/combined-data/encounter_prob-predicted.png)
 
