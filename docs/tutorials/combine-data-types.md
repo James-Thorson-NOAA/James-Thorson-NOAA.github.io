@@ -30,7 +30,7 @@ In this example, the key change is specifying `settings$ObsModel = cbind( c(13,1
 * `e_i=1` are count-data samples that follow a log-linked Poisson point process of numerical density; 
 * `e_i=2` are biomass samples that follow a Poisson-linked delta model (which approximates a flexible compound-Poisson-gamma distribution), with numerical densities that follow a Poisson point process and a gamma distribution for individual weight;
 
-These three processes then share information about numerical densities (1st linear predictor), while the biomass samples are the only source of information for converting counts to biomass (2nd linear predictor). 
+These three processes then share information about numerical densities (1st linear predictor), while the biomass samples are the only source of information for converting counts to biomass (2nd linear predictor).  Importantly, we also include a factor for data type as a catchability coefficient, such that `VAST` estimates the calibration rate for each gear relative to the reference gear.
   
 ```R
 # Load packages
