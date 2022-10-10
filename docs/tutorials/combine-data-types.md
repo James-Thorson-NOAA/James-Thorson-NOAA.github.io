@@ -18,6 +18,7 @@ As a simple example, I show code for combining three data types for red snapper 
 * encounter/non-encounter data from the NMFS Red Snapper/Shark Bottom Longline Survey (“BLL”) dataset;
 * count data from the National Marine Fisheries Service (NMFS) Pelagic Acoustic Trawl Survey (“PELACTR”) dataset;
 * biomass data from the SEAMAP Groundfish Trawl Survey (“TRAWL”) dataset;
+
 This example is fully documented in Grüss and Thorson (2019).  Inspecting the distribution of data (encounter: blue;  count: red;  biomass: green) shows, e.g.:
 * that biomass data are generally lacking in the eastern Gulf of Mexico in 2006-2008, such that other data sources are needed to inform densities and 
 * that count data are typically hte primary source of information for offshore densities prior to 2014;
@@ -27,7 +28,8 @@ This example is fully documented in Grüss and Thorson (2019).  Inspecting the d
 In this example, the key change is specifying `settings$ObsModel = cbind( c(13,14,2), 1 )`.  This indicates that observations with:
 * `e_i=0` are encounter/non-encounter samples that follow a complementary log-log link from a Poisson point process of numerical density;
 * `e_i=1` are count-data samples that follow a log-linked Poisson point process of numerical density; 
-* `e_i=2` are biomass samples that follow an approximately Tweedie distribution, with numerical densities that follow a Poisson point process and a gamma distribution for individual weight;
+* `e_i=2` are biomass samples that follow a Poisson-linked delta model (which approximates a flexible compound-Poisson-gamma distribution), with numerical densities that follow a Poisson point process and a gamma distribution for individual weight;
+
 These three processes then share information about numerical densities (1st linear predictor), while the biomass samples are the only source of information for converting counts to biomass (2nd linear predictor). 
   
 ```R
