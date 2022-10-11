@@ -16,7 +16,7 @@ Many regions have monitoring data or opportunistic/process-research collections 
 
 In these cases, analysts can use the formula interface to specify covariates that represent the main effect of seasonal and annual variation, and then treat a new ordinal "year-season" variable as `t_i` within VAST. These main effects for season and year might be linear offsets, spatially varying terms or both, and model selection/exploration is typically needed to determine the best option.
 
-We explore this concept in [Thorson et al. 2020](https://academic.oup.com/icesjms/article-abstract/77/5/1879/5837191), and illustrate a simplified example below.  The use of the formula interface for seasonal models was developed by Andrew Allyn.
+We explore this concept in [Thorson et al. 2020](https://academic.oup.com/icesjms/article-abstract/77/5/1879/5837191), and illustrate a simplified example below.  The use of the formula interface for seasonal models was developed by Andrew Allyn. The example starts by formatting the ordinal "year-season" variable, as well as dummy observations to that the model will run for every modeled time:
 
 ```R
 # load package and example data 
@@ -77,19 +77,19 @@ cov_dat = data.frame(
 # Inspect
 table("year_season"=cov_dat$Year, "Actual_year"=cov_dat$Year_Cov)
 table("year_season"=cov_dat$Year, "Actual_season"=cov_dat$Season)
+```
 
-#####
-## Model settings
-#####
+After these code-intensive preparatory steps, we build the settings and object, make small modifications to mirror all variance parameters, and then estimate parameters and plot results:
 
+```R
 # Make settings
 settings = make_settings(n_x = 100,
   Region = example$Region,
   strata.limits = example$strata.limits,
   purpose = "index2",
-  FieldConfig = c("Omega1" = 1, "Epsilon1" = 1, "Omega2" = 1, "Epsilon2" = 1),
-  RhoConfig = c("Beta1" = 3, "Beta2" = 3, "Epsilon1" = 4, "Epsilon2" = 4),
-  ObsModel = c(1, 1),
+  FieldConfig = c("Omega1" = 0, "Epsilon1" = 0, "Omega2" = 1, "Epsilon2" = 1),
+  RhoConfig = c("Beta1" = 3, "Beta2" = 3, "Epsilon1" = 0, "Epsilon2" = 4),
+  ObsModel = c(10, 2),
   bias.correct = FALSE,
   Options = c('treat_nonencounter_as_zero' = TRUE) )
 
@@ -99,7 +99,6 @@ formula_use = ~ Season + Year_Cov
 # Implement corner constraint for linear effect but not spatially varying effect:
 # * one level for each term is 2 (just spatially varying)
 # * all other levels for each term is 3 (spatialy varying plus linear effect)
-X1config_cp_use = matrix( c(2, rep(3,nlevels(cov_dat$Season)-1), 2, rep(3,nlevels(cov_dat$Year_Cov)-1) ), nrow=1 )
 X2config_cp_use = matrix( c(2, rep(3,nlevels(cov_dat$Season)-1), 2, rep(3,nlevels(cov_dat$Year_Cov)-1) ), nrow=1 )
 
 #####
@@ -112,10 +111,10 @@ fit_orig = fit_model("settings" = settings,
   "t_i" = samp_dat[, 'year_season'],
   "b_i" = samp_dat[, 'weight'],
   "a_i" = samp_dat[, 'Swept'],
-  "X1config_cp" = X1config_cp_use,
+  #"X1config_cp" = X1config_cp_use,
   "X2config_cp" = X2config_cp_use,
   "covariate_data" = cov_dat,
-  "X1_formula" = formula_use,
+  #"X1_formula" = ~ 1,
   "X2_formula" = formula_use,
   "X_contrasts" = list(Season = contrasts(cov_dat$Season, contrasts = FALSE), Year_Cov = contrasts(cov_dat$Year_Cov, contrasts = FALSE)),
   "run_model" = FALSE,
@@ -125,8 +124,6 @@ fit_orig = fit_model("settings" = settings,
 Map_adjust = fit_orig$tmb_list$Map
 
 # Pool variances for each term to a single value
-Map_adjust$log_sigmaXi1_cp = factor(c(rep(as.numeric(Map_adjust$log_sigmaXi1_cp[1]), nlevels(cov_dat$Season)),
-  rep(as.numeric(Map_adjust$log_sigmaXi1_cp[nlevels(cov_dat$Season)+1]), nlevels(cov_dat$Year_Cov))))
 Map_adjust$log_sigmaXi2_cp = factor(c(rep(as.numeric(Map_adjust$log_sigmaXi2_cp[1]), nlevels(cov_dat$Season)),
   rep(as.numeric(Map_adjust$log_sigmaXi2_cp[nlevels(cov_dat$Season)+1]), nlevels(cov_dat$Year_Cov))))
 
@@ -137,22 +134,32 @@ fit  = fit_model("settings" = settings,
   "t_i" = samp_dat[, 'year_season'],
   "b_i" = samp_dat[, 'weight'],
   "a_i" = samp_dat[, 'Swept'],
-  "X1config_cp" = X1config_cp_use,
+  #"X1config_cp" = X1config_cp_use,
   "X2config_cp" = X2config_cp_use,
   "covariate_data" = cov_dat,
-  "X1_formula" = formula_use,
+  #"X1_formula" = formula_use,
   "X2_formula" = formula_use,
   "X_contrasts" = list(Season = contrasts(cov_dat$Season, contrasts = FALSE), Year_Cov = contrasts(cov_dat$Year_Cov, contrasts = FALSE)),
-  "newtonsteps" = 1,
+  "newtonsteps" = 0,
   "PredTF_i" = samp_dat[, 'Dummy'],
   "Map" = Map_adjust )
 
 #
-plot( fit,
+out = plot( fit,
   projargs='+proj=natearth +lon_0=-68 +units=km',
   country = "united states of america",
-  year_labels = yearseason_labels )
+  year_labels = yearseason_labels,
+  plot_set = c(3,19),
+  mfrow=c(33,3) )
 ```
+
+The estimated variance for the annual term goes to zero in this case, so we here visualize the estimated seasonal effects, which shows that the DFO data has higher expected densities along the eastern boundary than the Spring or following Fall NMFS surveys:
+
+![Expanded length compositions](/assets/images/seasonal-model/xi_2-predicted-cropped.png)
+
+A similar pattern is also apparent in the mapped log-densities for the ordinal year-season variable, which also shows the propagation of hotspots e.g., the southern hotspot from Fall 1989 to DFO 1990 survey intervals:
+
+![Expanded length compositions](/assets/images/seasonal-model/ln_density-predicted-cropped.png)
 
 ## Works cited
 
