@@ -16,7 +16,7 @@
 title: VAST
 description: VAST in R
 baseurl:  # the subpath of your site, e.g. /blog keep blank unless this is a project under username
-url: "https://jlmorano.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://James-Thorson-NOAA.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 
@@ -48,7 +48,7 @@ exclude:
 
 # Enable or disable the site search
 # Supports true (default) or false
-search_enabled: true
+search_enabled: false
 search:
   # Split pages into sections that can be searched individually
   # Supports 1 - 6, default: 2
@@ -103,6 +103,8 @@ nav_external_links:
     url: https://github.com/James-Thorson-NOAA/VAST/issues
   - title: VAST on Github
     url: https://github.com/James-Thorson-NOAA/VAST
+  - title: Applications
+    url: https://github.com/pfmc-assessments/geostatistical_delta-GLMM/wiki/Applications
 
 # Footer content
 # appears at the bottom of every page's main content
