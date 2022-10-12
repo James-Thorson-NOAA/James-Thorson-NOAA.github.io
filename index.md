@@ -62,9 +62,10 @@ Current members are:
 
 ## Funding and support for the tool
 
+* 2022: Support from J. Morano (Cornell University, and supported by the Sea Grant Pop. Dy. Fellowship) to develop this website 
 * 2018-2022: Support for J. Thorson from the Habitat and Ecological Processes Research program, Alaska Fisheries Science Center, National Marine Fisheries Service, NOAA
 * 2015-2018: Support for J. Thorson from Fisheries Resource Analysis and Monitoring Division (FRAM), Northwest Fisheries Science Center, National Marine Fisheries Service, NOAA
-* Ongoing:  Support from Danish Technical University (in particular Kasper Kristensen) for  development of Template Model Builder software, URL: https://www.jstatsoft.org/article/view/v070i05
+* 2014-present:  Support from Danish Technical University (in particular Kasper Kristensen) for  development of Template Model Builder software, URL: https://www.jstatsoft.org/article/view/v070i05
 * Generous support from people knowledgeable about each region and survey! Specific contributions are listed [here](https://github.com/nwfsc-assess/geostatistical_delta-GLMM/blob/master/shiny/Acknowledgements_for_regional_inputs.csv).
 * Hoff, G., Thorson, J., and Punt, A.  2018. Spatio-temporal dynamics of groundfish availability to EBS bottom trawl surveys and abundance estimate uncertainties.  North Pacific Research Board (NPRB) 2018 RFP.   
 * Rooper, C., Thorson, J., and Boldt, J.  2017. Detecting changes in life history traits and distribution shifts in eastern Bering Sea fishes in response to climate change.  Habitat Information for Stock Assessments 2016 RFP.  
