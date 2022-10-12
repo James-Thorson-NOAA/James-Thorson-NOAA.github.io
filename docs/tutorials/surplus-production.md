@@ -52,7 +52,6 @@ Inputs = fit_model( settings = settings,
   Lon_i = sampling_data[,'Lon'],
   b_i = sampling_data[,'Catch_KG'],
   a_i = sampling_data[,'AreaSwept_km2'],
-  v_i = as.numeric(sampling_data[,'Vessel']),
   t_i = sampling_data[,'Year'],
   F_ct = F_ct,
   build_model = FALSE )
@@ -71,14 +70,12 @@ fit = fit_model( settings = settings,
   Lon_i = sampling_data[,'Lon'],
   b_i = sampling_data[,'Catch_KG'],
   a_i = sampling_data[,'AreaSwept_km2'],
-  v_i = as.numeric(sampling_data[,'Vessel']),
   t_i = sampling_data[,'Year'],
   F_ct = F_ct,
   Map = Map,
   Parameters = Params,
   getsd = TRUE,
-  year_labels = c(1975, 1984:2015), 
-  use_new_epsilon = TRUE )
+  year_labels = c(1975, 1984:2015) )
 
 # Fix issue in auto-generated plot labels
 fit$years_to_plot = 1:length(fit$year_labels)  # Plot all years, not just years with samples
