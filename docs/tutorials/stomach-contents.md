@@ -22,7 +22,7 @@ One key step for the estimation of PESCs is the definition of the `Expansion_cz`
 
 which entails that the estimated biomass (the product of biomass per unit area and surface area) for the first “category”, namely the predator (red grouper), will be multiplied by the estimated prey-biomass-per-predator-biomass for the other categories, namely the prey items (crabs, fish, other prey, and shrimps), to obtain PESC estimates (for crabs, fish, other prey, and shrimps). 
 
-For more information about the approach and its outcomes, please read Gruss et al. (2020).  As case study we analyze red group biomass as predator, combined with their consumption of fishes, crabs, shrimps, or other prey.  
+For more information about the approach and its outcomes, please read Gruss et al. (2020).  As case study we analyze red group biomass as predator, combined with their consumption of fishes, crabs, shrimps, or other prey. We start by illustrating how to format separate data sets containing predator density and stomach samples into a single data frame: 
 
 ```R
 # Load packages
@@ -65,7 +65,11 @@ example$Stomach_content_data$Area_swept_km2 = 1
 
 # Merge the predator biomass catch rate and stomach content datasets
 sampling_data <- rbind( example$Predator_biomass_cath_rate_data, example$Stomach_content_data )
+```
 
+After these preparatory steps, we proceed with fitting VAST and plotting output using the normal steps:
+
+```R
 # Make settings
 settings = make_settings( n_x = 300,
   Region = example$Region,
