@@ -90,7 +90,8 @@ plot_results( fit = fit,
   settings = settings,
   check_residuals = FALSE,
   country = "united states of america",
-  use_new_epsilon = FALSE )
+  use_new_epsilon = FALSE, 
+  mfrow = c(9,4) )
 ```
 
 Inspecting the density maps shows:
