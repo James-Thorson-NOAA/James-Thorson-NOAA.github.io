@@ -99,6 +99,8 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
+  - title: User Manual
+    url: https://github.com/James-Thorson-NOAA/VAST/blob/main/manual/VAST_model_structure.pdf
   - title: Report Issues
     url: https://github.com/James-Thorson-NOAA/VAST/issues
   - title: VAST on Github
