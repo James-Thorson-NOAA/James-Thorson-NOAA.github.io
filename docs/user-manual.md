@@ -11,7 +11,7 @@ permalink: /user-manual
 
 **James Thorson**
 
-**Purpose** **of document**:
+**Purpose of document**:
 
 R package VAST includes many different forms of documentation, which are
 documented on the [package GitHub
@@ -122,20 +122,20 @@ correlated variation among categories and years as explained next.
 
 Regarding intercepts representing temporal variation:
 
-$$\beta_{1}\left( c_{i},t_{i} \right) = \mu_{\beta 1}\left( c_{i} \right) + \sum_{f = 1}^{n_{\beta 1}}{L_{\beta 1}\left( c_{i},f \right)\beta_{1}\left( t_{i},f \right)}$$
+$$\beta_{1}\left( c_{i},t_{i} \right) = \mu_{\beta_1}\left( c_{i} \right) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}\left( c_{i},f \right)\beta_{1}\left( t_{i},f \right)}$$
 
 where $\beta_{1}\left( t_{i},f\  \right)$ represents temporal variation
-for time $t_{i}$ for factor $f$ (of $n_{\beta 1}$ factors representing
-temporal variation), $L_{\beta 1}(c_{i},f)$ is the loadings matrix that
+for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing
+temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that
 generates temporal covariation among categories for this linear
-predictor, and $\mu_{\beta 1}\left( c_{i} \right)$ represents the
+predictor, and $\mu_{\beta_1}\left( c_{i} \right)$ represents the
 time-average for each category $c_{i}$. The number of factors
-$n_{\beta 1}$ can range from zero to the number of categories $n_{c}$,
-$0 \leq n_{\beta 1} \leq n_{c}$, where $n_{\beta 1} = 0$ is equivalent
+$n_{\beta_1}$ can range from zero to the number of categories $n_{c}$,
+$0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent
 to eliminating all temporal terms from the model. By default,
-$n_{\beta 1} = n_{c}$, $\beta_{1}\left( t_{i},f\  \right)$ is treated as
+$n_{\beta_1} = n_{c}$, $\beta_{1}\left( t_{i},f\  \right)$ is treated as
 a fixed effect for each year $t$ and factor $f$,
-$\mu_{\beta 1}\left( c_{i} \right) = 0$, and $\mathbf{L}_{\beta 1}$ is
+$\mu_{\beta_1}\left( c_{i} \right) = 0$, and $\mathbf{L}_{\beta_1}$ is
 an identity matrix; this formulation is equivalent to estimating a
 separate intercept
 $\beta_{1}\left( t_{i},c \right) = \beta_{1}\left( t_{i},f \right)$ as
@@ -145,13 +145,13 @@ Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
 years and categories. When treated as random,
 $\beta_{1}\left( t_{i},f \right)$ is assigned a normal distribution with
-unit variance, such that $\mathbf{L}_{\beta 1}^{T}\mathbf{L}_{\beta 1}$
+unit variance, such that $\mathbf{L}_{\beta_1}^{T}\mathbf{L}_{\beta_1}$
 is the covariance among categories for a given process (Thorson et al.
 2015b). When treating intercepts as random, and when there is only one
-category and using one factor ($n_{\beta 1} = 1$), then
-$\mathbf{L}_{\beta 1}$ is a 1x1 matrix (i.e. a scalar) such
-$\mathbf{L}_{\beta 1}^{2}$ is the variance and the absolute value,
-$abs(\mathbf{L}_{\beta 1})$ is the standard deviation for temporal
+category and using one factor ($n_{\beta_1} = 1$), then
+$\mathbf{L}_{\beta_1}$ is a 1x1 matrix (i.e. a scalar) such
+$\mathbf{L}_{\beta_1}^{2}$ is the variance and the absolute value,
+$abs(\mathbf{L}_{\beta_1})$ is the standard deviation for temporal
 variation.
 
 By default the model specifies that each intercept $\beta_{1}(c,t)$ and
@@ -160,27 +160,27 @@ following autocorrelation structure:
 
 $$\beta_{1}(t,f)\sim\left\{ \begin{matrix}
 Normal(0,1) & if\ t = t_{\min} \\
-Normal\left( \rho_{\beta 1}\beta_{1}(t - 1,f),1 \right) & if\ t > t_{\min} \\
+Normal\left( \rho_{\beta_1}\beta_{1}(t - 1,f),1 \right) & if\ t > t_{\min} \\
 \end{matrix} \right.\ $$
 
 Where $t_{\min}$ is the index for the first modelled year and
-$\rho_{\beta 1}$ and $\rho_{\beta 2}$ are the estimated degree of
+$\rho_{\beta_1}$ and $\rho_{\beta_2}$ are the estimated degree of
 first-order autocorrelation in temporal variation (note that random
 effects have a variance of one given that they are subsequently
 multiplied by loadings matrices that represent the temporal covariance
 among factors). Options treating intercepts as a random effect include:
 
-1.  *Independent among years* --specifies $\rho_{\beta 1} = 0$
+1.  *Independent among years* --specifies $\rho_{\beta_1} = 0$
 
-2.  *Random walk* --specifies $\rho_{\beta 1} = 1$
+2.  *Random walk* --specifies $\rho_{\beta_1} = 1$
 
-3.  *Constant intercept* --specifies $\rho_{\beta 1} = 0$ and
-    $\sigma_{\beta 1}^{2} = 0$ (i.e., $\beta_{1}(t)$ is constant for all
+3.  *Constant intercept* --specifies $\rho_{\beta_1} = 0$ and
+    $\sigma_{\beta_1}^{2} = 0$ (i.e., $\beta_{1}(t)$ is constant for all
     $t$)
 
-4.  *Autoregressive* --estimates $\rho_{\beta 1}$ as a fixed effect
+4.  *Autoregressive* --estimates $\rho_{\beta_1}$ as a fixed effect
 
-and settings are defined identically for specifying $\rho_{\beta 2}$.
+and settings are defined identically for specifying $\rho_{\beta_2}$.
 
 **Spatial variation**
 
@@ -294,7 +294,7 @@ catchability among a grouping variable (tows or vessels) for each factor
 $f$ (of $n_{\eta 1}$ factors representing overdispersion), and
 $L_{1}(c_{i},f)$ is a loadings matrix that generates covariation in
 catchability among categories for this predictor. All loadings matrices
-are specified similarly to $\mathbf{L}_{\beta 1}$, i.e., where factors
+are specified similarly to $\mathbf{L}_{\beta_1}$, i.e., where factors
 have a variance of one such that $\mathbf{L}^{T}\mathbf{L}$ represents
 the covariance among categories. The main difference is that spatial,
 spatio-temporal, and overdispersion factors can only be specified as
@@ -683,7 +683,7 @@ $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta 1}}{L_{\beta 1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f\ )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{\left( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) \right)X(g,t,p)}}{︸}}$$
+$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f\ )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{\left( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) \right)X(g,t,p)}}{︸}}$$
 
 where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
 are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
@@ -1269,16 +1269,16 @@ settings (FE/RE)
   -----------------------------------------------------------------------------------------------------------------------------------------------------------
   Coefficient name                           Symbol                              Type    Dimensions
   ------------------------------------------ ----------------------------------- ------- --------------------------------------------------------------------
-  Factor values for intercept for 1^st^      $$\beta_{1}(f,t)$$                  FE/RE   $$n_{\beta 1} \times n_{t}$$
+  Factor values for intercept for 1^st^      $$\beta_{1}(f,t)$$                  FE/RE   $$n_{\beta_1} \times n_{t}$$
   linear predictor                                                                       
 
-  Factor values for intercept for 2^st^      $$\beta_{2}(f,t)$$                  FE/RE   $$n_{\beta 2} \times n_{t}$$
+  Factor values for intercept for 2^st^      $$\beta_{2}(f,t)$$                  FE/RE   $$n_{\beta_2} \times n_{t}$$
   linear predictor                                                                       
 
-  Loadings matrix for intercepts for 1^st^   $$L_{\beta 1}(c,f)$$                FE      $$n_{c} \times n_{\beta 1}$$
+  Loadings matrix for intercepts for 1^st^   $$L_{\beta_1}(c,f)$$                FE      $$n_{c} \times n_{\beta_1}$$
   linear predictor                                                                       
 
-  Loadings matrix for intercepts for 2^nd^   $$L_{\beta 2}(c,f)$$                FE      $$n_{c} \times n_{\beta 2}$$
+  Loadings matrix for intercepts for 2^nd^   $$L_{\beta_2}(c,f)$$                FE      $$n_{c} \times n_{\beta_2}$$
   linear predictor                                                                       
 
   Loadings matrix for spatial covariation    $$L_{\omega 1}(c,f)$$               FE      $$n_{c} \times n_{\omega 1}$$
@@ -1329,16 +1329,16 @@ settings (FE/RE)
   Decorrelation rate for 2^nd^ linear        $$\kappa_{2}$$                      FE      1
   predictor                                                                              
 
-  Autocorrelation for intercepts of 1^st^    $$\rho_{\beta 1}$$                  FE      1
+  Autocorrelation for intercepts of 1^st^    $$\rho_{\beta_1}$$                  FE      1
   linear predictor                                                                       
 
-  Autocorrelation for intercepts of 2^nd^    $$\rho_{\beta 2}$$                  FE      1
+  Autocorrelation for intercepts of 2^nd^    $$\rho_{\beta_2}$$                  FE      1
   linear predictor                                                                       
 
-  Conditional variance for intercepts of     $$\sigma_{\beta 1}^{2}$$            FE      1
+  Conditional variance for intercepts of     $$\sigma_{\beta_1}^{2}$$            FE      1
   1^st^ linear predictor                                                                 
 
-  Conditional variance for intercepts of     $$\sigma_{\beta 2}^{2}$$            FE      1
+  Conditional variance for intercepts of     $$\sigma_{\beta_2}^{2}$$            FE      1
   2^nd^linear predictor                                                                  
 
   Autocorrelation for spatio-temporal        $$\rho_{\varepsilon 1}$$            FE      1
