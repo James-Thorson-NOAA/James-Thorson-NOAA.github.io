@@ -7,11 +7,9 @@ permalink: /user-manual
 
 # VAST model structure and user interface
 
-
-
 **James Thorson**
 
-**Purpose of document**:
+## Purpose of document
 
 R package VAST includes many different forms of documentation, which are
 documented on the [package GitHub
@@ -22,56 +20,30 @@ structure (all model equations and notation). Please see reference
 documentation for explanation of the user interface, and GitHub wiki for
 examples.
 
-**Package architecture**:
+## Package architecture
 
-VAST is developed as an R package available on GitHub. It depends upon
-helper functions that are bundled in package FishStatsUtils, and these
-helper functions are installed separately because they are also used by
-other spatio-temporal packages (e.g., EOFR). VAST and FishStatsUtils use
-S3 objects to ease interpretation of objects that are commonly saved to
-terminal (see Table 1 for list). VAST can be run using two primary
-levels of abstraction:
+VAST is developed as an R package available on GitHub. It depends upon helper functions that are bundled in package FishStatsUtils, and these helper functions are installed separately because they are also used by other spatio-temporal packages (e.g., EOFR). VAST and FishStatsUtils use S3 objects to ease interpretation of objects that are commonly saved to terminal (see Table 1 for list). VAST can be run using two primarylevels of abstraction:
 
 1.  *High-level wrapper functions*: New users are recommended to explore
-    using \`FishStatsUtils::make_settings\` and
-    \`FishStatsUtils::fit_model\` to run VAST, and to explore results
-    using \`plot\` and \`summary\`.
+    using `FishStatsUtils::make_settings` and
+    `FishStatsUtils::fit_model` to run VAST, and to explore results
+    using `plot` and `summary`.
 
 2.  *Mid-level utilities*: Experienced users often run lower-level
     functions to accomplish basic tasks in spatial analysis, using
-    \`FishStatsUtils::make_extrapolation_info\`,
-    \`FishStatsUtils::make_spatial_info\`, \`VAST::make_data\`, and
-    \`VAST::make_model\` individually.
+    `FishStatsUtils::make_extrapolation_info`,
+    `FishStatsUtils::make_spatial_info`, `VAST::make_data`, and
+    `VAST::make_model` individually.
 
-Updates to VAST are released using semantic-version numbering (e.g.,
-version 3.2.0) and a battery of integrated tests (comparing results
-using updated code to saved results from earlier versions) are run prior
-to numbered releases to ensure that results are backwards compatible.
+Updates to VAST are released using semantic-version numbering (e.g., version 3.2.0) and a battery of integrated tests (comparing results using updated code to saved results from earlier versions) are run prior to numbered releases to ensure that results are backwards compatible.
 
-**Model description**:
+## Model description
 
-In the following, I use mathematical notation similar to the C++ code
-used to define the model in TMB: Notation is close to common
-recommendations, e.g., Edwards and Auger‐Méthé (2019), although I use
-parentheses to indicate indices of vectors, matrices, and arrays, and
-reserve subscripts for naming (see Table 2 for summary of notation that
-may be slightly out-of-date). Feel free to change notation when
-describing the model to suit your purposes in reports or publications.
-For further details regarding terminology, motivation, and statistical
-properties, please read the papers listed on the GitHub main page.
+In the following, I use mathematical notation similar to the C++ code used to define the model in TMB: Notation is close to common recommendations, e.g., Edwards and Auger‐Méthé (2019), although I use parentheses to indicate indices of vectors, matrices, and arrays, and reserve subscripts for naming (see Table 2 for summary of notation that may be slightly out-of-date). Feel free to change notation when describing the model to suit your purposes in reports or publications. For further details regarding terminology, motivation, and statistical properties, please read the papers listed on the GitHub main page.
 
-**Model Overview**
+### Model Overview
 
-VAST predicts variation in density across multiple locations $s$, time
-intervals $t$, for multiple categories $c$. Categories could include
-either multiple species, multiple size/age/sex classes for each
-individual species, and/or a mix of biological, physical, and fishery
-variables describing an ecosystem. VAST approximates the covariance
-between these multiple categories and years using a factor-model
-decomposition (Thorson et al. 2015b, 2016a), i.e., by summing across the
-contribution of multiple random effects (termed factors). If there is
-only a single category, the model reduces to a standard univariate
-spatio-temporal model.
+VAST predicts variation in density across multiple locations $s$, time intervals $t$, for multiple categories $c$. Categories could include either multiple species, multiple size/age/sex classes for each individual species, and/or a mix of biological, physical, and fishery variables describing an ecosystem. VAST approximates the covariance between these multiple categories and years using a factor-model decomposition (Thorson et al. 2015b, 2016a), i.e., by summing across the contribution of multiple random effects (termed factors). If there is only a single category, the model reduces to a standard univariate spatio-temporal model.
 
 After estimating variation in density across space, time, and among
 categories, VAST then predicts variables at extrapolation-grid cells
@@ -100,7 +72,7 @@ between the location of knots and either data or extrapolation-grid
 cells. This distributes knots as a function of the spatial intensity of
 sampling data.
 
-**Linear predictors**
+### Linear predictors
 
 The model potentially includes two linear predictors (because it is
 designed to support delta-models, which include two components). The
@@ -118,28 +90,14 @@ different subscripts (Thorson and Barnett 2017; Thorson 2019). Model
 components are specified hierarchically to efficiently compute
 correlated variation among categories and years as explained next.
 
-**Temporal variation**
+### Temporal variation
 
 Regarding intercepts representing temporal variation:
 
 $$\beta_{1}\left( c_{i},t_{i} \right) = \mu_{\beta_1}\left( c_{i} \right) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}\left( c_{i},f \right)\beta_{1}\left( t_{i},f \right)}$$
 
-where $\beta_{1}\left( t_{i},f\  \right)$ represents temporal variation
-for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing
-temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that
-generates temporal covariation among categories for this linear
-predictor, and $\mu_{\beta_1}\left( c_{i} \right)$ represents the
-time-average for each category $c_{i}$. The number of factors
-$n_{\beta_1}$ can range from zero to the number of categories $n_{c}$,
-$0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent
-to eliminating all temporal terms from the model. By default,
-$n_{\beta_1} = n_{c}$, $\beta_{1}\left( t_{i},f\  \right)$ is treated as
-a fixed effect for each year $t$ and factor $f$,
-$\mu_{\beta_1}\left( c_{i} \right) = 0$, and $\mathbf{L}_{\beta_1}$ is
-an identity matrix; this formulation is equivalent to estimating a
-separate intercept
-$\beta_{1}\left( t_{i},c \right) = \beta_{1}\left( t_{i},f \right)$ as
-fixed effect for each category and year.
+where $\beta_{1}\left( t_{i},f\  \right)$ represents temporal variation for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that generates temporal covariation among categories for this linear
+predictor, and $\mu_{\beta_1}\left( c_{i} \right)$ represents the time-average for each category $c_{i}$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}\left( t_{i},f\  \right)$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}\left( c_{i} \right) = 0$, and $\mathbf{L}_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}\left( t_{i},c \right) = \beta_{1}\left( t_{i},f \right)$ as fixed effect for each category and year.
 
 Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
@@ -182,7 +140,7 @@ among factors). Options treating intercepts as a random effect include:
 
 and settings are defined identically for specifying $\rho_{\beta_2}$.
 
-**Spatial variation**
+### Spatial variation
 
 Regarding spatial variation:
 
@@ -217,7 +175,7 @@ for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}$.
 
-**Spatio-temporal variation**
+### Spatio-temporal variation
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
@@ -283,7 +241,7 @@ estimated degree of first-order autocorrelation in temporal variation:
 and settings are defined identically for specifying
 $\rho_{\varepsilon 2}$.
 
-**Overdisperison**
+### Overdisperison
 
 Regarding overdispersion:
 
@@ -302,7 +260,7 @@ random effects, while the intercepts can be specified as either random
 or fixed (where specifying as fixed "turns off" all factor-modelling for
 that intercept).
 
-**Density covariates**
+### Density covariates
 
 Regarding covariates affecting densities ("density" or "habitat"
 covariates):
@@ -331,7 +289,7 @@ Values are then predicted as e.g.:
 
 $$\mathbf{\xi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_{i}\mathbf{\xi}_{1}(c,p)$$
 
-**Catchability covariates**
+### Catchability covariates
 
 Finally, regarding covariates affecting the process of obtaining
 measurements ("catchability" or "detectability" covariates):
@@ -354,7 +312,7 @@ Values are then predicted as e.g.:
 
 $$\mathbf{\varphi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_{i}\mathbf{\varphi}_{1}(k)$$
 
-**Fishing impacts**
+### Fishing impacts
 
 Fishing impacts are included to represent the effect of known human
 impacts on variables. They are not yet documented in detail here, but
@@ -364,7 +322,7 @@ within MICE or single-species production models following
 vector-autoregressive dynamics (i.e., Gompertz density dependence). Feel
 free to contact the package author if desiring more documentation.
 
-**Link functions and observation error distributions**
+### Link functions and observation error distributions
 
 There are currently four options for the link function. For the latest
 set of options see the R help documentation by typing into the R
@@ -412,65 +370,27 @@ $$r_{2}(i) = \frac{a_{i} \times \exp\left( p_{1}(i) \right)}{r_{1}(i)} \times \e
 > but can also be used to combine encounter, count, and biomass-sampling
 > data (see section below for details).
 
-**Observation models**:
+## Observation models
 
-There are different user-controlled options for observation models for
-available sampling data. I distinguish between observation models for
-continuous-valued data (e.g., biomass, or numbers standardized to a
-fixed area), and observation models for count data (e.g., numbers
-treating area-swept as an offset). However, both are parameterized such
-that the expectation for sampling data
-$\mathbb{E}\left( B_{i} \right) = r_{1}(i) \times r_{2}(i)$.
+There are different user-controlled options for observation models for available sampling data. I distinguish between observation models for continuous-valued data (e.g., biomass, or numbers standardized to a fixed area), and observation models for count data (e.g., numbers treating area-swept as an offset). However, both are parameterized such that the expectation for sampling data $\mathbb{E}\left( B_{i} \right) = r_{1}(i) \times r_{2}(i)$.
 
 *Continuous-valued data (e.g., biomass)*
 
-If using an observation model with continuous support (e.g., a normal,
-lognormal, gamma, or Tweedie models), then data $b_{i}$ can be any
-non-negative real number, $b_{i}\mathcal{\in R}$ and $b_{i} \geq 0$.
-VAST calculates the probability of these data as:
+If using an observation model with continuous support (e.g., a normal, lognormal, gamma, or Tweedie models), then data $b_{i}$ can be any non-negative real number, $b_{i}\mathcal{\in R}$ and $b_{i} \geq 0$. VAST calculates the probability of these data as:
 
-$$\Pr\left( b_{i} = B \right) = \left\{ \begin{matrix}
-1 - r_{1}(i) & if\ B = 0 \\
-r_{1}(i) \times g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right.\  & if\ B > 0 \\
-\end{matrix} \right.\ $$
+$$\Pr \left( b_{i} = B \right) = \left\{ \begin{matrix}1 - r_{1}(i) & if\ B = 0 \\r_{1}(i) \times g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right\  & if\ B > 0 \\\end{matrix} \right.\$$
 
-where ObsModel\[1\] controls the probability density function
-$g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right.\ $ used for positive
-catch rates (see ?Data_Fn for a list of options), where each options is
-defined to have with expectation $r_{2}(i)$ and dispersion
-$\sigma_{m}^{2}(c)$, where dispersion parameter $\sigma_{m}^{2}(c)$
-varies among categories by default.
+where `ObsModel[1]` controls the probability density function $g{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right.\$ used for positive catch rates (see `?Data_Fn` for a list of options), where each options is defined to have with expectation $r_{2}(i)$ and dispersion $\sigma_{m}^{2}(c)$, where dispersion parameter $\sigma_{m}^{2}(c)$ varies among categories by default.
 
 *Discrete-valued data (e.g., abundance)*
 
-If using an observation model with discrete support (e.g., a Poisson,
-negative-binomial, Conway-Maxwell Poisson, or lognormal-Poisson models),
-then data $b_{i}$ can be any whole number,
-$b_{i} \in \{ 0,1,2,\ldots\}$. VAST calculates the probability of these
-data as:
+If using an observation model with discrete support (e.g., a Poisson, negative-binomial, Conway-Maxwell Poisson, or lognormal-Poisson models), then data $b_{i}$ can be any whole number, $b_{i} \in \{ 0,1,2,\ldots\}$. VAST calculates the probability of these data as:
 
-$$\Pr\left( B = b_{i} \right) = \left\{ \begin{matrix}
-\left( 1 - r_{1}(i) \right) + g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\  & if\ B = 0 \\
-r_{1}(i) \times g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\  & if\ B > 0 \\
-\end{matrix} \right.\ $$
+$$\Pr\left( B = b_{i} \right) = \left\{ \begin{matrix} \left( 1 - r_{1}(i) \right) + g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\  & if\ B = 0 \\ r_{1}(i) \times g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\  & if\ B > 0 \\ \end{matrix} \right.\ $$
 
-where ObsModel\[1\] controls the probability mass function
-$g\{\left. \ B|r_{2}(i),\ldots\} \right.\ $ used (again, see ?Data_Fn
-for a list of options), where I use ... to signify that these
-probability mass functions generally can have one or more parameter
-governing dispersion, and the precise number and interpretation varies
-among observation models (i.e., the value of ObsModel\[1\]). For these
-count-data models, $\left( 1 - r_{1}(i) \right)$ is the "zero-inflation
-probability" (i.e., the proportion of habitat in the immediate vicinity
-of location $s_{i}$ and time $t_{i}$ that is never occupied), while
-$r_{2}(i)$ is the expected value for probability mass function
-$g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\ $ (i.e., the number of
-individuals that are in the vicinity of sampling in habitat that is
-occupied), and $g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\ $ is the
-probability of not encountering category *c* given that sampling occurs
-in occupied habitat (Martin et al. 2005).
+where `ObsModel[1]` controls the probability mass function $g\{\left. \ B|r_{2}(i),\ldots\} \right.\ $ used (again, see `?Data_Fn` for a list of options), where I use ... to signify that these probability mass functions generally can have one or more parameter governing dispersion, and the precise number and interpretation varies among observation models (i.e., the value of `ObsModel[1]`). For these count-data models, $\left( 1 - r_{1}(i) \right)$ is the "zero-inflation probability" (i.e., the proportion of habitat in the immediate vicinity of location $s_{i}$ and time $t_{i}$ that is never occupied), while $r_{2}(i)$ is the expected value for probability mass function $g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\ $ (i.e., the number of individuals that are in the vicinity of sampling in habitat that is occupied), and $g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\ $ is the probability of not encountering category *c* given that sampling occurs in occupied habitat (Martin et al. 2005).
 
-**Settings regarding spatial smoothers**
+## Settings regarding spatial smoothers
 
 VAST then uses a stochastic partial differential equation (SPDE)
 approximation to the probability density function for spatial and
@@ -518,8 +438,7 @@ There are also other options:
     distances in a stream network or other graphical spatial dependency
     (Hocking et al. 2018).
 
-**Interpolating spatial variation from knots to the location of
-samples**
+## Interpolating spatial variation from knots to the location of samples
 
 Starting with VAST release 3.0.0, users can choose between two options
 for smoothing spatial variation.
@@ -540,12 +459,12 @@ for smoothing spatial variation.
     representing the vertices of the triangle containing location
     $s_{i}$.
 
-**Structure on parameters among years**:
+## Structure on parameters among years
 
 There are different user-controlled options for specifying structure for
 intercepts or spatio-temporal variation across time.
 
-**Parameter estimation**
+## Parameter estimation
 
 Parameters are estimated using maximum likelihood, where the maximum
 likelihood of fixed effects is obtained by integrating a joint
@@ -565,7 +484,7 @@ function \`ThorsonUtilities::list_parameters( Obj )\` to see a list of
 estimated parameters (where \`Obj\` is the compiled VAST object),
 including which are fixed or random.
 
-**Identifiability constraints**:
+## Identifiability constraints
 
 The model as described requires several identifiability constraints to
 ensure that the resulting Hessian is positive definite (and hence allow
@@ -608,7 +527,7 @@ predictions, but we note that it gives rise to numerical complexities
 when tuning or interpreting mixing for conventional samplers within a
 Bayesian estimation paradigm.
 
-**Combining multiple data types**
+## Combining multiple data types
 
 VAST can be used to combine encounter/non-encounter, count, and
 biomass-sampling data. This involves specifying a Poisson-link delta
@@ -631,7 +550,7 @@ distribution for count data, and e_i\[1\]==3 indicates that it follows a
 gamma distribution for biomass-sampling data. This specification can be
 modified to include different combinations of these same data types.
 
-**Relationship to other named models**
+## Relationship to other named models
 
 VAST can be configured to be identical to (or closely mimic) many models
 that have previously been published in ecology and fisheries:
@@ -660,8 +579,7 @@ that have previously been published in ecology and fisheries:
     phase of the resulting index. However, I will wait to document this
     until the associated paper is published.
 
-**Predicting variables across the spatial domain and calculating derived
-quantities**
+## Predicting variables across the spatial domain and calculating derived quantities
 
 After a nonlinear minimizer has identified the value of fixed effects
 that maximizes the Laplace approximation to the marginal likelihood,
@@ -735,7 +653,7 @@ The calculation of these and other derived quantities can be turned on
 and off using input Options to function make_data (see reference
 documentation for details regarding user interface).
 
-**List of features**
+## List of features
 
 I next provide a list of "features" organized as decisions that can be
 made by the analyst. Although this is somewhat redundant with the
@@ -876,7 +794,7 @@ VAST would ideally include this same set of features.
 20. Specifying multiple "seasons" (e.g., when modelling data with both
     annual and monthly spatio-temporal variation).
 
-**Common problems**
+## Common problems
 
 There are two basic problems that are often encountered during
 spatio-temporal delta-GLMMs:
@@ -924,7 +842,7 @@ TMBhelper::fit_tmb( \..., getsd=FALSE, newtonsteps=0 )
 Then check what parameters are being estimated near an upper or lower
 boundary.
 
-**How to implement basic model changes**
+## How to implement basic model changes
 
 There are a few basic model types that users often want to fit using
 VAST. I briefly describe how these can be done here.
@@ -953,7 +871,7 @@ VAST. I briefly describe how these can be done here.
     feature has been used to estimate species distributions for use in
     ecosystem models (Grüss et al. 2017, 2018).
 
-**Acknowledgements**
+## Acknowledgements
 
 I thank K. Kristensen, H. Skaug, and the developers of Template Model
 Builder, without which this research and resulting R package VAST would
@@ -969,10 +887,7 @@ volunteers and NOAA scientists who have served on sampling vessels that
 provided data to test these methods. Finally, I think A. Grüss and S.
 Hoyle for providing edits to this document.
 
-**\
-**
-
-**Works cited**
+## Works cited
 
 Edwards, A.M., and Auger‐Méthé, M. 2019. Some guidance on using
 mathematical notation in ecology. Methods Ecol. Evol. **10**(1): 92--99.
