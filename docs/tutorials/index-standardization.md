@@ -30,13 +30,11 @@ Set local working directory (change for your machine)
 setwd( "Enter directory location here" )
 ```
 
-Load VAST
+Load VAST and the example data set
 ```R
 library(VAST)
-```
 
-Load data set
-```R
+# examples installed with VAST
 example = load_example( data_set="EBS_pollock" )
 ```
 
@@ -45,17 +43,16 @@ Additional datasets are available in `load_example`. See `?load_example` for lis
 
 # Configure model settings
 
-Make settings (turning off bias.correct to save time for example). Add some more info here.
+Make settings, with defaults defined by the specified `purpose` argument.  Here, we use `purpose="index2"` which reflects current "good practices" for standardizing an abundance index for use in a subsequent stock-assessment model.  
 ```R
 settings = make_settings( n_x = 100, 
   Region = example$Region, 
-  purpose = "index2", 
-  bias.correct = FALSE )
+  purpose = "index2" )
 ```
 
 # Run the model
 
-Run model. Add some more info here.
+Run model, where default `settings` can be overridden by passing additional arguments to `fit_model`
 ```R
 fit = fit_model( settings = settings, 
   Lat_i = example$sampling_data[,'Lat'], 
