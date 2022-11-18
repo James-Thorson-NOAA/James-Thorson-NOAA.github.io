@@ -79,7 +79,7 @@ designed to support delta-models, which include two components). The
 first linear predictor $p_{1}(i)$ represents encounter probability in a
 delta-model, or zero-inflation in a count-data model:
 
-$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_{i},t_{i})}{︸}} + \underset{Spatial\ variation}{\overset{\omega_{1}^{*}( s_{i},c_{i} )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\varepsilon_{1}^{*}(s_{i},c_{i},t_{i})}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_{i},c_{i})}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_{i},t_{i} )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_{i},t_{i})}{︸}}$$
+$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_{i},t_{i})}{︸}} + \underset{Spatial\ variation}{\overset{\omega_1^*( s_{i},c_{i} )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\varepsilon_{1}^*(s_{i},c_{i},t_{i})}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_{i},c_{i})}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_{i},t_{i} )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_{i},t_{i})}{︸}}$$
 
 where $p_{1}(i)$ is the predictor for observation $i$, arising for
 category $c_{i}$ at location $s_{i}$ and time $t_{i}$. Similarly, the
@@ -143,9 +143,9 @@ and settings are defined identically for specifying $\rho_{\beta_2}$.
 
 Regarding spatial variation:
 
-$$\omega_{1}^{*}(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_{1}^{*}( s_{i},f  )}$$
+$$\omega_1^*(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_1^*( s_{i},f  )}$$
 
-where $\omega_{1}^{*}( s_{i},f  )$ represents predicted
+where $\omega_1^*( s_{i},f  )$ represents predicted
 spatial variation in the first linear predictor occurring at the
 location $s_{i}$ of sample $i$ for factor $f$ (of $n_{\omega 1}$ factors
 representing spatial variation), and $L_{\omega 1}(c_{i},\ f)$ is the
@@ -156,20 +156,20 @@ VAST specifies internally that the spatial and spatio-temporal Gaussian
 random fields (GMRFs) have a variance of 1.0. By default VAST estimates
 their values at each of $n_{s}$ vertices as follows:
 
-$$\omega_{1}(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\omega_1(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
-where $\omega_{1}(f)$ is the vector of length $n_{s}$ formed
-when subsetting $\omega_{1}(s,f)$ for a given $f$. Specifying a variance
+where $\omega_1(f)$ is the vector of length $n_{s}$ formed
+when subsetting $\omega_1(s,f)$ for a given $f$. Specifying a variance
 of 1.0 ensures that the covariance among categories is defined by the
 loadings matrix for that term. These GMRFs are then projected to
 calculate their value at every location $s_{i}$ using matrix
 $\mathbf{A}$ with $n_{i}$ rows and $n_{s}$ columns. Specifically, values
 are projected as:
 
-$$\omega_{1}^{*}(f) = \mathbf{A}_{i}\omega_{1}(f)$$
+$$\omega_1^*(f) = \mathbf{A}_{i}\omega_1(f)$$
 
-where $\omega_{1}^{*}(f)$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}( s_{i},f  )$
+where $\omega_1^*(f)$ is the vector of length $n_{i}$,
+containing the predicted value $\omega_1^*( s_{i},f  )$
 for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}$.
@@ -191,7 +191,7 @@ $$\mathbf{\varepsilon}_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then projected as:
 
-$$\mathbf{\varepsilon}_{1}^{*}( f_{1},f_{2} ) = \mathbf{A}_{i}\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$$
+$$\mathbf{\varepsilon}_{1}^*( f_{1},f_{2} ) = \mathbf{A}_{i}\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$$
 
 This is then projected across years and categories using loadings
 matrices $L_{\varepsilon_{t}1}$ and
@@ -264,7 +264,7 @@ that intercept).
 Regarding covariates affecting densities ("density" or "habitat"
 covariates):
 
-$$\nu_{1}( c_{i},t_{i} ) = \sum_{p = 1}^{n_{p}}{( \gamma_{1}( c_{i},p ) + \sigma_{\xi 1}(c_{i},p)\xi_{1}^{*}( s_{i},c_{i},p ) )X( i,t_{i},p )}$$
+$$\nu_{1}( c_{i},t_{i} ) = \sum_{p = 1}^{n_{p}}{( \gamma_{1}( c_{i},p ) + \sigma_{\xi 1}(c_{i},p)\xi_{1}^*( s_{i},c_{i},p ) )X( i,t_{i},p )}$$
 
 where $X( i,t_{i},p )$ is an three-dimensional array of
 $n_{p}$ measured density covariates that explain variation in density
@@ -293,15 +293,15 @@ $$\mathbf{\xi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_{i}\mathbf{\xi}_{1}(c,p)$$
 Finally, regarding covariates affecting the process of obtaining
 measurements ("catchability" or "detectability" covariates):
 
-$$\zeta_{1}(i) = \sum_{k = 1}^{n_{k}}( \lambda_{1}(k) + \sigma_{\varphi 1}(k)\varphi_{1}^{*}( s_{i},k ) )q_{1}(i,k)$$
+$$\zeta_{1}(i) = \sum_{k = 1}^{n_{k}}( \lambda_{1}(k) + \sigma_{\varphi 1}(k)\varphi_{1}^*( s_{i},k ) )q_{1}(i,k)$$
 
 Where $q_{1}(i,k)$ is an element of matrix $\mathbf{Q}_{1}$ composed of
 $n_{k}$ measured catchability covariates that explain variation in
 catchability, $\lambda_{1}(k)$ is the estimated impact of catchability
 covariates for this linear predictor,
-$\varphi_{1}^{*}( s_{i},k )$ is unit-variance spatial
+$\varphi_{1}^*( s_{i},k )$ is unit-variance spatial
 variation in that slope term such that
-$\sigma_{\varphi 1}(k)\varphi_{1}^{*}( s_{i},k )$ has
+$\sigma_{\varphi 1}(k)\varphi_{1}^*( s_{i},k )$ has
 standard deviation $\sigma_{\varphi 1}(k)$, where spatial variation in
 detectability is specified as follows:
 
@@ -492,7 +492,7 @@ calculation of asymptotic standard errors):
 1.  All loadings matrices are defined to be lower-triangular (i.e.,
     elements above the diagonal are fixed at 0);
 
-2.  When estimating spatial random fields $\omega_{1}^{*}(s,c)$ and
+2.  When estimating spatial random fields $\omega_1^*(s,c)$ and
     estimating a loadings matrix across years for spatio-temporal
     variation, it is helpful to impose a sum-to-zero constraint on
     factors of the loadings matrix $L_{\varepsilon_{t}1}(f_{2},t)$. This
@@ -591,16 +591,16 @@ et al. 2015a). Predicting random effects at extrapolation-grid cell $g$
 at location $s_{g}$ is accomplished using matrix $\mathbf{A}_{g}$ with
 $n_{g}$ rows and $n_{s}$ columns. Values are predicted as e.g.:
 
-$$\omega_{1}^{*}(f ) = \mathbf{A}_{g}\omega_{1}(f)$$
+$$\omega_1^*(f ) = \mathbf{A}_{g}\omega_1(f)$$
 
-where $\omega_{1}^{*}(f )$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}( s_{g},f  )$
+where $\omega_1^*(f )$ is the vector of length $n_{i}$,
+containing the predicted value $\omega_1^*( s_{g},f  )$
 for spatial variation in the first linear predictor at every location
 $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) )X(g,t,p)}}{︸}}$$
+$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^*(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_1^*(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^*(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^*(g,c,p) )X(g,t,p)}}{︸}}$$
 
 where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
 are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
@@ -1263,9 +1263,9 @@ settings (FE/RE)
 
   Parameters governing geometric anisotropy  $$h(z)$$                            FE      2
 
-  Spatial factors for 1^st^ linear predictor $$\omega_{1}(s,f)$$                 RE      $$n_{s} \times n_{\omega 1}$$
+  Spatial factors for 1^st^ linear predictor $$\omega_1(s,f)$$                 RE      $$n_{s} \times n_{\omega 1}$$
 
-  Spatial factors for 2^nd^ linear predictor $$\omega_{2}(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
+  Spatial factors for 2^nd^ linear predictor $$\omega_2(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
 
   Spatio-temporal factors for 1^st^ linear   $$\varepsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
   predictor                                                                              
@@ -1305,16 +1305,16 @@ Table 2D -- Variable calculated internally
   Spatio-temporal variationfor 2^nd^ linear        $$\varepsilon_{2}(i,c,t)$$   $$n_{i} \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
-  Spatial variation for 1^st^ linear predictor at  $$\omega_{1}(g,c)$$          $$n_{g} \times n_{c}$$
+  Spatial variation for 1^st^ linear predictor at  $$\omega_1(g,c)$$          $$n_{g} \times n_{c}$$
   each extrapolation-grid cell                                                  
 
-  Spatial variation for 2^nd^ linear predictor at  $$\omega_{2}(g,c)$$          $$n_{g} \times n_{c}$$
+  Spatial variation for 2^nd^ linear predictor at  $$\omega_2(g,c)$$          $$n_{g} \times n_{c}$$
   each extrapolation-grid cell                                                  
 
-  Spatial variation for 1^st^ linear predictor at  $$\omega_{1}(i,c)$$          $$n_{i} \times n_{c}$$
+  Spatial variation for 1^st^ linear predictor at  $$\omega_1(i,c)$$          $$n_{i} \times n_{c}$$
   each sample                                                                   
 
-  Spatial variation for 2^nd^ linear predictor at  $$\omega_{2}(i,c)$$          $$n_{i} \times n_{c}$$
+  Spatial variation for 2^nd^ linear predictor at  $$\omega_2(i,c)$$          $$n_{i} \times n_{c}$$
   each sample                                                                   
 
   Intercept for 1^st^ linear predictor             $$\beta_{1}(c,t)$$           $$n_{c} \times n_{t}$$
@@ -1335,9 +1335,9 @@ Table 2E -- Derived quantities
   ----------------------------------------------------------------------------------------------------------------------------------
   Coefficient name                                Symbol                           Dimensions
   ----------------------------------------------- -------------------------------- -------------------------------------------------
-  Predicted density for each sample               $$d^{*}(i,c,t)$$                 $$n_{i} \times n_{c} \times n_{t}$$
+  Predicted density for each sample               $$d^*(i,c,t)$$                 $$n_{i} \times n_{c} \times n_{t}$$
 
-  Predicted density for each extrapolation-grid   $$d^{*}(g,c,t)$$                 $$n_{g} \times n_{c} \times n_{t}$$
+  Predicted density for each extrapolation-grid   $$d^*(g,c,t)$$                 $$n_{g} \times n_{c} \times n_{t}$$
   cell                                                                             
 
   Index of abundance                              $$I(c,t,l)$$                     $$n_{c} \times n_{t} \times n_{l}$$
@@ -1366,39 +1366,39 @@ Table 2E -- Derived quantities
   Rotation matrix for overdispersion covariation  $$\mathbf{B}_{2}$$               $$n_{c} \times n_{c}$$
   for 2^nd^linear predictor                                                        
 
-  Rotated loadings matrix for spatial covariation $$L_{\omega 1}^{*}(c,f)$$        $$n_{c} \times n_{\omega 1}$$
+  Rotated loadings matrix for spatial covariation $$L_{\omega 1}^*(c,f)$$        $$n_{c} \times n_{\omega 1}$$
   for 1^st^ linear predictor                                                       
 
-  Rotated loadings for spatial covariation for    $$L_{\omega 2}^{*}(c,f)$$        $$n_{c} \times n_{\omega 2}$$
+  Rotated loadings for spatial covariation for    $$L_{\omega 2}^*(c,f)$$        $$n_{c} \times n_{\omega 2}$$
   2^nd^ linear predictor                                                           
 
-  Rotated loadings for spatio-temporal            $$L_{\varepsilon 1}^{*}(c,f)$$   $$n_{c} \times n_{\varepsilon 1}$$
+  Rotated loadings for spatio-temporal            $$L_{\varepsilon 1}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 1}$$
   covariation for 1^st^ linear predictor                                           
 
-  Rotated loadings for spatio-temporal            $$L_{\varepsilon 2}^{*}(c,f)$$   $$n_{c} \times n_{\varepsilon 2}$$
+  Rotated loadings for spatio-temporal            $$L_{\varepsilon 2}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 2}$$
   covariation for 2^nd^ linear predictor                                           
 
-  Rotated loadings for overdispersion covariation $$L_{1}^{*}(c,f)$$               $$n_{c} \times n_{\eta 1}$$
+  Rotated loadings for overdispersion covariation $$L_{1}^*(c,f)$$               $$n_{c} \times n_{\eta 1}$$
   for 1^st^ linear predictor                                                       
 
-  Rotated loadings for overdispersion covariation $$L_{2}^{*}(c,f)$$               $$n_{c} \times n_{\eta 2}$$
+  Rotated loadings for overdispersion covariation $$L_{2}^*(c,f)$$               $$n_{c} \times n_{\eta 2}$$
   for 2^nd^ linear predictor                                                       
 
-  Rotated spatial factors for 1^st^ linear        $$\omega_{1}^{*}(s,f)$$          $$n_{s} \times n_{\omega 1}$$
+  Rotated spatial factors for 1^st^ linear        $$\omega_1^*(s,f)$$          $$n_{s} \times n_{\omega 1}$$
   predictor                                                                        
 
-  Rotated spatial factors for 2^nd^ linear        $$\omega_{2}^{*}(s,f)$$          $$n_{s} \times n_{\omega 2}$$
+  Rotated spatial factors for 2^nd^ linear        $$\omega_2^*(s,f)$$          $$n_{s} \times n_{\omega 2}$$
   predictor                                                                        
 
-  Rotated spatio-temporal factors for 1^st^       $$\varepsilon_{1}^{*}(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 1^st^       $$\varepsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated spatio-temporal factors for 2^nd^       $$\varepsilon_{2}^{*}(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 2^nd^       $$\varepsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated overdispersion factors for 1^st^ linear $$\eta_{1}^{*}(v,f)$$            $$n_{v} \times n_{\eta 1}$$
+  Rotated overdispersion factors for 1^st^ linear $$\eta_{1}^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
   predictor                                                                        
 
-  Rotated overdispersion factors for 2^nd^ linear $$\eta_{2}^{*}(v,f)$$            $$n_{v} \times n_{\eta 2}$$
+  Rotated overdispersion factors for 2^nd^ linear $$\eta_{2}^*(v,f)$$            $$n_{v} \times n_{\eta 2}$$
   predictor                                                                        
   ----------------------------------------------------------------------------------------------------------------------------------
