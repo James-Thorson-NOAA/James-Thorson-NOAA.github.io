@@ -204,7 +204,7 @@ generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-$$ \epsilon_1( s,c_1,t ) = \epsilon_1^{'}( s,c_1,t ) & if\ t = t_{\min} $$
+$$\epsilon_1( s,c_1,t ) = \epsilon_1^{'}( s,c_1,t ) & if\ t = t_{\min}$$
 
 and
 
