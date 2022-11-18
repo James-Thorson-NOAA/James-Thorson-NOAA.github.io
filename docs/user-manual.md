@@ -178,20 +178,20 @@ matrix $\mathbf{A}$.
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
-$\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$ and
-$\mathbf{\varepsilon}_{2}( f_{1},f_{2} )$ composed of
+$\varepsilon_{1}( f_{1},f_{2} )$ and
+$\varepsilon_{2}( f_{1},f_{2} )$ composed of
 $\varepsilon_{1}( s,f_{1},f_{2} )$ and
 $\varepsilon_{2}( s,f_{1},f_{2} )$ across locations $s$, is
 independent for each factor representing covariation among categories
 ($f_{1}$) and among years ($f_{2}$). We describe the process for the
-1^st^ linear predictor, and an identical process is used for the 2^nd^
+1st linear predictor, and an identical process is used for the 2nd
 linear predictor (using different subscripts):
 
-$$\mathbf{\varepsilon}_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\varepsilon_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then projected as:
 
-$$\mathbf{\varepsilon}_{1}^*( f_{1},f_{2} ) = \mathbf{A}_i\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$$
+$$\varepsilon_{1}^*( f_{1},f_{2} ) = \mathbf{A}_i\varepsilon_{1}( f_{1},f_{2} )$$
 
 This is then projected across years and categories using loadings
 matrices $L_{\varepsilon_{t}1}$ and
@@ -535,7 +535,7 @@ $\exp( p_{1}(i) )$ and biomass-per-individual
 $\exp( p_{2}(i) )$, see Grüss and Thorson (2019) for details.
 This approach is specified by associating each observation with a given
 error distribution using input e_i where e.g. e_i\[1\] is the
-error-distribution for the 1^st^ observation. The user then specifies
+error-distribution for the 1st observation. The user then specifies
 multiple observation errors via input ObsModel_ez:
 
 \# Control observation error
@@ -752,7 +752,7 @@ VAST would ideally include this same set of features.
     c.  estimated as following a random-walk structure over time; or
 
     d.  estimated as following a vector-autoregressive structure
-        involving a matrix of 1^st^ order autoregressive interactions.
+        involving a matrix of 1st order autoregressive interactions.
 
 *Derived quantities*
 
@@ -1109,13 +1109,13 @@ Table 2A -- Indices
 
   Factor number                                                 $$f$$
 
-  Habitat covariate number for 1^st^ linear predictor           $$p_{1}$$
+  Habitat covariate number for 1st linear predictor           $$p_{1}$$
 
-  Habitat covariate number for 2^nd^ linear predictor           $$p_{2}$$
+  Habitat covariate number for 2nd linear predictor           $$p_{2}$$
 
-  Catchability covariate number for 1^st^ linear predictor      $$k_{1}$$
+  Catchability covariate number for 1st linear predictor      $$k_{1}$$
 
-  Catchability covariate number for 2^nd^ linear predictor      $$k_{2}$$
+  Catchability covariate number for 2nd linear predictor      $$k_{2}$$
 
   Stratum number                                                $$l$$
 
@@ -1147,26 +1147,26 @@ Table 2B -- Data
 
   Distance between two vertices                 $$d(s,s^{'})$$         $$n_{s} \times n_{s}$$
 
-  Habitat covariates affecting 1^st^ linear     $$X_{1}(i,t,p_{1})$$   $$n_i \times n_{t} \times n_{p1}$$
+  Habitat covariates affecting 1st linear     $$X_{1}(i,t,p_{1})$$   $$n_i \times n_{t} \times n_{p1}$$
   predictor for each sampling location, time,                          
   and variable                                                         
 
-  Habitat covariates affecting 2^nd^ linear     $$X_{2}(i,t,p_{2})$$   $$n_i \times n_{t} \times n_{p2}$$
+  Habitat covariates affecting 2nd linear     $$X_{2}(i,t,p_{2})$$   $$n_i \times n_{t} \times n_{p2}$$
   predictor for each sampling location, time,                          
   and variable                                                         
 
-  Habitat covariates affecting 1^st^ linear     $$X_{1}(g,t,p_{1})$$   $$n_{g} \times n_{t} \times n_{p1}$$
+  Habitat covariates affecting 1st linear     $$X_{1}(g,t,p_{1})$$   $$n_{g} \times n_{t} \times n_{p1}$$
   predictor for each extrapolation-grid cell,                          
   time, and variable                                                   
 
-  Habitat covariates affecting 2^nd^ linear     $$X_{2}(g,t,p_{2})$$   $$n_{g} \times n_{t} \times n_{p2}$$
+  Habitat covariates affecting 2nd linear     $$X_{2}(g,t,p_{2})$$   $$n_{g} \times n_{t} \times n_{p2}$$
   predictor for each extrapolation-grid cell,                          
   time, and variable                                                   
 
-  Catchability covariates affecting 1^st^       $$Q_{1}(i,k_{1})$$     $$n_i \times n_{k1}$$
+  Catchability covariates affecting 1st       $$Q_{1}(i,k_{1})$$     $$n_i \times n_{k1}$$
   linear predictor for each sample and variable                        
 
-  Catchability covariates affecting 2^nd^       $$Q_{2}(i,k_{2})$$     $$n_i \times n_{k2}$$
+  Catchability covariates affecting 2nd       $$Q_{2}(i,k_{2})$$     $$n_i \times n_{k2}$$
   linear predictor for each sample and variable                        
 
   Area associated with extrapolation-grid cell  $$a(g,l)$$             $$n_{g} \times n_{l}$$
@@ -1183,100 +1183,100 @@ settings (FE/RE)
   -----------------------------------------------------------------------------------------------------------------------------------------------------------
   Coefficient name                           Symbol                              Type    Dimensions
   ------------------------------------------ ----------------------------------- ------- --------------------------------------------------------------------
-  Factor values for intercept for 1^st^      $$\beta_{1}(f,t)$$                  FE/RE   $$n_{\beta_1} \times n_{t}$$
+  Factor values for intercept for 1st      $$\beta_{1}(f,t)$$                  FE/RE   $$n_{\beta_1} \times n_{t}$$
   linear predictor                                                                       
 
-  Factor values for intercept for 2^st^      $$\beta_{2}(f,t)$$                  FE/RE   $$n_{\beta_2} \times n_{t}$$
+  Factor values for intercept for 2nd      $$\beta_{2}(f,t)$$                  FE/RE   $$n_{\beta_2} \times n_{t}$$
   linear predictor                                                                       
 
-  Loadings matrix for intercepts for 1^st^   $$L_{\beta_1}(c,f)$$                FE      $$n_{c} \times n_{\beta_1}$$
+  Loadings matrix for intercepts for 1st   $$L_{\beta_1}(c,f)$$                FE      $$n_{c} \times n_{\beta_1}$$
   linear predictor                                                                       
 
-  Loadings matrix for intercepts for 2^nd^   $$L_{\beta_2}(c,f)$$                FE      $$n_{c} \times n_{\beta_2}$$
+  Loadings matrix for intercepts for 2nd   $$L_{\beta_2}(c,f)$$                FE      $$n_{c} \times n_{\beta_2}$$
   linear predictor                                                                       
 
   Loadings matrix for spatial covariation    $$L_{\omega 1}(c,f)$$               FE      $$n_{c} \times n_{\omega 1}$$
-  for 1^st^ linear predictor                                                             
+  for 1st linear predictor                                                             
 
   Loadings matrix for spatial covariation    $$L_{\omega 2}(c,f)$$               FE      $$n_{c} \times n_{\omega 2}$$
-  for 2^nd^ linear predictor                                                             
+  for 2nd linear predictor                                                             
 
   Loadings matrix for spatio-temporal        $$L_{\varepsilon 1}(c,f)$$          FE      $$n_{c} \times n_{\varepsilon 1}$$
-  covariation across categories for 1^st^                                                
+  covariation across categories for 1st                                                
   linear predictor                                                                       
 
   Loadings matrix for spatio-temporal        $$L_{\varepsilon 2}(c,f)$$          FE      $$n_{c} \times n_{\varepsilon 2}$$
-  covariation across categories for 2^nd^                                                
+  covariation across categories for 2nd                                                
   linear predictor                                                                       
 
   Loadings matrix for spatio-temporal        $$L_{\varepsilon 1}^{time}(t,f)$$   FE      $$n_{t} \times n_{\varepsilon 1}^{time}$$
-  covariation across time for 1^st^ linear                                               
+  covariation across time for 1st linear                                               
   predictor                                                                              
 
   Loadings matrix for spatio-temporal        $$L_{\varepsilon 2}^{time}(t,f)$$   FE      $$n_{t} \times n_{\varepsilon 2}^{time}$$
-  covariation across time for 2^nd^ linear                                               
+  covariation across time for 2nd linear                                               
   predictor                                                                              
 
   Loadings matrix for overdispersion         $$L_{1}(c,f)$$                      FE      $$n_{c} \times n_{\eta 1}$$
-  covariation for 1^st^ linear predictor                                                 
+  covariation for 1st linear predictor                                                 
 
   Loadings matrix for overdispersion         $$L_{2}(c,f)$$                      FE      $$n_{c} \times n_{\eta 2}$$
-  covariation for 2^nd^ linear predictor                                                 
+  covariation for 2nd linear predictor                                                 
 
-  Impact of habitat covariates on 1^st^      $$\gamma_{1}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
+  Impact of habitat covariates on 1st      $$\gamma_{1}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
   linear predictor                                                                       
 
-  Impact of habitat covariates on 2^nd^      $$\gamma_{2}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
+  Impact of habitat covariates on 2nd      $$\gamma_{2}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
   linear predictor                                                                       
 
-  Impact of catchability covariates on 1^st^ $$\lambda_{1}(k)$$                  FE      $$n_{k}$$
+  Impact of catchability covariates on 1st $$\lambda_{1}(k)$$                  FE      $$n_{k}$$
   linear predictor                                                                       
 
-  Impact of catchability covariates on 2^nd^ $$\lambda_{2}(k)$$                  FE      $$n_{k}$$
+  Impact of catchability covariates on 2nd $$\lambda_{2}(k)$$                  FE      $$n_{k}$$
   linear predictor                                                                       
 
   Parameters governing residual variation    $$\sigma_{m}^{2}(c,z)$$             FE      $$n_{c} \times 2$$
 
-  Decorrelation rate for 1^st^ linear        $$\kappa_{1}$$                      FE      1
+  Decorrelation rate for 1st linear        $$\kappa_{1}$$                      FE      1
   predictor                                                                              
 
-  Decorrelation rate for 2^nd^ linear        $$\kappa_{2}$$                      FE      1
+  Decorrelation rate for 2nd linear        $$\kappa_{2}$$                      FE      1
   predictor                                                                              
 
-  Autocorrelation for intercepts of 1^st^    $$\rho_{\beta_1}$$                  FE      1
+  Autocorrelation for intercepts of 1st    $$\rho_{\beta_1}$$                  FE      1
   linear predictor                                                                       
 
-  Autocorrelation for intercepts of 2^nd^    $$\rho_{\beta_2}$$                  FE      1
+  Autocorrelation for intercepts of 2nd    $$\rho_{\beta_2}$$                  FE      1
   linear predictor                                                                       
 
   Conditional variance for intercepts of     $$\sigma_{\beta_1}^{2}$$            FE      1
-  1^st^ linear predictor                                                                 
+  1st linear predictor                                                                 
 
   Conditional variance for intercepts of     $$\sigma_{\beta_2}^{2}$$            FE      1
-  2^nd^linear predictor                                                                  
+  2ndlinear predictor                                                                  
 
   Autocorrelation for spatio-temporal        $$\rho_{\varepsilon 1}$$            FE      1
-  covariation of 1^st^ linear predictor                                                  
+  covariation of 1st linear predictor                                                  
 
   Autocorrelation for spatio-temporal        $$\rho_{\varepsilon 2}$$            FE      1
-  covariation of 2^nd^ linear predictor                                                  
+  covariation of 2nd linear predictor                                                  
 
   Parameters governing geometric anisotropy  $$h(z)$$                            FE      2
 
-  Spatial factors for 1^st^ linear predictor $$\omega_1(s,f)$$                 RE      $$n_{s} \times n_{\omega 1}$$
+  Spatial factors for 1st linear predictor $$\omega_1(s,f)$$                 RE      $$n_{s} \times n_{\omega 1}$$
 
-  Spatial factors for 2^nd^ linear predictor $$\omega_2(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
+  Spatial factors for 2nd linear predictor $$\omega_2(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
 
-  Spatio-temporal factors for 1^st^ linear   $$\varepsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
+  Spatio-temporal factors for 1st linear   $$\varepsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
   predictor                                                                              
 
-  Spatio-temporal factors for 2^nd^ linear   $$\varepsilon_{2}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
+  Spatio-temporal factors for 2nd linear   $$\varepsilon_{2}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
   predictor                                                                              
 
-  Overdispersion factors for 1^st^ linear    $$\eta_{1}(v,f)$$                   RE      $$n_{v} \times n_{\eta 1}$$
+  Overdispersion factors for 1st linear    $$\eta_{1}(v,f)$$                   RE      $$n_{v} \times n_{\eta 1}$$
   predictor                                                                              
 
-  Overdispersion factors for 2^nd^ linear    $$\eta_{2}(v,f)$$                   RE      $$n_{v} \times n_{\eta 2}$$
+  Overdispersion factors for 2nd linear    $$\eta_{2}(v,f)$$                   RE      $$n_{v} \times n_{\eta 2}$$
   predictor                                                                              
   -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1285,47 +1285,47 @@ Table 2D -- Variable calculated internally
   -------------------------------------------------------------------------------------------------------------------
   Coefficient name                                 Symbol                       Dimensions
   ------------------------------------------------ ---------------------------- -------------------------------------
-  1^st^ linear predictor                           $$p_{1}(i)$$                 $$n_i$$
+  1st linear predictor                           $$p_{1}(i)$$                 $$n_i$$
 
-  2^nd^ linear predictor                           $$p_{2}(i)$$                 $$n_i$$
+  2nd linear predictor                           $$p_{2}(i)$$                 $$n_i$$
 
-  1^st^ link-transformed predictor                 $$r_{1}(i)$$                 $$n_i$$
+  1st link-transformed predictor                 $$r_{1}(i)$$                 $$n_i$$
 
-  2^nd^ link-transformed predictor                 $$r_{2}(i)$$                 $$n_i$$
+  2nd link-transformed predictor                 $$r_{2}(i)$$                 $$n_i$$
 
-  Spatio-temporal variation for 1^st^ linear       $$\varepsilon_{1}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\varepsilon_{1}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variationfor 2^nd^ linear        $$\varepsilon_{2}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\varepsilon_{2}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variation for 1^st^ linear       $$\varepsilon_{1}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\varepsilon_{1}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
-  Spatio-temporal variationfor 2^nd^ linear        $$\varepsilon_{2}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\varepsilon_{2}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
-  Spatial variation for 1^st^ linear predictor at  $$\omega_1(g,c)$$          $$n_{g} \times n_{c}$$
+  Spatial variation for 1st linear predictor at  $$\omega_1(g,c)$$          $$n_{g} \times n_{c}$$
   each extrapolation-grid cell                                                  
 
-  Spatial variation for 2^nd^ linear predictor at  $$\omega_2(g,c)$$          $$n_{g} \times n_{c}$$
+  Spatial variation for 2nd linear predictor at  $$\omega_2(g,c)$$          $$n_{g} \times n_{c}$$
   each extrapolation-grid cell                                                  
 
-  Spatial variation for 1^st^ linear predictor at  $$\omega_1(i,c)$$          $$n_i \times n_{c}$$
+  Spatial variation for 1st linear predictor at  $$\omega_1(i,c)$$          $$n_i \times n_{c}$$
   each sample                                                                   
 
-  Spatial variation for 2^nd^ linear predictor at  $$\omega_2(i,c)$$          $$n_i \times n_{c}$$
+  Spatial variation for 2nd linear predictor at  $$\omega_2(i,c)$$          $$n_i \times n_{c}$$
   each sample                                                                   
 
-  Intercept for 1^st^ linear predictor             $$\beta_{1}(c,t)$$           $$n_{c} \times n_{t}$$
+  Intercept for 1st linear predictor             $$\beta_{1}(c,t)$$           $$n_{c} \times n_{t}$$
 
   Intercept for 2^st^ linear predictor             $$\beta_{2}(c,t)$$           $$n_{c} \times n_{t}$$
 
   Spatial correlation matrix among vertices for    $$\mathbf{R}_{1}$$           $$n_{s} \times n_{s}$$
-  1^st^ linear predictor                                                        
+  1st linear predictor                                                        
 
   Spatial correlation matrix among vertices for    $$\mathbf{R}_{2}$$           $$n_{s} \times n_{s}$$
-  2^nd^ linear predictor                                                        
+  2nd linear predictor                                                        
 
   Anisotropy matrix                                $$\mathbf{H}$$               $$2 \times 2$$
   -------------------------------------------------------------------------------------------------------------------
@@ -1349,56 +1349,56 @@ Table 2E -- Derived quantities
   Effective area occupied                         $$A(c,t,l)$$                     $$n_{c} \times n_{t} \times n_{l}$$
 
   Rotation matrix for spatial covariation for     $$\mathbf{B}_{\omega 1}$$        $$n_{c} \times n_{c}$$
-  1^st^ linear predictor                                                           
+  1st linear predictor                                                           
 
   Rotation matrix for spatial covariation for     $$\mathbf{B}_{\omega 2}$$        $$n_{c} \times n_{c}$$
-  2^nd^linear predictor                                                            
+  2ndlinear predictor                                                            
 
   Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\varepsilon 1}$$   $$n_{c} \times n_{c}$$
-  for 1^st^ linear predictor                                                       
+  for 1st linear predictor                                                       
 
   Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\varepsilon 2}$$   $$n_{c} \times n_{c}$$
-  for 2^nd^ linear predictor                                                       
+  for 2nd linear predictor                                                       
 
   Rotation matrix for overdispersion covariation  $$\mathbf{B}_{1}$$               $$n_{c} \times n_{c}$$
-  for 1^st^ linear predictor                                                       
+  for 1st linear predictor                                                       
 
   Rotation matrix for overdispersion covariation  $$\mathbf{B}_{2}$$               $$n_{c} \times n_{c}$$
-  for 2^nd^linear predictor                                                        
+  for 2ndlinear predictor                                                        
 
   Rotated loadings matrix for spatial covariation $$L_{\omega 1}^*(c,f)$$        $$n_{c} \times n_{\omega 1}$$
-  for 1^st^ linear predictor                                                       
+  for 1st linear predictor                                                       
 
   Rotated loadings for spatial covariation for    $$L_{\omega 2}^*(c,f)$$        $$n_{c} \times n_{\omega 2}$$
-  2^nd^ linear predictor                                                           
+  2nd linear predictor                                                           
 
   Rotated loadings for spatio-temporal            $$L_{\varepsilon 1}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 1}$$
-  covariation for 1^st^ linear predictor                                           
+  covariation for 1st linear predictor                                           
 
   Rotated loadings for spatio-temporal            $$L_{\varepsilon 2}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 2}$$
-  covariation for 2^nd^ linear predictor                                           
+  covariation for 2nd linear predictor                                           
 
   Rotated loadings for overdispersion covariation $$L_{1}^*(c,f)$$               $$n_{c} \times n_{\eta 1}$$
-  for 1^st^ linear predictor                                                       
+  for 1st linear predictor                                                       
 
   Rotated loadings for overdispersion covariation $$L_{2}^*(c,f)$$               $$n_{c} \times n_{\eta 2}$$
-  for 2^nd^ linear predictor                                                       
+  for 2nd linear predictor                                                       
 
-  Rotated spatial factors for 1^st^ linear        $$\omega_1^*(s,f)$$          $$n_{s} \times n_{\omega 1}$$
+  Rotated spatial factors for 1st linear        $$\omega_1^*(s,f)$$          $$n_{s} \times n_{\omega 1}$$
   predictor                                                                        
 
-  Rotated spatial factors for 2^nd^ linear        $$\omega_2^*(s,f)$$          $$n_{s} \times n_{\omega 2}$$
+  Rotated spatial factors for 2nd linear        $$\omega_2^*(s,f)$$          $$n_{s} \times n_{\omega 2}$$
   predictor                                                                        
 
-  Rotated spatio-temporal factors for 1^st^       $$\varepsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 1st       $$\varepsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated spatio-temporal factors for 2^nd^       $$\varepsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 2nd       $$\varepsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated overdispersion factors for 1^st^ linear $$\eta_{1}^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
+  Rotated overdispersion factors for 1st linear $$\eta_{1}^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
   predictor                                                                        
 
-  Rotated overdispersion factors for 2^nd^ linear $$\eta_{2}^*(v,f)$$            $$n_{v} \times n_{\eta 2}$$
+  Rotated overdispersion factors for 2nd linear $$\eta_{2}^*(v,f)$$            $$n_{v} \times n_{\eta 2}$$
   predictor                                                                        
   ----------------------------------------------------------------------------------------------------------------------------------
