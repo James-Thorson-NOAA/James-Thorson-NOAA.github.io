@@ -156,9 +156,9 @@ VAST specifies internally that the spatial and spatio-temporal Gaussian
 random fields (GMRFs) have a variance of 1.0. By default VAST estimates
 their values at each of $n_{s}$ vertices as follows:
 
-$$\mathbf{\omega}_{1}(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\omega_{1}(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
-where $\mathbf{\omega}_{1}(f)$ is the vector of length $n_{s}$ formed
+where $\omega_{1}(f)$ is the vector of length $n_{s}$ formed
 when subsetting $\omega_{1}(s,f)$ for a given $f$. Specifying a variance
 of 1.0 ensures that the covariance among categories is defined by the
 loadings matrix for that term. These GMRFs are then projected to
@@ -166,9 +166,9 @@ calculate their value at every location $s_{i}$ using matrix
 $\mathbf{A}$ with $n_{i}$ rows and $n_{s}$ columns. Specifically, values
 are projected as:
 
-$$\mathbf{\omega}_{1}^{*}(f) = \mathbf{A}_{i}\mathbf{\omega}_{1}(f)$$
+$$\omega_{1}^{*}(f) = \mathbf{A}_{i}\omega_{1}(f)$$
 
-where $\mathbf{\omega}_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
+where $\omega_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
 containing the predicted value $\omega_{1}^{*}( s_{i},f\  )$
 for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
@@ -591,9 +591,9 @@ et al. 2015a). Predicting random effects at extrapolation-grid cell $g$
 at location $s_{g}$ is accomplished using matrix $\mathbf{A}_{g}$ with
 $n_{g}$ rows and $n_{s}$ columns. Values are predicted as e.g.:
 
-$$\mathbf{\omega}_{1}^{*}(f\ ) = \mathbf{A}_{g}\mathbf{\omega}_{1}(f)$$
+$$\omega_{1}^{*}(f\ ) = \mathbf{A}_{g}\omega_{1}(f)$$
 
-where $\mathbf{\omega}_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
+where $\omega_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
 containing the predicted value $\omega_{1}^{*}( s_{g},f\  )$
 for spatial variation in the first linear predictor at every location
 $s_{g}$, and other spatial variables are predicted similarly using
