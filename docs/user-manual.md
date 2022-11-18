@@ -187,7 +187,7 @@ independent for each factor representing covariation among categories
 1st linear predictor, and an identical process is used for the 2nd
 linear predictor (using different subscripts):
 
-$$\epsilon_1( f_1,f_2 )\sim MVN( \mathbf{0},\mathbf{R}_1 )$$
+$$\epsilon_1( f_1,f_2 )\sim MVN( \bm{0},\bm{R}_1 )$$
 
 Values are then projected as:
 
