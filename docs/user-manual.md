@@ -79,7 +79,7 @@ designed to support delta-models, which include two components). The
 first linear predictor $p_{1}(i)$ represents encounter probability in a
 delta-model, or zero-inflation in a count-data model:
 
-$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_i,t_i)}{︸}} + \underset{Spatial\ variation}{\overset{\omega_1^*( s_i,c_i )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\varepsilon_{1}^*(s_i,c_i,t_i)}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_i,c_i)}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_i,t_i )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_i,t_i)}{︸}}$$
+$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_i,t_i)}{︸}} + \underset{Spatial\ variation}{\overset{\omega_1^*( s_i,c_i )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\epsilon_{1}^*(s_i,c_i,t_i)}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_i,c_i)}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_i,t_i )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_i,t_i)}{︸}}$$
 
 where $p_{1}(i)$ is the predictor for observation $i$, arising for
 category $c_i$ at location $s_i$ and time $t_i$. Similarly, the
@@ -178,43 +178,41 @@ matrix $\mathbf{A}$.
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
-$\varepsilon_{1}( f_{1},f_{2} )$ and
-$\varepsilon_{2}( f_{1},f_{2} )$ composed of
-$\varepsilon_{1}( s,f_{1},f_{2} )$ and
-$\varepsilon_{2}( s,f_{1},f_{2} )$ across locations $s$, is
+$\epsilon_{1}( f_{1},f_{2} )$ and
+$\epsilon_{2}( f_{1},f_{2} )$ composed of
+$\epsilon_{1}( s,f_{1},f_{2} )$ and
+$\epsilon_{2}( s,f_{1},f_{2} )$ across locations $s$, is
 independent for each factor representing covariation among categories
 ($f_{1}$) and among years ($f_{2}$). We describe the process for the
 1st linear predictor, and an identical process is used for the 2nd
 linear predictor (using different subscripts):
 
-$$\varepsilon_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\epsilon_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then projected as:
 
-$$\varepsilon_{1}^*( f_{1},f_{2} ) = \mathbf{A}_i\varepsilon_{1}( f_{1},f_{2} )$$
+$$\epsilon_{1}^*( f_{1},f_{2} ) = \mathbf{A}_i\epsilon_{1}( f_{1},f_{2} )$$
 
 This is then projected across years and categories using loadings
-matrices $L_{\varepsilon_{t}1}$ and
-$\L_{\varepsilon_{c}2}$:
+matrices $L_{\epsilon_{t}1}$ and
+$\L_{\epsilon_{c}2}$:
 
-$$\varepsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\varepsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\varepsilon_{t}1}}{L_{\varepsilon_{c}1}(c,f_{1})L_{\varepsilon_{t}1}(f_{2},t)\varepsilon_{1}( s,f_{1},f_{2} )}}$$
+$$\epsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\epsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_{1})L_{\epsilon_{t}1}(f_{2},t)\epsilon_{1}( s,f_{1},f_{2} )}}$$
 
 Using a factor-decomposition to approximate covariation among years is a
 generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-$$\varepsilon_{1}( s,c_{1},t ) = \left\{ \begin{matrix}
-\varepsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min} \\
-\sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\varepsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min} \\
-\end{matrix} \right.\ $$
+$$\epsilon_{1}( s,c_{1},t ) = \epsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min}$$
+$$\epsilon_{1}( s,c_{1},t ) = \sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\epsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min}$$
 
 Where $b( c_{1},c_{2} )$ is the estimated impact of
 spatio-temporal variation in category $c_{2}$ on spatio-temporal changes
 in category $c_{1}$:
 
 $$b( c_{1},c_{2} ) = \left\{ \begin{matrix}
-\sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} + \rho_{\varepsilon 1}(c_{1}) & if\ c_{1} = c_{2} \\
+\sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} + \rho_{\epsilon 1}(c_{1}) & if\ c_{1} = c_{2} \\
 \sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} & if\ c_{1} \neq c_{2} \\
 \end{matrix} \right.\ $$
 
@@ -226,19 +224,19 @@ low-dimensional subspace and $\mathbf{Χ}$ represents responses within
 that subspace. By default $n_{b} = 0$ corresponding to
 $\mathbf{Χ\Psi = 0}$, and these terms drop out of the model; however,
 they allow a parsimonious representation of species interactions
-(Thorson et al. 2017, 2019). Meanwhile $\rho_{\varepsilon 1}(c)$ is the
+(Thorson et al. 2017, 2019). Meanwhile $\rho_{\epsilon 1}(c)$ is the
 estimated degree of first-order autocorrelation in temporal variation:
 
-1.  *Random walk* -- specifies $\rho_{\varepsilon 1}(c) = 1$
+1.  *Random walk* -- specifies $\rho_{\epsilon 1}(c) = 1$
 
-2.  *Autoregressive* -- estimates $\rho_{\varepsilon 1}$ as a single
+2.  *Autoregressive* -- estimates $\rho_{\epsilon 1}$ as a single
     fixed effect with the same value for all categories
 
 3.  *Individual autoregressive* \-- estimates a separate value of
-    $\rho_{\varepsilon 1}(c)$ as a single fixed effect for each category
+    $\rho_{\epsilon 1}(c)$ as a single fixed effect for each category
 
 and settings are defined identically for specifying
-$\rho_{\varepsilon 2}$.
+$\rho_{\epsilon 2}$.
 
 ### Overdisperison
 
@@ -495,19 +493,19 @@ calculation of asymptotic standard errors):
 2.  When estimating spatial random fields $\omega_1^*(s,c)$ and
     estimating a loadings matrix across years for spatio-temporal
     variation, it is helpful to impose a sum-to-zero constraint on
-    factors of the loadings matrix $L_{\varepsilon_{t}1}(f_{2},t)$. This
+    factors of the loadings matrix $L_{\epsilon_{t}1}(f_{2},t)$. This
     ensures that spatial terms represent the distribution in an
     "average" year, defined as year $t$ when
-    $L_{\varepsilon_{t}1}( f_{2},t ) = 0$ for all columns;
+    $L_{\epsilon_{t}1}( f_{2},t ) = 0$ for all columns;
 
 3.  When estimating loadings across species
-    $L_{\varepsilon_{c}1}(c,f_{1})$ and across years
-    $L_{\varepsilon_{t}1}(f_{2},t)$, the magnitude (determinant) of
+    $L_{\epsilon_{c}1}(c,f_{1})$ and across years
+    $L_{\epsilon_{t}1}(f_{2},t)$, the magnitude (determinant) of
     these two matrices is confounded. The solution adopted here is to
     impose the constraint that
-    $\sum_{f = 1}^{n_{f}}{\sum_{t = 1}^{n_{t}}{L_{\varepsilon_{t}}(f,t)}} = 1$
+    $\sum_{f = 1}^{n_{f}}{\sum_{t = 1}^{n_{t}}{L_{\epsilon_{t}}(f,t)}} = 1$
     for both linear predictors, such that the magnitude of
-    $L_{\varepsilon_{c}}(c,f)$ can be interpreted similarly to other
+    $L_{\epsilon_{c}}(c,f)$ can be interpreted similarly to other
     loadings matrices.
 
 4.  When estimating a spatially varying response to intercepts
@@ -600,7 +598,7 @@ $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^*(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_1^*(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^*(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^*(g,c,p) )X(g,t,p)}}{︸}}$$
+$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^*(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_1^*(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\epsilon 1}}{L_{\epsilon 1}(c,f)\epsilon_{1}^*(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^*(g,c,p) )X(g,t,p)}}{︸}}$$
 
 where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
 are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
@@ -801,11 +799,11 @@ spatio-temporal delta-GLMMs:
 1.  *Encounter rates*: Some combination of categories and year has 0% or
     100% encounter rate. If there is 100% encounter rate for category
     $c$ in year $t$, then $\beta_{1}(c,t) \rightarrow \infty$ and/or
-    $\varepsilon_{1}(s,c,t) \rightarrow \infty$ for that year. If there
+    $\epsilon_{1}(s,c,t) \rightarrow \infty$ for that year. If there
     is 0% encounter rate in year $t$, then
     $\beta_{1}(c,t) \rightarrow - \infty$ and/or
-    $\varepsilon_{1}(s,c,t) \rightarrow - \infty$ and there is no
-    information to estimate $\beta_{2}(c,t)$ or $\varepsilon_{2}(s,c,t)$
+    $\epsilon_{1}(s,c,t) \rightarrow - \infty$ and there is no
+    information to estimate $\beta_{2}(c,t)$ or $\epsilon_{2}(s,c,t)$
     for that category $c$ and year $t$;
 
 2.  *Bounds*: Some parameter(s) hits a bound;
@@ -814,7 +812,7 @@ These problems can be solved by:
 
 1.  *Encounter rates*: constraining terms that vary among years (e.g.,
     intercept $\beta$ and spatio-temporal variation
-    $\varepsilon(s,t,p)$). This can be done in many different ways that
+    $\epsilon(s,t,p)$). This can be done in many different ways that
     are each idiosyncratic and require some special justification. The
     easiest options are:
 
@@ -1201,19 +1199,19 @@ settings (FE/RE)
   Loadings matrix for spatial covariation    $$L_{\omega 2}(c,f)$$               FE      $$n_{c} \times n_{\omega 2}$$
   for 2nd linear predictor                                                             
 
-  Loadings matrix for spatio-temporal        $$L_{\varepsilon 1}(c,f)$$          FE      $$n_{c} \times n_{\varepsilon 1}$$
+  Loadings matrix for spatio-temporal        $$L_{\epsilon 1}(c,f)$$          FE      $$n_{c} \times n_{\epsilon 1}$$
   covariation across categories for 1st                                                
   linear predictor                                                                       
 
-  Loadings matrix for spatio-temporal        $$L_{\varepsilon 2}(c,f)$$          FE      $$n_{c} \times n_{\varepsilon 2}$$
+  Loadings matrix for spatio-temporal        $$L_{\epsilon 2}(c,f)$$          FE      $$n_{c} \times n_{\epsilon 2}$$
   covariation across categories for 2nd                                                
   linear predictor                                                                       
 
-  Loadings matrix for spatio-temporal        $$L_{\varepsilon 1}^{time}(t,f)$$   FE      $$n_{t} \times n_{\varepsilon 1}^{time}$$
+  Loadings matrix for spatio-temporal        $$L_{\epsilon 1}^{time}(t,f)$$   FE      $$n_{t} \times n_{\epsilon 1}^{time}$$
   covariation across time for 1st linear                                               
   predictor                                                                              
 
-  Loadings matrix for spatio-temporal        $$L_{\varepsilon 2}^{time}(t,f)$$   FE      $$n_{t} \times n_{\varepsilon 2}^{time}$$
+  Loadings matrix for spatio-temporal        $$L_{\epsilon 2}^{time}(t,f)$$   FE      $$n_{t} \times n_{\epsilon 2}^{time}$$
   covariation across time for 2nd linear                                               
   predictor                                                                              
 
@@ -1255,10 +1253,10 @@ settings (FE/RE)
   Conditional variance for intercepts of     $$\sigma_{\beta_2}^{2}$$            FE      1
   2ndlinear predictor                                                                  
 
-  Autocorrelation for spatio-temporal        $$\rho_{\varepsilon 1}$$            FE      1
+  Autocorrelation for spatio-temporal        $$\rho_{\epsilon 1}$$            FE      1
   covariation of 1st linear predictor                                                  
 
-  Autocorrelation for spatio-temporal        $$\rho_{\varepsilon 2}$$            FE      1
+  Autocorrelation for spatio-temporal        $$\rho_{\epsilon 2}$$            FE      1
   covariation of 2nd linear predictor                                                  
 
   Parameters governing geometric anisotropy  $$h(z)$$                            FE      2
@@ -1267,10 +1265,10 @@ settings (FE/RE)
 
   Spatial factors for 2nd linear predictor $$\omega_2(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
 
-  Spatio-temporal factors for 1st linear   $$\varepsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
+  Spatio-temporal factors for 1st linear   $$\epsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
   predictor                                                                              
 
-  Spatio-temporal factors for 2nd linear   $$\varepsilon_{2}(s,f,f)$$          RE      $$n_{s} \times n_{\varepsilon 1} \times n_{\varepsilon 1}^{time}$$
+  Spatio-temporal factors for 2nd linear   $$\epsilon_{2}(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
   predictor                                                                              
 
   Overdispersion factors for 1st linear    $$\eta_{1}(v,f)$$                   RE      $$n_{v} \times n_{\eta 1}$$
@@ -1293,16 +1291,16 @@ Table 2D -- Variable calculated internally
 
   2nd link-transformed predictor                 $$r_{2}(i)$$                 $$n_i$$
 
-  Spatio-temporal variation for 1st linear       $$\varepsilon_{1}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\epsilon_{1}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variationfor 2nd linear        $$\varepsilon_{2}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\epsilon_{2}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variation for 1st linear       $$\varepsilon_{1}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\epsilon_{1}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
-  Spatio-temporal variationfor 2nd linear        $$\varepsilon_{2}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\epsilon_{2}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
   Spatial variation for 1st linear predictor at  $$\omega_1(g,c)$$          $$n_{g} \times n_{c}$$
@@ -1354,10 +1352,10 @@ Table 2E -- Derived quantities
   Rotation matrix for spatial covariation for     $$\mathbf{B}_{\omega 2}$$        $$n_{c} \times n_{c}$$
   2ndlinear predictor                                                            
 
-  Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\varepsilon 1}$$   $$n_{c} \times n_{c}$$
+  Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\epsilon 1}$$   $$n_{c} \times n_{c}$$
   for 1st linear predictor                                                       
 
-  Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\varepsilon 2}$$   $$n_{c} \times n_{c}$$
+  Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\epsilon 2}$$   $$n_{c} \times n_{c}$$
   for 2nd linear predictor                                                       
 
   Rotation matrix for overdispersion covariation  $$\mathbf{B}_{1}$$               $$n_{c} \times n_{c}$$
@@ -1372,10 +1370,10 @@ Table 2E -- Derived quantities
   Rotated loadings for spatial covariation for    $$L_{\omega 2}^*(c,f)$$        $$n_{c} \times n_{\omega 2}$$
   2nd linear predictor                                                           
 
-  Rotated loadings for spatio-temporal            $$L_{\varepsilon 1}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 1}$$
+  Rotated loadings for spatio-temporal            $$L_{\epsilon 1}^*(c,f)$$   $$n_{c} \times n_{\epsilon 1}$$
   covariation for 1st linear predictor                                           
 
-  Rotated loadings for spatio-temporal            $$L_{\varepsilon 2}^*(c,f)$$   $$n_{c} \times n_{\varepsilon 2}$$
+  Rotated loadings for spatio-temporal            $$L_{\epsilon 2}^*(c,f)$$   $$n_{c} \times n_{\epsilon 2}$$
   covariation for 2nd linear predictor                                           
 
   Rotated loadings for overdispersion covariation $$L_{1}^*(c,f)$$               $$n_{c} \times n_{\eta 1}$$
@@ -1390,10 +1388,10 @@ Table 2E -- Derived quantities
   Rotated spatial factors for 2nd linear        $$\omega_2^*(s,f)$$          $$n_{s} \times n_{\omega 2}$$
   predictor                                                                        
 
-  Rotated spatio-temporal factors for 1st       $$\varepsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 1st       $$\epsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated spatio-temporal factors for 2nd       $$\varepsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\varepsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 2nd       $$\epsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
   Rotated overdispersion factors for 1st linear $$\eta_{1}^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
