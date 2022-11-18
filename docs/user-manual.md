@@ -79,7 +79,7 @@ designed to support delta-models, which include two components). The
 first linear predictor $p_{1}(i)$ represents encounter probability in a
 delta-model, or zero-inflation in a count-data model:
 
-$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_{i},t_{i})}{︸}} + \underset{Spatial\ variation}{\overset{\omega_{1}^{*}\left( s_{i},c_{i} \right)}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\varepsilon_{1}^{*}(s_{i},c_{i},t_{i})}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_{i},c_{i})}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}\left( c_{i},t_{i} \right)}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_{i},t_{i})}{︸}}$$
+$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_{i},t_{i})}{︸}} + \underset{Spatial\ variation}{\overset{\omega_{1}^{*}( s_{i},c_{i} )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\varepsilon_{1}^{*}(s_{i},c_{i},t_{i})}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_{i},c_{i})}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_{i},t_{i} )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_{i},t_{i})}{︸}}$$
 
 where $p_{1}(i)$ is the predictor for observation $i$, arising for
 category $c_{i}$ at location $s_{i}$ and time $t_{i}$. Similarly, the
@@ -94,15 +94,14 @@ correlated variation among categories and years as explained next.
 
 Regarding intercepts representing temporal variation:
 
-$$\beta_{1}\left( c_{i},t_{i} \right) = \mu_{\beta_1}\left( c_{i} \right) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}\left( c_{i},f \right)\beta_{1}\left( t_{i},f \right)}$$
+$$\beta_{1}( c_{i},t_{i} ) = \mu_{\beta_1}( c_{i} ) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}( c_{i},f )\beta_{1}( t_{i},f )}$$
 
-where $\beta_{1}\left( t_{i},f\  \right)$ represents temporal variation for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that generates temporal covariation among categories for this linear
-predictor, and $\mu_{\beta_1}\left( c_{i} \right)$ represents the time-average for each category $c_{i}$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}\left( t_{i},f\  \right)$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}\left( c_{i} \right) = 0$, and $\mathbf{L}_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}\left( t_{i},c \right) = \beta_{1}\left( t_{i},f \right)$ as fixed effect for each category and year.
+where $\beta_{1}( t_{i},f )$ represents temporal variation for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that generates temporal covariation among categories for this linear predictor, and $\mu_{\beta_1}( c_{i} )$ represents the time-average for each category $c_{i}$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}( t_{i},f\  )$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}( c_{i} ) = 0$, and $L_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}( t_{i},c ) = \beta_{1}( t_{i},f )$ as fixed effect for each category and year.
 
 Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
 years and categories. When treated as random,
-$\beta_{1}\left( t_{i},f \right)$ is assigned a normal distribution with
+$\beta_{1}( t_{i},f )$ is assigned a normal distribution with
 unit variance, such that $\mathbf{L}_{\beta_1}^{T}\mathbf{L}_{\beta_1}$
 is the covariance among categories for a given process (Thorson et al.
 2015b). When treating intercepts as random, and when there is only one
@@ -118,7 +117,7 @@ following autocorrelation structure:
 
 $$\beta_{1}(t,f)\sim\left\{ \begin{matrix}
 Normal(0,1) & if\ t = t_{\min} \\
-Normal\left( \rho_{\beta_1}\beta_{1}(t - 1,f),1 \right) & if\ t > t_{\min} \\
+Normal( \rho_{\beta_1}\beta_{1}(t - 1,f),1 ) & if\ t > t_{\min} \\
 \end{matrix} \right.\ $$
 
 Where $t_{\min}$ is the index for the first modelled year and
@@ -144,9 +143,9 @@ and settings are defined identically for specifying $\rho_{\beta_2}$.
 
 Regarding spatial variation:
 
-$$\omega_{1}^{*}(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_{1}^{*}\left( s_{i},f\  \right)}$$
+$$\omega_{1}^{*}(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_{1}^{*}( s_{i},f\  )}$$
 
-where $\omega_{1}^{*}\left( s_{i},f\  \right)$ represents predicted
+where $\omega_{1}^{*}( s_{i},f\  )$ represents predicted
 spatial variation in the first linear predictor occurring at the
 location $s_{i}$ of sample $i$ for factor $f$ (of $n_{\omega 1}$ factors
 representing spatial variation), and $L_{\omega 1}(c_{i},\ f)$ is the
@@ -157,7 +156,7 @@ VAST specifies internally that the spatial and spatio-temporal Gaussian
 random fields (GMRFs) have a variance of 1.0. By default VAST estimates
 their values at each of $n_{s}$ vertices as follows:
 
-$$\mathbf{\omega}_{1}(f)\sim MVN\left( \mathbf{0},\mathbf{R}_{1} \right)$$
+$$\mathbf{\omega}_{1}(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 where $\mathbf{\omega}_{1}(f)$ is the vector of length $n_{s}$ formed
 when subsetting $\omega_{1}(s,f)$ for a given $f$. Specifying a variance
@@ -170,7 +169,7 @@ are projected as:
 $$\mathbf{\omega}_{1}^{*}(f) = \mathbf{A}_{i}\mathbf{\omega}_{1}(f)$$
 
 where $\mathbf{\omega}_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}\left( s_{i},f\  \right)$
+containing the predicted value $\omega_{1}^{*}( s_{i},f\  )$
 for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}$.
@@ -179,42 +178,42 @@ matrix $\mathbf{A}$.
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
-$\mathbf{\varepsilon}_{1}\left( f_{1},f_{2} \right)$ and
-$\mathbf{\varepsilon}_{2}\left( f_{1},f_{2} \right)$ composed of
-$\varepsilon_{1}\left( s,f_{1},f_{2} \right)$ and
-$\varepsilon_{2}\left( s,f_{1},f_{2} \right)$ across locations $s$, is
+$\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$ and
+$\mathbf{\varepsilon}_{2}( f_{1},f_{2} )$ composed of
+$\varepsilon_{1}( s,f_{1},f_{2} )$ and
+$\varepsilon_{2}( s,f_{1},f_{2} )$ across locations $s$, is
 independent for each factor representing covariation among categories
 ($f_{1}$) and among years ($f_{2}$). We describe the process for the
 1^st^ linear predictor, and an identical process is used for the 2^nd^
 linear predictor (using different subscripts):
 
-$$\mathbf{\varepsilon}_{1}\left( f_{1},f_{2} \right)\sim MVN\left( \mathbf{0},\mathbf{R}_{1} \right)$$
+$$\mathbf{\varepsilon}_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then projected as:
 
-$$\mathbf{\varepsilon}_{1}^{*}\left( f_{1},f_{2} \right) = \mathbf{A}_{i}\mathbf{\varepsilon}_{1}\left( f_{1},f_{2} \right)$$
+$$\mathbf{\varepsilon}_{1}^{*}( f_{1},f_{2} ) = \mathbf{A}_{i}\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$$
 
 This is then projected across years and categories using loadings
 matrices $\mathbf{L}_{\varepsilon_{t}1}$ and
 $\mathbf{L}_{\varepsilon_{c}2}$:
 
-$$\varepsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\varepsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\varepsilon_{t}1}}{L_{\varepsilon_{c}1}(c,f_{1})L_{\varepsilon_{t}1}(f_{2},t)\varepsilon_{1}\left( s,f_{1},f_{2} \right)}}$$
+$$\varepsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\varepsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\varepsilon_{t}1}}{L_{\varepsilon_{c}1}(c,f_{1})L_{\varepsilon_{t}1}(f_{2},t)\varepsilon_{1}( s,f_{1},f_{2} )}}$$
 
 Using a factor-decomposition to approximate covariation among years is a
 generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-$$\varepsilon_{1}\left( s,c_{1},t \right) = \left\{ \begin{matrix}
-\varepsilon_{1}^{'}\left( s,c_{1},t \right) & if\ t = t_{\min} \\
-\sum_{c_{2} = 1}^{n_{c}}{b\left( c_{1},c_{2} \right)\varepsilon_{1}^{'}\left( s,c_{2},t - 1 \right)} & if\ t > t_{\min} \\
+$$\varepsilon_{1}( s,c_{1},t ) = \left\{ \begin{matrix}
+\varepsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min} \\
+\sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\varepsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min} \\
 \end{matrix} \right.\ $$
 
-Where $b\left( c_{1},c_{2} \right)$ is the estimated impact of
+Where $b( c_{1},c_{2} )$ is the estimated impact of
 spatio-temporal variation in category $c_{2}$ on spatio-temporal changes
 in category $c_{1}$:
 
-$$b\left( c_{1},c_{2} \right) = \left\{ \begin{matrix}
+$$b( c_{1},c_{2} ) = \left\{ \begin{matrix}
 \sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} + \rho_{\varepsilon 1}(c_{1}) & if\ c_{1} = c_{2} \\
 \sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} & if\ c_{1} \neq c_{2} \\
 \end{matrix} \right.\ $$
@@ -245,9 +244,9 @@ $\rho_{\varepsilon 2}$.
 
 Regarding overdispersion:
 
-$$\eta_{1}\left( v_{i},c_{i} \right) = \sum_{f = 1}^{n_{\eta 1}}{L_{1}(c_{i},f)\eta_{1}\left( v_{i},f \right)}$$
+$$\eta_{1}( v_{i},c_{i} ) = \sum_{f = 1}^{n_{\eta 1}}{L_{1}(c_{i},f)\eta_{1}( v_{i},f )}$$
 
-where $\eta_{1}\left( v_{i},f \right)$ represents random variation in
+where $\eta_{1}( v_{i},f )$ represents random variation in
 catchability among a grouping variable (tows or vessels) for each factor
 $f$ (of $n_{\eta 1}$ factors representing overdispersion), and
 $L_{1}(c_{i},f)$ is a loadings matrix that generates covariation in
@@ -265,25 +264,25 @@ that intercept).
 Regarding covariates affecting densities ("density" or "habitat"
 covariates):
 
-$$\nu_{1}\left( c_{i},t_{i} \right) = \sum_{p = 1}^{n_{p}}{\left( \gamma_{1}\left( c_{i},p \right) + \sigma_{\xi 1}(c_{i},p)\xi_{1}^{*}\left( s_{i},c_{i},p \right) \right)X\left( i,t_{i},p \right)}$$
+$$\nu_{1}( c_{i},t_{i} ) = \sum_{p = 1}^{n_{p}}{( \gamma_{1}( c_{i},p ) + \sigma_{\xi 1}(c_{i},p)\xi_{1}^{*}( s_{i},c_{i},p ) )X( i,t_{i},p )}$$
 
-where $X\left( i,t_{i},p \right)$ is an three-dimensional array of
+where $X( i,t_{i},p )$ is an three-dimensional array of
 $n_{p}$ measured density covariates that explain variation in density
 for time *t* and the location $s_{i}$ where sampling occurred for sample
 $i$. VAST can include a separate, spatially-varying effect of each
 habitat covariate $p$ for each category $c$. The spatially varying slope
 is
-$\gamma_{1}\left( c_{i},t_{i},p \right) + \sigma_{\xi 1}(c,p)\xi_{n}(s,c,p)$,
-where $\gamma_{1}\left( c_{i},\ t_{i},p \right)$ is the average effect
-of density covariate $X\left( i,t_{i},p \right)$ for category $c$,
-$\xi_{n}\left( s_{i},c_{i},p \right)$ represents spatial variation in
+$\gamma_{1}( c_{i},t_{i},p ) + \sigma_{\xi 1}(c,p)\xi_{n}(s,c,p)$,
+where $\gamma_{1}( c_{i},\ t_{i},p )$ is the average effect
+of density covariate $X( i,t_{i},p )$ for category $c$,
+$\xi_{n}( s_{i},c_{i},p )$ represents spatial variation in
 that effect (which has a mean of zero and standard deviation of one),
 and $\sigma_{\xi 1}(c,p)$ represents the estimated standard deviation of
 spatial variation of covariate $p$ for category $c$. By default VAST
 estimates spatially-varying slope terms values at each vertex as
 follows:
 
-$$\mathbf{\xi}_{1}(c,p)\sim MVN\left( \mathbf{0},\mathbf{R}_{1} \right)$$
+$$\mathbf{\xi}_{1}(c,p)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then predicted as e.g.:
 
@@ -294,19 +293,19 @@ $$\mathbf{\xi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_{i}\mathbf{\xi}_{1}(c,p)$$
 Finally, regarding covariates affecting the process of obtaining
 measurements ("catchability" or "detectability" covariates):
 
-$$\zeta_{1}(i) = \sum_{k = 1}^{n_{k}}\left( \lambda_{1}(k) + \sigma_{\varphi 1}(k)\varphi_{1}^{*}\left( s_{i},k \right) \right)q_{1}(i,k)$$
+$$\zeta_{1}(i) = \sum_{k = 1}^{n_{k}}( \lambda_{1}(k) + \sigma_{\varphi 1}(k)\varphi_{1}^{*}( s_{i},k ) )q_{1}(i,k)$$
 
 Where $q_{1}(i,k)$ is an element of matrix $\mathbf{Q}_{1}$ composed of
 $n_{k}$ measured catchability covariates that explain variation in
 catchability, $\lambda_{1}(k)$ is the estimated impact of catchability
 covariates for this linear predictor,
-$\varphi_{1}^{*}\left( s_{i},k \right)$ is unit-variance spatial
+$\varphi_{1}^{*}( s_{i},k )$ is unit-variance spatial
 variation in that slope term such that
-$\sigma_{\varphi 1}(k)\varphi_{1}^{*}\left( s_{i},k \right)$ has
+$\sigma_{\varphi 1}(k)\varphi_{1}^{*}( s_{i},k )$ has
 standard deviation $\sigma_{\varphi 1}(k)$, where spatial variation in
 detectability is specified as follows:
 
-$$\mathbf{\varphi}_{1}(k)\sim MVN\left( \mathbf{0},\mathbf{R}_{1} \right)$$
+$$\mathbf{\varphi}_{1}(k)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
 
 Values are then predicted as e.g.:
 
@@ -317,7 +316,7 @@ $$\mathbf{\varphi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_{i}\mathbf{\varphi}_{1}(k)
 Fishing impacts are included to represent the effect of known human
 impacts on variables. They are not yet documented in detail here, but
 see Thorson et al. (2019) for details. By default this term is excluded
-(i.e., $\iota\left( c_{i},t_{i} \right) = 0$) and it is only applicable
+(i.e., $\iota( c_{i},t_{i} ) = 0$) and it is only applicable
 within MICE or single-species production models following
 vector-autoregressive dynamics (i.e., Gompertz density dependence). Feel
 free to contact the package author if desiring more documentation.
@@ -330,14 +329,14 @@ terminal \`?VAST::Data_Fn\`.
 
 1.  ObsModel\[2\]=0 applies a logit-link for the first linear predictor:
 
-$$r_{1}(i) = {logit}^{- 1}\left( p_{1}(i) \right)$$
+$$r_{1}(i) = {logit}^{- 1}( p_{1}(i) )$$
 
 > where $r_{1}(i)$ is the predictor encounter probability in a
 > delta-model, or zero-inflation in a count-data model, and
 > ${logit}^{- 1}(p_{1}(i))$ is the inverse-logit (a.k.a. logistic)
 > function of $p_{1}(i)$, and:
 
-$$r_{2}(i) = a_{i} \times \log^{- 1}\left( p_{2}(i) \right)$$
+$$r_{2}(i) = a_{i} \times \log^{- 1}( p_{2}(i) )$$
 
 > where $r_{2}(i)$ is the predicted biomass density for positive catch
 > rates in a delta-model or mean-intensity function for a count-data
@@ -348,21 +347,21 @@ $$r_{2}(i) = a_{i} \times \log^{- 1}\left( p_{2}(i) \right)$$
 2.  ObsModel\[2\]=1 corresponds to a "Poisson-link" delta-model that
     approximates a Tweedie distribution:
 
-$$r_{1}(i) = 1 - \exp\left( - a_{i} \times \exp\left( p_{1}(i) \right) \right)\ $$
+$$r_{1}(i) = 1 - \exp( - a_{i} \times \exp( p_{1}(i) ) )\ $$
 
 > where $r_{1}(i)$ is the predictor encounter probability and
-> $1 - \exp\left( - a_{i} \times \exp\left( p_{1}(i) \right) \right)$ is
-> a complementary log-log link of $p_{1}(i) + \log\left( a_{i} \right)$,
+> $1 - \exp( - a_{i} \times \exp( p_{1}(i) ) )$ is
+> a complementary log-log link of $p_{1}(i) + \log( a_{i} )$,
 > and:
 
-$$r_{2}(i) = \frac{a_{i} \times \exp\left( p_{1}(i) \right)}{r_{1}(i)} \times \exp\left( p_{2}(i) \right)$$
+$$r_{2}(i) = \frac{a_{i} \times \exp( p_{1}(i) )}{r_{1}(i)} \times \exp( p_{2}(i) )$$
 
 > where $r_{2}(i)$ is the predicted biomass given that the species is
 > encountered. In this "Poisson-process" link function,
-> $\exp\left( p_{1}(i) \right)$ is interpreted as the density in number
+> $\exp( p_{1}(i) )$ is interpreted as the density in number
 > of individuals per area such that
-> $a_{i} \times \exp\left( p_{1}(i) \right)$ is the predicted number of
-> individuals encountered, and $\exp\left( p_{2}(i) \right)$ is
+> $a_{i} \times \exp( p_{1}(i) )$ is the predicted number of
+> individuals encountered, and $\exp( p_{2}(i) )$ is
 > interpreted as the average weight per individual. Area-swept $a_{i}$
 > therefore enters as a linear offset for the expected number of
 > individuals encountered (Thorson 2018). This Poisson-link function
@@ -372,13 +371,13 @@ $$r_{2}(i) = \frac{a_{i} \times \exp\left( p_{1}(i) \right)}{r_{1}(i)} \times \e
 
 ## Observation models
 
-There are different user-controlled options for observation models for available sampling data. I distinguish between observation models for continuous-valued data (e.g., biomass, or numbers standardized to a fixed area), and observation models for count data (e.g., numbers treating area-swept as an offset). However, both are parameterized such that the expectation for sampling data $\mathbb{E}\left( B_{i} \right) = r_{1}(i) \times r_{2}(i)$.
+There are different user-controlled options for observation models for available sampling data. I distinguish between observation models for continuous-valued data (e.g., biomass, or numbers standardized to a fixed area), and observation models for count data (e.g., numbers treating area-swept as an offset). However, both are parameterized such that the expectation for sampling data $\mathbb{E}( B_{i} ) = r_{1}(i) \times r_{2}(i)$.
 
 *Continuous-valued data (e.g., biomass)*
 
 If using an observation model with continuous support (e.g., a normal, lognormal, gamma, or Tweedie models), then data $b_{i}$ can be any non-negative real number, $b_{i}\mathcal{\in R}$ and $b_{i} \geq 0$. VAST calculates the probability of these data as:
 
-$$\Pr \left( b_{i} = B \right) = \left\{ \begin{matrix}1 - r_{1}(i) & if\ B = 0 \\r_{1}(i) \times g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right\  & if\ B > 0 \\\end{matrix} \right.\$$
+$$\Pr ( b_{i} = B ) = \left\{ \begin{matrix}1 - r_{1}(i) & if\ B = 0 \\r_{1}(i) \times g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right\  & if\ B > 0 \\\end{matrix} \right.\$$
 
 where `ObsModel[1]` controls the probability density function $g{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right.\$ used for positive catch rates (see `?Data_Fn` for a list of options), where each options is defined to have with expectation $r_{2}(i)$ and dispersion $\sigma_{m}^{2}(c)$, where dispersion parameter $\sigma_{m}^{2}(c)$ varies among categories by default.
 
@@ -386,9 +385,9 @@ where `ObsModel[1]` controls the probability density function $g{\left. \ B|r_{2
 
 If using an observation model with discrete support (e.g., a Poisson, negative-binomial, Conway-Maxwell Poisson, or lognormal-Poisson models), then data $b_{i}$ can be any whole number, $b_{i} \in \{ 0,1,2,\ldots\}$. VAST calculates the probability of these data as:
 
-$$\Pr\left( B = b_{i} \right) = \left\{ \begin{matrix} \left( 1 - r_{1}(i) \right) + g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\  & if\ B = 0 \\ r_{1}(i) \times g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\  & if\ B > 0 \\ \end{matrix} \right.\ $$
+$$\Pr( B = b_{i} ) = \left\{ \begin{matrix} ( 1 - r_{1}(i) ) + g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\  & if\ B = 0 \\ r_{1}(i) \times g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\  & if\ B > 0 \\ \end{matrix} \right.\ $$
 
-where `ObsModel[1]` controls the probability mass function $g\{\left. \ B|r_{2}(i),\ldots\} \right.\ $ used (again, see `?Data_Fn` for a list of options), where I use ... to signify that these probability mass functions generally can have one or more parameter governing dispersion, and the precise number and interpretation varies among observation models (i.e., the value of `ObsModel[1]`). For these count-data models, $\left( 1 - r_{1}(i) \right)$ is the "zero-inflation probability" (i.e., the proportion of habitat in the immediate vicinity of location $s_{i}$ and time $t_{i}$ that is never occupied), while $r_{2}(i)$ is the expected value for probability mass function $g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\ $ (i.e., the number of individuals that are in the vicinity of sampling in habitat that is occupied), and $g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\ $ is the probability of not encountering category *c* given that sampling occurs in occupied habitat (Martin et al. 2005).
+where `ObsModel[1]` controls the probability mass function $g\{\left. \ B|r_{2}(i),\ldots\} \right.\ $ used (again, see `?Data_Fn` for a list of options), where I use ... to signify that these probability mass functions generally can have one or more parameter governing dispersion, and the precise number and interpretation varies among observation models (i.e., the value of `ObsModel[1]`). For these count-data models, $( 1 - r_{1}(i) )$ is the "zero-inflation probability" (i.e., the proportion of habitat in the immediate vicinity of location $s_{i}$ and time $t_{i}$ that is never occupied), while $r_{2}(i)$ is the expected value for probability mass function $g\{\left. \ B = b_{i}|r_{2}(i),\ldots\} \right.\ $ (i.e., the number of individuals that are in the vicinity of sampling in habitat that is occupied), and $g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\ $ is the probability of not encountering category *c* given that sampling occurs in occupied habitat (Martin et al. 2005).
 
 ## Settings regarding spatial smoothers
 
@@ -404,11 +403,11 @@ is $n_{s}$. Outputs from this triangulated mesh can then be used to
 calculate the precision (inverse-covariance) matrix for a multivariate
 normal probability density function for the value of a spatial variable
 at all $n_{s}$ verticies. Specifically, the correlation
-$\mathbf{R}_{1}\left( s_{1},s_{2} \right)$ between location $s$ and
+$\mathbf{R}_{1}( s_{1},s_{2} )$ between location $s$ and
 location $s_{2}$ for spatial and spatio-temporal terms included in the
 first linear predictor is approximated as following a Matern function:
 
-$$\mathbf{R}_{1}\left( s_{1},s_{2} \right) = \frac{1}{2^{\nu - 1}\Gamma(\nu)} \times \left( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| \right)^{\nu} \times K_{\nu}\left( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| \right)$$
+$$\mathbf{R}_{1}( s_{1},s_{2} ) = \frac{1}{2^{\nu - 1}\Gamma(\nu)} \times ( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| )^{\nu} \times K_{\nu}( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| )$$
 
 where $\mathbf{H}$ is a two-dimensional linear transformation
 representing geometric anisotropy (with a determinant of 1.0), $\nu$ is
@@ -420,8 +419,8 @@ freedom (included in vector $\mathbf{h}$). By default these are
 estimated as fixed effects and then transformed:
 
 $$\mathbf{H} = \begin{bmatrix}
-\exp\left( h(1) \right) & h(2) \\
-h(2) & \frac{1 + h^{2}(2)}{\exp\left( h(1) \right)} \\
+\exp( h(1) ) & h(2) \\
+h(2) & \frac{1 + h^{2}(2)}{\exp( h(1) )} \\
 \end{bmatrix}$$
 
 However, the user can specify isotropy (i.e., $\mathbf{h} = \mathbf{0}$
@@ -499,7 +498,7 @@ calculation of asymptotic standard errors):
     factors of the loadings matrix $L_{\varepsilon_{t}1}(f_{2},t)$. This
     ensures that spatial terms represent the distribution in an
     "average" year, defined as year $t$ when
-    $L_{\varepsilon_{t}1}\left( f_{2},t \right) = 0$ for all columns;
+    $L_{\varepsilon_{t}1}( f_{2},t ) = 0$ for all columns;
 
 3.  When estimating loadings across species
     $L_{\varepsilon_{c}1}(c,f_{1})$ and across years
@@ -532,8 +531,8 @@ Bayesian estimation paradigm.
 VAST can be used to combine encounter/non-encounter, count, and
 biomass-sampling data. This involves specifying a Poisson-link delta
 model which predicts each data type from numbers density
-$\exp\left( p_{1}(i) \right)$ and biomass-per-individual
-$\exp\left( p_{2}(i) \right)$, see Grüss and Thorson (2019) for details.
+$\exp( p_{1}(i) )$ and biomass-per-individual
+$\exp( p_{2}(i) )$, see Grüss and Thorson (2019) for details.
 This approach is specified by associating each observation with a given
 error distribution using input e_i where e.g. e_i\[1\] is the
 error-distribution for the 1^st^ observation. The user then specifies
@@ -595,13 +594,13 @@ $n_{g}$ rows and $n_{s}$ columns. Values are predicted as e.g.:
 $$\mathbf{\omega}_{1}^{*}(f\ ) = \mathbf{A}_{g}\mathbf{\omega}_{1}(f)$$
 
 where $\mathbf{\omega}_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}\left( s_{g},f\  \right)$
+containing the predicted value $\omega_{1}^{*}( s_{g},f\  )$
 for spatial variation in the first linear predictor at every location
 $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f\ )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{\left( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) \right)X(g,t,p)}}{︸}}$$
+$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f\ )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) )X(g,t,p)}}{︸}}$$
 
 where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
 are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
@@ -611,7 +610,7 @@ extrapolation-grid cell $g$, category $c$, and time $t$.
 By default, density is used to predict total abundance for the entire
 domain (or a subset of the domain) for a given species:
 
-$$I(c,t,l) = \sum_{x = 1}^{n_{x}}\left( a(g,l) \times d(g,c,t) \right)$$
+$$I(c,t,l) = \sum_{x = 1}^{n_{x}}( a(g,l) \times d(g,c,t) )$$
 
 where $a(g,l)$ is the area associated with extrapolation-grid cell $g$
 for index $l$; and. The user can also specify additional post-hoc
@@ -625,7 +624,7 @@ Options = c(\"SD_site_density\"=0, \"SD_site_logdensity\"=0,
 1.  *Distribution shift* -- RhoConfig\[3\]=1 turns on calculation of the
     centroid of the population's distribution:
 
-$$Z(c,t,m) = \sum_{x = 1}^{n_{x}}\frac{\left( z(g,m) \times a(g,1) \times d(g,c,t) \right)}{I(c,t,1)}$$
+$$Z(c,t,m) = \sum_{x = 1}^{n_{x}}\frac{( z(g,m) \times a(g,1) \times d(g,c,t) )}{I(c,t,1)}$$
 
 where $z(g,m)$ is a matrix representing location for each
 extrapolation-grid cell (by default $z(g,m)$ is the location in Eastings
