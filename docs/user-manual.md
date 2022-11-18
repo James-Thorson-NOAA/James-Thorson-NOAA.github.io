@@ -96,7 +96,7 @@ Regarding intercepts representing temporal variation:
 
 $$\beta_{1}( c_{i},t_{i} ) = \mu_{\beta_1}( c_{i} ) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}( c_{i},f )\beta_{1}( t_{i},f )}$$
 
-where $\beta_{1}( t_{i},f )$ represents temporal variation for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that generates temporal covariation among categories for this linear predictor, and $\mu_{\beta_1}( c_{i} )$ represents the time-average for each category $c_{i}$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}( t_{i},f\  )$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}( c_{i} ) = 0$, and $L_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}( t_{i},c ) = \beta_{1}( t_{i},f )$ as fixed effect for each category and year.
+where $\beta_{1}( t_{i},f )$ represents temporal variation for time $t_{i}$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_{i},f)$ is the loadings matrix that generates temporal covariation among categories for this linear predictor, and $\mu_{\beta_1}( c_{i} )$ represents the time-average for each category $c_{i}$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}( t_{i},f  )$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}( c_{i} ) = 0$, and $L_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}( t_{i},c ) = \beta_{1}( t_{i},f )$ as fixed effect for each category and year.
 
 Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
@@ -143,9 +143,9 @@ and settings are defined identically for specifying $\rho_{\beta_2}$.
 
 Regarding spatial variation:
 
-$$\omega_{1}^{*}(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_{1}^{*}( s_{i},f\  )}$$
+$$\omega_{1}^{*}(s,c) = \sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(c_{i},f)\omega_{1}^{*}( s_{i},f  )}$$
 
-where $\omega_{1}^{*}( s_{i},f\  )$ represents predicted
+where $\omega_{1}^{*}( s_{i},f  )$ represents predicted
 spatial variation in the first linear predictor occurring at the
 location $s_{i}$ of sample $i$ for factor $f$ (of $n_{\omega 1}$ factors
 representing spatial variation), and $L_{\omega 1}(c_{i},\ f)$ is the
@@ -168,8 +168,8 @@ are projected as:
 
 $$\omega_{1}^{*}(f) = \mathbf{A}_{i}\omega_{1}(f)$$
 
-where $\omega_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}( s_{i},f\  )$
+where $\omega_{1}^{*}(f )$ is the vector of length $n_{i}$,
+containing the predicted value $\omega_{1}^{*}( s_{i},f  )$
 for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}$.
@@ -591,16 +591,16 @@ et al. 2015a). Predicting random effects at extrapolation-grid cell $g$
 at location $s_{g}$ is accomplished using matrix $\mathbf{A}_{g}$ with
 $n_{g}$ rows and $n_{s}$ columns. Values are predicted as e.g.:
 
-$$\omega_{1}^{*}(f\ ) = \mathbf{A}_{g}\omega_{1}(f)$$
+$$\omega_{1}^{*}(f ) = \mathbf{A}_{g}\omega_{1}(f)$$
 
-where $\omega_{1}^{*}(f\ )$ is the vector of length $n_{i}$,
-containing the predicted value $\omega_{1}^{*}( s_{g},f\  )$
+where $\omega_{1}^{*}(f )$ is the vector of length $n_{i}$,
+containing the predicted value $\omega_{1}^{*}( s_{g},f  )$
 for spatial variation in the first linear predictor at every location
 $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f\ )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) )X(g,t,p)}}{︸}}$$
+$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^{*}(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_{1}^{*}(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\varepsilon 1}}{L_{\varepsilon 1}(c,f)\varepsilon_{1}^{*}(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^{*}(g,c,p) )X(g,t,p)}}{︸}}$$
 
 where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
 are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
