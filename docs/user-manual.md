@@ -76,14 +76,14 @@ sampling data.
 
 The model potentially includes two linear predictors (because it is
 designed to support delta-models, which include two components). The
-first linear predictor $p_{1}(i)$ represents encounter probability in a
+first linear predictor $p_1(i)$ represents encounter probability in a
 delta-model, or zero-inflation in a count-data model:
 
-$$p_{1}(i) = \underset{Temporal\ variation}{\overset{\beta_{1}(c_i,t_i)}{︸}} + \underset{Spatial\ variation}{\overset{\omega_1^*( s_i,c_i )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\epsilon_{1}^*(s_i,c_i,t_i)}{︸}} + \underset{Vessel\ effects}{\overset{\eta_{1}(v_i,c_i)}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_{1}( c_i,t_i )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_{1}(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_i,t_i)}{︸}}$$
+$$p_1(i) = \underset{Temporal\ variation}{\overset{\beta_1(c_i,t_i)}{︸}} + \underset{Spatial\ variation}{\overset{\omega_1^*( s_i,c_i )}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\epsilon_1^*(s_i,c_i,t_i)}{︸}} + \underset{Vessel\ effects}{\overset{\eta_1(v_i,c_i)}{︸}} + \underset{Habitat\ covariates}{\overset{\nu_1( c_i,t_i )}{︸}} + \underset{Catchability\ covariate}{\overset{\zeta_1(i)}{︸}} - \underset{Fishing\ impacts}{\overset{\iota(c_i,t_i)}{︸}}$$
 
-where $p_{1}(i)$ is the predictor for observation $i$, arising for
+where $p_1(i)$ is the predictor for observation $i$, arising for
 category $c_i$ at location $s_i$ and time $t_i$. Similarly, the
-second linear predictor $p_{2}(i)$ represents positive catch rates in a
+second linear predictor $p_2(i)$ represents positive catch rates in a
 delta-model, or the count-data intensity function in a count-data model,
 where all variables and parameters are defined similarly except using
 different subscripts (Thorson and Barnett 2017; Thorson 2019). Model
@@ -94,14 +94,14 @@ correlated variation among categories and years as explained next.
 
 Regarding intercepts representing temporal variation:
 
-$$\beta_{1}( c_i,t_i ) = \mu_{\beta_1}( c_i ) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}( c_i,f )\beta_{1}( t_i,f )}$$
+$$\beta_1( c_i,t_i ) = \mu_{\beta_1}( c_i ) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}( c_i,f )\beta_1( t_i,f )}$$
 
-where $\beta_{1}( t_i,f )$ represents temporal variation for time $t_i$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_i,f)$ is the loadings matrix that generates temporal covariation among categories for this linear predictor, and $\mu_{\beta_1}( c_i )$ represents the time-average for each category $c_i$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_{1}( t_i,f  )$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}( c_i ) = 0$, and $L_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_{1}( t_i,c ) = \beta_{1}( t_i,f )$ as fixed effect for each category and year.
+where $\beta_1( t_i,f )$ represents temporal variation for time $t_i$ for factor $f$ (of $n_{\beta_1}$ factors representing temporal variation), $L_{\beta_1}(c_i,f)$ is the loadings matrix that generates temporal covariation among categories for this linear predictor, and $\mu_{\beta_1}( c_i )$ represents the time-average for each category $c_i$. The number of factors $n_{\beta_1}$ can range from zero to the number of categories $n_{c}$, $0 \leq n_{\beta_1} \leq n_{c}$, where $n_{\beta_1} = 0$ is equivalent to eliminating all temporal terms from the model. By default, $n_{\beta_1} = n_{c}$, $\beta_1( t_i,f  )$ is treated as a fixed effect for each year $t$ and factor $f$, $\mu_{\beta_1}( c_i ) = 0$, and $L_{\beta_1}$ is an identity matrix; this formulation is equivalent to estimating a separate intercept $\beta_1( t_i,c ) = \beta_1( t_i,f )$ as fixed effect for each category and year.
 
 Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
 years and categories. When treated as random,
-$\beta_{1}( t_i,f )$ is assigned a normal distribution with
+$\beta_1( t_i,f )$ is assigned a normal distribution with
 unit variance, such that $L_{\beta_1}^{T}L_{\beta_1}$
 is the covariance among categories for a given process (Thorson et al.
 2015b). When treating intercepts as random, and when there is only one
@@ -111,13 +111,13 @@ $L_{\beta_1}^{2}$ is the variance and the absolute value,
 $abs(L_{\beta_1})$ is the standard deviation for temporal
 variation.
 
-By default the model specifies that each intercept $\beta_{1}(c,t)$ and
-$\beta_{2}(c,t)$ is a fixed effect. However, other settings specify the
+By default the model specifies that each intercept $\beta_1(c,t)$ and
+$\beta_2(c,t)$ is a fixed effect. However, other settings specify the
 following autocorrelation structure:
 
-$$\beta_{1}(t,f)\sim\left\{ \begin{matrix}
+$$\beta_1(t,f)\sim\left\{ \begin{matrix}
 Normal(0,1) & if\ t = t_{\min} \\
-Normal( \rho_{\beta_1}\beta_{1}(t - 1,f),1 ) & if\ t > t_{\min} \\
+Normal( \rho_{\beta_1}\beta_1(t - 1,f),1 ) & if\ t > t_{\min} \\
 \end{matrix} \right.\ $$
 
 Where $t_{\min}$ is the index for the first modelled year and
@@ -132,7 +132,7 @@ among factors). Options treating intercepts as a random effect include:
 2.  *Random walk* --specifies $\rho_{\beta_1} = 1$
 
 3.  *Constant intercept* --specifies $\rho_{\beta_1} = 0$ and
-    $\sigma_{\beta_1}^{2} = 0$ (i.e., $\beta_{1}(t)$ is constant for all
+    $\sigma_{\beta_1}^{2} = 0$ (i.e., $\beta_1(t)$ is constant for all
     $t$)
 
 4.  *Autoregressive* --estimates $\rho_{\beta_1}$ as a fixed effect
@@ -156,7 +156,7 @@ VAST specifies internally that the spatial and spatio-temporal Gaussian
 random fields (GMRFs) have a variance of 1.0. By default VAST estimates
 their values at each of $n_{s}$ vertices as follows:
 
-$$\omega_1(f)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\omega_1(f)\sim MVN( \mathbf{0},\mathbf{R}_1 )$$
 
 where $\omega_1(f)$ is the vector of length $n_{s}$ formed
 when subsetting $\omega_1(s,f)$ for a given $f$. Specifying a variance
@@ -178,49 +178,48 @@ matrix $\mathbf{A}$.
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
-$\epsilon_{1}( f_{1},f_{2} )$ and
-$\epsilon_{2}( f_{1},f_{2} )$ composed of
-$\epsilon_{1}( s,f_{1},f_{2} )$ and
-$\epsilon_{2}( s,f_{1},f_{2} )$ across locations $s$, is
+$\epsilon_1( f_1,f_2 )$ and
+$\epsilon_2( f_1,f_2 )$ composed of
+$\epsilon_1( s,f_1,f_2 )$ and
+$\epsilon_2( s,f_1,f_2 )$ across locations $s$, is
 independent for each factor representing covariation among categories
-($f_{1}$) and among years ($f_{2}$). We describe the process for the
+($f_1$) and among years ($f_2$). We describe the process for the
 1st linear predictor, and an identical process is used for the 2nd
 linear predictor (using different subscripts):
 
-$$\epsilon_{1}( f_{1},f_{2} )\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\epsilon_1( f_1,f_2 )\sim MVN( \mathbf{0},\mathbf{R}_1 )$$
 
 Values are then projected as:
 
-$$\epsilon_{1}^*( f_{1},f_{2} ) = \mathbf{A}_i\epsilon_{1}( f_{1},f_{2} )$$
+$$\epsilon_1^*( f_1,f_2 ) = \mathbf{A}_i\epsilon_1( f_1,f_2 )$$
 
 This is then projected across years and categories using loadings
 matrices $L_{\epsilon_{t}1}$ and
 $\L_{\epsilon_{c}2}$:
 
-$$\epsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\epsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_{1})L_{\epsilon_{t}1}(f_{2},t)\epsilon_{1}( s,f_{1},f_{2} )}}$$
+$$\epsilon_1^{'}(s,c,t) = \sum_{f_1 = 1}^{n_{\epsilon_{c}1}}{\sum_{f_2 = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_1)L_{\epsilon_{t}1}(f_2,t)\epsilon_1( s,f_1,f_2 )}}$$
 
 Using a factor-decomposition to approximate covariation among years is a
 generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-\begin{equation}
-\begin{gathered}
-  \epsilon_{1}( s,c_{1},t ) = \epsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min} \\
-  \epsilon_{1}( s,c_{1},t ) = \sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\epsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min}
-\end{gathered}
-\end{equation}
+$$ \epsilon_1( s,c_1,t ) = \epsilon_1^{'}( s,c_1,t ) & if\ t = t_{\min} $$
 
-Where $b( c_{1},c_{2} )$ is the estimated impact of
-spatio-temporal variation in category $c_{2}$ on spatio-temporal changes
-in category $c_{1}$:
+and
 
-$$b( c_{1},c_{2} ) = \left\{ \begin{matrix}
-\sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} + \rho_{\epsilon 1}(c_{1}) & if\ c_{1} = c_{2} \\
-\sum_{f = 1}^{n_{b}}{\chi(c_{1},f)\psi(f,c_{2})} & if\ c_{1} \neq c_{2} \\
+$$ \epsilon_1( s,c_1,t ) = \sum_{c_2 = 1}^{n_{c}}{b( c_1,c_2 )\epsilon_1^{'}( s,c_2,t - 1 )} & if\ t > t_{\min} $$
+
+Where $b( c_1,c_2 )$ is the estimated impact of
+spatio-temporal variation in category $c_2$ on spatio-temporal changes
+in category $c_1$:
+
+$$b( c_1,c_2 ) = \left\{ \begin{matrix}
+\sum_{f = 1}^{n_{b}}{\chi(c_1,f)\psi(f,c_2)} + \rho_{\epsilon 1}(c_1) & if\ c_1 = c_2 \\
+\sum_{f = 1}^{n_{b}}{\chi(c_1,f)\psi(f,c_2)} & if\ c_1 \neq c_2 \\
 \end{matrix} \right.\ $$
 
-Where $\chi(c_{1},f)$ and $\psi(f,c_{2})$ represent elements of matrices
+Where $\chi(c_1,f)$ and $\psi(f,c_2)$ represent elements of matrices
 $\mathbf{Χ}$ and $\mathbf{\Psi}$, where the product $\mathbf{Χ\Psi}$ is
 the typical interaction matrix in a cointegration model (Engle and
 Granger 1987), where $\mathbf{\Psi}$ projects dynamics to a
@@ -246,12 +245,12 @@ $\rho_{\epsilon 2}$.
 
 Regarding overdispersion:
 
-$$\eta_{1}( v_i,c_i ) = \sum_{f = 1}^{n_{\eta 1}}{L_{1}(c_i,f)\eta_{1}( v_i,f )}$$
+$$\eta_1( v_i,c_i ) = \sum_{f = 1}^{n_{\eta 1}}{L_1(c_i,f)\eta_1( v_i,f )}$$
 
-where $\eta_{1}( v_i,f )$ represents random variation in
+where $\eta_1( v_i,f )$ represents random variation in
 catchability among a grouping variable (tows or vessels) for each factor
 $f$ (of $n_{\eta 1}$ factors representing overdispersion), and
-$L_{1}(c_i,f)$ is a loadings matrix that generates covariation in
+$L_1(c_i,f)$ is a loadings matrix that generates covariation in
 catchability among categories for this predictor. All loadings matrices
 are specified similarly to $\L_{\beta_1}$, i.e., where factors
 have a variance of one such that $\mathbf{L}^{T}\mathbf{L}$ represents
@@ -266,7 +265,7 @@ that intercept).
 Regarding covariates affecting densities ("density" or "habitat"
 covariates):
 
-$$\nu_{1}( c_i,t_i ) = \sum_{p = 1}^{n_{p}}{( \gamma_{1}( c_i,p ) + \sigma_{\xi 1}(c_i,p)\xi_{1}^*( s_i,c_i,p ) )X( i,t_i,p )}$$
+$$\nu_1( c_i,t_i ) = \sum_{p = 1}^{n_{p}}{( \gamma_1( c_i,p ) + \sigma_{\xi 1}(c_i,p)\xi_1^*( s_i,c_i,p ) )X( i,t_i,p )}$$
 
 where $X( i,t_i,p )$ is an three-dimensional array of
 $n_{p}$ measured density covariates that explain variation in density
@@ -274,8 +273,8 @@ for time *t* and the location $s_i$ where sampling occurred for sample
 $i$. VAST can include a separate, spatially-varying effect of each
 habitat covariate $p$ for each category $c$. The spatially varying slope
 is
-$\gamma_{1}( c_i,t_i,p ) + \sigma_{\xi 1}(c,p)\xi_{n}(s,c,p)$,
-where $\gamma_{1}( c_i,\ t_i,p )$ is the average effect
+$\gamma_1( c_i,t_i,p ) + \sigma_{\xi 1}(c,p)\xi_{n}(s,c,p)$,
+where $\gamma_1( c_i,\ t_i,p )$ is the average effect
 of density covariate $X( i,t_i,p )$ for category $c$,
 $\xi_{n}( s_i,c_i,p )$ represents spatial variation in
 that effect (which has a mean of zero and standard deviation of one),
@@ -284,34 +283,34 @@ spatial variation of covariate $p$ for category $c$. By default VAST
 estimates spatially-varying slope terms values at each vertex as
 follows:
 
-$$\mathbf{\xi}_{1}(c,p)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\mathbf{\xi}_1(c,p)\sim MVN( \mathbf{0},\mathbf{R}_1 )$$
 
 Values are then predicted as e.g.:
 
-$$\mathbf{\xi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_i\mathbf{\xi}_{1}(c,p)$$
+$$\mathbf{\xi}_1^{\mathbf{*}}(c,p) = \mathbf{A}_i\mathbf{\xi}_1(c,p)$$
 
 ### Catchability covariates
 
 Finally, regarding covariates affecting the process of obtaining
 measurements ("catchability" or "detectability" covariates):
 
-$$\zeta_{1}(i) = \sum_{k = 1}^{n_{k}}( \lambda_{1}(k) + \sigma_{\varphi 1}(k)\varphi_{1}^*( s_i,k ) )q_{1}(i,k)$$
+$$\zeta_1(i) = \sum_{k = 1}^{n_{k}}( \lambda_1(k) + \sigma_{\varphi 1}(k)\varphi_1^*( s_i,k ) )q_1(i,k)$$
 
-Where $q_{1}(i,k)$ is an element of matrix $\mathbf{Q}_{1}$ composed of
+Where $q_1(i,k)$ is an element of matrix $\mathbf{Q}_1$ composed of
 $n_{k}$ measured catchability covariates that explain variation in
-catchability, $\lambda_{1}(k)$ is the estimated impact of catchability
+catchability, $\lambda_1(k)$ is the estimated impact of catchability
 covariates for this linear predictor,
-$\varphi_{1}^*( s_i,k )$ is unit-variance spatial
+$\varphi_1^*( s_i,k )$ is unit-variance spatial
 variation in that slope term such that
-$\sigma_{\varphi 1}(k)\varphi_{1}^*( s_i,k )$ has
+$\sigma_{\varphi 1}(k)\varphi_1^*( s_i,k )$ has
 standard deviation $\sigma_{\varphi 1}(k)$, where spatial variation in
 detectability is specified as follows:
 
-$$\mathbf{\varphi}_{1}(k)\sim MVN( \mathbf{0},\mathbf{R}_{1} )$$
+$$\mathbf{\varphi}_1(k)\sim MVN( \mathbf{0},\mathbf{R}_1 )$$
 
 Values are then predicted as e.g.:
 
-$$\mathbf{\varphi}_{1}^{\mathbf{*}}(c,p) = \mathbf{A}_i\mathbf{\varphi}_{1}(k)$$
+$$\mathbf{\varphi}_1^{\mathbf{*}}(c,p) = \mathbf{A}_i\mathbf{\varphi}_1(k)$$
 
 ### Fishing impacts
 
@@ -331,39 +330,39 @@ terminal \`?VAST::Data_Fn\`.
 
 1.  ObsModel\[2\]=0 applies a logit-link for the first linear predictor:
 
-$$r_{1}(i) = {logit}^{- 1}( p_{1}(i) )$$
+$$r_1(i) = {logit}^{- 1}( p_1(i) )$$
 
-> where $r_{1}(i)$ is the predictor encounter probability in a
+> where $r_1(i)$ is the predictor encounter probability in a
 > delta-model, or zero-inflation in a count-data model, and
-> ${logit}^{- 1}(p_{1}(i))$ is the inverse-logit (a.k.a. logistic)
-> function of $p_{1}(i)$, and:
+> ${logit}^{- 1}(p_1(i))$ is the inverse-logit (a.k.a. logistic)
+> function of $p_1(i)$, and:
 
-$$r_{2}(i) = a_i \times \log^{- 1}( p_{2}(i) )$$
+$$r_2(i) = a_i \times \log^{- 1}( p_2(i) )$$
 
-> where $r_{2}(i)$ is the predicted biomass density for positive catch
+> where $r_2(i)$ is the predicted biomass density for positive catch
 > rates in a delta-model or mean-intensity function for a count-data
-> model, $\log^{- 1}(p_{2}(i))$ is the exponential function of
-> $p_{2}(i)$, and $a_i$ is the area-swept for observation $i$, which
+> model, $\log^{- 1}(p_2(i))$ is the exponential function of
+> $p_2(i)$, and $a_i$ is the area-swept for observation $i$, which
 > enters as a linear offset for expected biomass given an encounter.
 
 2.  ObsModel\[2\]=1 corresponds to a "Poisson-link" delta-model that
     approximates a Tweedie distribution:
 
-$$r_{1}(i) = 1 - \exp( - a_i \times \exp( p_{1}(i) ) )\ $$
+$$r_1(i) = 1 - \exp( - a_i \times \exp( p_1(i) ) )\ $$
 
-> where $r_{1}(i)$ is the predictor encounter probability and
-> $1 - \exp( - a_i \times \exp( p_{1}(i) ) )$ is
-> a complementary log-log link of $p_{1}(i) + \log( a_i )$,
+> where $r_1(i)$ is the predictor encounter probability and
+> $1 - \exp( - a_i \times \exp( p_1(i) ) )$ is
+> a complementary log-log link of $p_1(i) + \log( a_i )$,
 > and:
 
-$$r_{2}(i) = \frac{a_i \times \exp( p_{1}(i) )}{r_{1}(i)} \times \exp( p_{2}(i) )$$
+$$r_2(i) = \frac{a_i \times \exp( p_1(i) )}{r_1(i)} \times \exp( p_2(i) )$$
 
-> where $r_{2}(i)$ is the predicted biomass given that the species is
+> where $r_2(i)$ is the predicted biomass given that the species is
 > encountered. In this "Poisson-process" link function,
-> $\exp( p_{1}(i) )$ is interpreted as the density in number
+> $\exp( p_1(i) )$ is interpreted as the density in number
 > of individuals per area such that
-> $a_i \times \exp( p_{1}(i) )$ is the predicted number of
-> individuals encountered, and $\exp( p_{2}(i) )$ is
+> $a_i \times \exp( p_1(i) )$ is the predicted number of
+> individuals encountered, and $\exp( p_2(i) )$ is
 > interpreted as the average weight per individual. Area-swept $a_i$
 > therefore enters as a linear offset for the expected number of
 > individuals encountered (Thorson 2018). This Poisson-link function
@@ -373,23 +372,23 @@ $$r_{2}(i) = \frac{a_i \times \exp( p_{1}(i) )}{r_{1}(i)} \times \exp( p_{2}(i) 
 
 ## Observation models
 
-There are different user-controlled options for observation models for available sampling data. I distinguish between observation models for continuous-valued data (e.g., biomass, or numbers standardized to a fixed area), and observation models for count data (e.g., numbers treating area-swept as an offset). However, both are parameterized such that the expectation for sampling data $\mathbb{E}( B_i ) = r_{1}(i) \times r_{2}(i)$.
+There are different user-controlled options for observation models for available sampling data. I distinguish between observation models for continuous-valued data (e.g., biomass, or numbers standardized to a fixed area), and observation models for count data (e.g., numbers treating area-swept as an offset). However, both are parameterized such that the expectation for sampling data $\mathbb{E}( B_i ) = r_1(i) \times r_2(i)$.
 
 *Continuous-valued data (e.g., biomass)*
 
 If using an observation model with continuous support (e.g., a normal, lognormal, gamma, or Tweedie models), then data $b_i$ can be any non-negative real number, $b_i\mathcal{\in R}$ and $b_i \geq 0$. VAST calculates the probability of these data as:
 
-$$\Pr ( b_i = B ) = \left\{ \begin{matrix}1 - r_{1}(i) & if\ B = 0 \\r_{1}(i) \times g\{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right\  & if\ B > 0 \\\end{matrix} \right.\$$
+$$\Pr ( b_i = B ) = \left\{ \begin{matrix}1 - r_1(i) & if\ B = 0 \\r_1(i) \times g\{\left. \ B|r_2(i),\sigma_{m}^{2}(c)\} \right\  & if\ B > 0 \\\end{matrix} \right.\$$
 
-where `ObsModel[1]` controls the probability density function $g{\left. \ B|r_{2}(i),\sigma_{m}^{2}(c)\} \right.\$ used for positive catch rates (see `?Data_Fn` for a list of options), where each options is defined to have with expectation $r_{2}(i)$ and dispersion $\sigma_{m}^{2}(c)$, where dispersion parameter $\sigma_{m}^{2}(c)$ varies among categories by default.
+where `ObsModel[1]` controls the probability density function $g{\left. \ B|r_2(i),\sigma_{m}^{2}(c)\} \right.\$ used for positive catch rates (see `?Data_Fn` for a list of options), where each options is defined to have with expectation $r_2(i)$ and dispersion $\sigma_{m}^{2}(c)$, where dispersion parameter $\sigma_{m}^{2}(c)$ varies among categories by default.
 
 *Discrete-valued data (e.g., abundance)*
 
 If using an observation model with discrete support (e.g., a Poisson, negative-binomial, Conway-Maxwell Poisson, or lognormal-Poisson models), then data $b_i$ can be any whole number, $b_i \in \{ 0,1,2,\ldots\}$. VAST calculates the probability of these data as:
 
-$$\Pr( B = b_i ) = \left\{ \begin{matrix} ( 1 - r_{1}(i) ) + g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\  & if\ B = 0 \\ r_{1}(i) \times g\{\left. \ B = b_i|r_{2}(i),\ldots\} \right.\  & if\ B > 0 \\ \end{matrix} \right.\ $$
+$$\Pr( B = b_i ) = \left\{ \begin{matrix} ( 1 - r_1(i) ) + g\{ B = \left. \ 0|r_2(i),\ldots\} \right.\  & if\ B = 0 \\ r_1(i) \times g\{\left. \ B = b_i|r_2(i),\ldots\} \right.\  & if\ B > 0 \\ \end{matrix} \right.\ $$
 
-where `ObsModel[1]` controls the probability mass function $g\{\left. \ B|r_{2}(i),\ldots\} \right.\ $ used (again, see `?Data_Fn` for a list of options), where I use ... to signify that these probability mass functions generally can have one or more parameter governing dispersion, and the precise number and interpretation varies among observation models (i.e., the value of `ObsModel[1]`). For these count-data models, $( 1 - r_{1}(i) )$ is the "zero-inflation probability" (i.e., the proportion of habitat in the immediate vicinity of location $s_i$ and time $t_i$ that is never occupied), while $r_{2}(i)$ is the expected value for probability mass function $g\{\left. \ B = b_i|r_{2}(i),\ldots\} \right.\ $ (i.e., the number of individuals that are in the vicinity of sampling in habitat that is occupied), and $g\{ B = \left. \ 0|r_{2}(i),\ldots\} \right.\ $ is the probability of not encountering category *c* given that sampling occurs in occupied habitat (Martin et al. 2005).
+where `ObsModel[1]` controls the probability mass function $g\{\left. \ B|r_2(i),\ldots\} \right.\ $ used (again, see `?Data_Fn` for a list of options), where I use ... to signify that these probability mass functions generally can have one or more parameter governing dispersion, and the precise number and interpretation varies among observation models (i.e., the value of `ObsModel[1]`). For these count-data models, $( 1 - r_1(i) )$ is the "zero-inflation probability" (i.e., the proportion of habitat in the immediate vicinity of location $s_i$ and time $t_i$ that is never occupied), while $r_2(i)$ is the expected value for probability mass function $g\{\left. \ B = b_i|r_2(i),\ldots\} \right.\ $ (i.e., the number of individuals that are in the vicinity of sampling in habitat that is occupied), and $g\{ B = \left. \ 0|r_2(i),\ldots\} \right.\ $ is the probability of not encountering category *c* given that sampling occurs in occupied habitat (Martin et al. 2005).
 
 ## Settings regarding spatial smoothers
 
@@ -405,16 +404,16 @@ is $n_{s}$. Outputs from this triangulated mesh can then be used to
 calculate the precision (inverse-covariance) matrix for a multivariate
 normal probability density function for the value of a spatial variable
 at all $n_{s}$ verticies. Specifically, the correlation
-$\mathbf{R}_{1}( s_{1},s_{2} )$ between location $s$ and
-location $s_{2}$ for spatial and spatio-temporal terms included in the
+$\mathbf{R}_1( s_1,s_2 )$ between location $s$ and
+location $s_2$ for spatial and spatio-temporal terms included in the
 first linear predictor is approximated as following a Matern function:
 
-$$\mathbf{R}_{1}( s_{1},s_{2} ) = \frac{1}{2^{\nu - 1}\Gamma(\nu)} \times ( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| )^{\nu} \times K_{\nu}( \kappa_{1}\left| (s_{1}\mathbf{-}s_{2})\mathbf{H} \right| )$$
+$$\mathbf{R}_1( s_1,s_2 ) = \frac{1}{2^{\nu - 1}\Gamma(\nu)} \times ( \kappa_1\left| (s_1\mathbf{-}s_2)\mathbf{H} \right| )^{\nu} \times K_{\nu}( \kappa_1\left| (s_1\mathbf{-}s_2)\mathbf{H} \right| )$$
 
 where $\mathbf{H}$ is a two-dimensional linear transformation
 representing geometric anisotropy (with a determinant of 1.0), $\nu$ is
-the Matern smoothness (fixed at 1.0), and $\kappa_{1}$ governs the
-decorrelation distance for that first linear predictor ($\kappa_{2}$ is
+the Matern smoothness (fixed at 1.0), and $\kappa_1$ governs the
+decorrelation distance for that first linear predictor ($\kappa_2$ is
 also separately estimated for the second linear predictor). The linear
 transformation representing geometric anisotropy includes two degrees of
 freedom (included in vector $\mathbf{h}$). By default these are
@@ -497,14 +496,14 @@ calculation of asymptotic standard errors):
 2.  When estimating spatial random fields $\omega_1^*(s,c)$ and
     estimating a loadings matrix across years for spatio-temporal
     variation, it is helpful to impose a sum-to-zero constraint on
-    factors of the loadings matrix $L_{\epsilon_{t}1}(f_{2},t)$. This
+    factors of the loadings matrix $L_{\epsilon_{t}1}(f_2,t)$. This
     ensures that spatial terms represent the distribution in an
     "average" year, defined as year $t$ when
-    $L_{\epsilon_{t}1}( f_{2},t ) = 0$ for all columns;
+    $L_{\epsilon_{t}1}( f_2,t ) = 0$ for all columns;
 
 3.  When estimating loadings across species
-    $L_{\epsilon_{c}1}(c,f_{1})$ and across years
-    $L_{\epsilon_{t}1}(f_{2},t)$, the magnitude (determinant) of
+    $L_{\epsilon_{c}1}(c,f_1)$ and across years
+    $L_{\epsilon_{t}1}(f_2,t)$, the magnitude (determinant) of
     these two matrices is confounded. The solution adopted here is to
     impose the constraint that
     $\sum_{f = 1}^{n_{f}}{\sum_{t = 1}^{n_{t}}{L_{\epsilon_{t}}(f,t)}} = 1$
@@ -513,7 +512,7 @@ calculation of asymptotic standard errors):
     loadings matrices.
 
 4.  When estimating a spatially varying response to intercepts
-    $\beta_{1} + \beta_{2}$, it is helpful to center these prior to
+    $\beta_1 + \beta_2$, it is helpful to center these prior to
     using them as a covariate (NOTE: this feature is still in
     development, and recommended constraints may change).
 
@@ -533,8 +532,8 @@ Bayesian estimation paradigm.
 VAST can be used to combine encounter/non-encounter, count, and
 biomass-sampling data. This involves specifying a Poisson-link delta
 model which predicts each data type from numbers density
-$\exp( p_{1}(i) )$ and biomass-per-individual
-$\exp( p_{2}(i) )$, see Grüss and Thorson (2019) for details.
+$\exp( p_1(i) )$ and biomass-per-individual
+$\exp( p_2(i) )$, see Grüss and Thorson (2019) for details.
 This approach is specified by associating each observation with a given
 error distribution using input e_i where e.g. e_i\[1\] is the
 error-distribution for the 1st observation. The user then specifies
@@ -602,10 +601,10 @@ $s_{g}$, and other spatial variables are predicted similarly using
 matrix $\mathbf{A}_{g}$. Predicted values for random effects are then
 plugged into the linear predictor, e.g.:
 
-$$p_{1}(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_{1}^*(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_{1}(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_1^*(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\epsilon 1}}{L_{\epsilon 1}(c,f)\epsilon_{1}^*(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_{1}(c,t,p) + \sigma_{\xi 1}(c,p)\xi_{1}^*(g,c,p) )X(g,t,p)}}{︸}}$$
+$$p_1(g,c,t) = \underset{Temporal\ variation}{\overset{\beta_1^*(c) + \sum_{f = 1}^{n_{\beta_1}}{L_{\beta_1}(c,f)\beta_1(t,f)}}{︸}} + \underset{Spatial\ variation}{\overset{\sum_{f = 1}^{n_{\omega 1}}{L_{\omega 1}(x,f)\omega_1^*(g,f )}}{︸}} + \underset{Spatio - temporal\ variation}{\overset{\sum_{f = 1}^{n_{\epsilon 1}}{L_{\epsilon 1}(c,f)\epsilon_1^*(g,f,t)}}{︸}} + \underset{Habitat\ covariates}{\overset{\sum_{p = 1}^{n_{p}}{( \gamma_1(c,t,p) + \sigma_{\xi 1}(c,p)\xi_1^*(g,c,p) )X(g,t,p)}}{︸}}$$
 
-where $p_{2}(g,c,t)$ is predicted similar, and these linear predictors
-are used in turn to predict $r_{1}(g,c,t)$ and $r_{2}(g,c,t)$, where
+where $p_2(g,c,t)$ is predicted similar, and these linear predictors
+are used in turn to predict $r_1(g,c,t)$ and $r_2(g,c,t)$, where
 their product is predicted biomass-density $d(g,c,t)$ at every
 extrapolation-grid cell $g$, category $c$, and time $t$.
 
@@ -802,12 +801,12 @@ spatio-temporal delta-GLMMs:
 
 1.  *Encounter rates*: Some combination of categories and year has 0% or
     100% encounter rate. If there is 100% encounter rate for category
-    $c$ in year $t$, then $\beta_{1}(c,t) \rightarrow \infty$ and/or
-    $\epsilon_{1}(s,c,t) \rightarrow \infty$ for that year. If there
+    $c$ in year $t$, then $\beta_1(c,t) \rightarrow \infty$ and/or
+    $\epsilon_1(s,c,t) \rightarrow \infty$ for that year. If there
     is 0% encounter rate in year $t$, then
-    $\beta_{1}(c,t) \rightarrow - \infty$ and/or
-    $\epsilon_{1}(s,c,t) \rightarrow - \infty$ and there is no
-    information to estimate $\beta_{2}(c,t)$ or $\epsilon_{2}(s,c,t)$
+    $\beta_1(c,t) \rightarrow - \infty$ and/or
+    $\epsilon_1(s,c,t) \rightarrow - \infty$ and there is no
+    information to estimate $\beta_2(c,t)$ or $\epsilon_2(s,c,t)$
     for that category $c$ and year $t$;
 
 2.  *Bounds*: Some parameter(s) hits a bound;
@@ -865,7 +864,7 @@ VAST. I briefly describe how these can be done here.
     This will result in VAST estimating a logistic regression model for
     encounter/non-encounter data, except with one additional parameter
     estimated ($\sigma_{M}$), plus one additional parameter per category
-    ($\beta_{2}(c)$), where these additional parameters have no impact
+    ($\beta_2(c)$), where these additional parameters have no impact
     on other parameters, are not meant to be interpreted statistically
     or biologically, and are an artefact of using VAST (which is
     designed to fit a delta-model) to encounter/non-encounter data. This
@@ -1111,13 +1110,13 @@ Table 2A -- Indices
 
   Factor number                                                 $$f$$
 
-  Habitat covariate number for 1st linear predictor           $$p_{1}$$
+  Habitat covariate number for 1st linear predictor           $$p_1$$
 
-  Habitat covariate number for 2nd linear predictor           $$p_{2}$$
+  Habitat covariate number for 2nd linear predictor           $$p_2$$
 
-  Catchability covariate number for 1st linear predictor      $$k_{1}$$
+  Catchability covariate number for 1st linear predictor      $$k_1$$
 
-  Catchability covariate number for 2nd linear predictor      $$k_{2}$$
+  Catchability covariate number for 2nd linear predictor      $$k_2$$
 
   Stratum number                                                $$l$$
 
@@ -1149,26 +1148,26 @@ Table 2B -- Data
 
   Distance between two vertices                 $$d(s,s^{'})$$         $$n_{s} \times n_{s}$$
 
-  Habitat covariates affecting 1st linear     $$X_{1}(i,t,p_{1})$$   $$n_i \times n_{t} \times n_{p1}$$
+  Habitat covariates affecting 1st linear     $$X_1(i,t,p_1)$$   $$n_i \times n_{t} \times n_{p1}$$
   predictor for each sampling location, time,                          
   and variable                                                         
 
-  Habitat covariates affecting 2nd linear     $$X_{2}(i,t,p_{2})$$   $$n_i \times n_{t} \times n_{p2}$$
+  Habitat covariates affecting 2nd linear     $$X_2(i,t,p_2)$$   $$n_i \times n_{t} \times n_{p2}$$
   predictor for each sampling location, time,                          
   and variable                                                         
 
-  Habitat covariates affecting 1st linear     $$X_{1}(g,t,p_{1})$$   $$n_{g} \times n_{t} \times n_{p1}$$
+  Habitat covariates affecting 1st linear     $$X_1(g,t,p_1)$$   $$n_{g} \times n_{t} \times n_{p1}$$
   predictor for each extrapolation-grid cell,                          
   time, and variable                                                   
 
-  Habitat covariates affecting 2nd linear     $$X_{2}(g,t,p_{2})$$   $$n_{g} \times n_{t} \times n_{p2}$$
+  Habitat covariates affecting 2nd linear     $$X_2(g,t,p_2)$$   $$n_{g} \times n_{t} \times n_{p2}$$
   predictor for each extrapolation-grid cell,                          
   time, and variable                                                   
 
-  Catchability covariates affecting 1st       $$Q_{1}(i,k_{1})$$     $$n_i \times n_{k1}$$
+  Catchability covariates affecting 1st       $$Q_1(i,k_1)$$     $$n_i \times n_{k1}$$
   linear predictor for each sample and variable                        
 
-  Catchability covariates affecting 2nd       $$Q_{2}(i,k_{2})$$     $$n_i \times n_{k2}$$
+  Catchability covariates affecting 2nd       $$Q_2(i,k_2)$$     $$n_i \times n_{k2}$$
   linear predictor for each sample and variable                        
 
   Area associated with extrapolation-grid cell  $$a(g,l)$$             $$n_{g} \times n_{l}$$
@@ -1185,10 +1184,10 @@ settings (FE/RE)
   -----------------------------------------------------------------------------------------------------------------------------------------------------------
   Coefficient name                           Symbol                              Type    Dimensions
   ------------------------------------------ ----------------------------------- ------- --------------------------------------------------------------------
-  Factor values for intercept for 1st      $$\beta_{1}(f,t)$$                  FE/RE   $$n_{\beta_1} \times n_{t}$$
+  Factor values for intercept for 1st      $$\beta_1(f,t)$$                  FE/RE   $$n_{\beta_1} \times n_{t}$$
   linear predictor                                                                       
 
-  Factor values for intercept for 2nd      $$\beta_{2}(f,t)$$                  FE/RE   $$n_{\beta_2} \times n_{t}$$
+  Factor values for intercept for 2nd      $$\beta_2(f,t)$$                  FE/RE   $$n_{\beta_2} \times n_{t}$$
   linear predictor                                                                       
 
   Loadings matrix for intercepts for 1st   $$L_{\beta_1}(c,f)$$                FE      $$n_{c} \times n_{\beta_1}$$
@@ -1219,30 +1218,30 @@ settings (FE/RE)
   covariation across time for 2nd linear                                               
   predictor                                                                              
 
-  Loadings matrix for overdispersion         $$L_{1}(c,f)$$                      FE      $$n_{c} \times n_{\eta 1}$$
+  Loadings matrix for overdispersion         $$L_1(c,f)$$                      FE      $$n_{c} \times n_{\eta 1}$$
   covariation for 1st linear predictor                                                 
 
-  Loadings matrix for overdispersion         $$L_{2}(c,f)$$                      FE      $$n_{c} \times n_{\eta 2}$$
+  Loadings matrix for overdispersion         $$L_2(c,f)$$                      FE      $$n_{c} \times n_{\eta 2}$$
   covariation for 2nd linear predictor                                                 
 
-  Impact of habitat covariates on 1st      $$\gamma_{1}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
+  Impact of habitat covariates on 1st      $$\gamma_1(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
   linear predictor                                                                       
 
-  Impact of habitat covariates on 2nd      $$\gamma_{2}(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
+  Impact of habitat covariates on 2nd      $$\gamma_2(c,t,p)$$               FE      $$n_{c} \times n_{t} \times n_{p}$$
   linear predictor                                                                       
 
-  Impact of catchability covariates on 1st $$\lambda_{1}(k)$$                  FE      $$n_{k}$$
+  Impact of catchability covariates on 1st $$\lambda_1(k)$$                  FE      $$n_{k}$$
   linear predictor                                                                       
 
-  Impact of catchability covariates on 2nd $$\lambda_{2}(k)$$                  FE      $$n_{k}$$
+  Impact of catchability covariates on 2nd $$\lambda_2(k)$$                  FE      $$n_{k}$$
   linear predictor                                                                       
 
   Parameters governing residual variation    $$\sigma_{m}^{2}(c,z)$$             FE      $$n_{c} \times 2$$
 
-  Decorrelation rate for 1st linear        $$\kappa_{1}$$                      FE      1
+  Decorrelation rate for 1st linear        $$\kappa_1$$                      FE      1
   predictor                                                                              
 
-  Decorrelation rate for 2nd linear        $$\kappa_{2}$$                      FE      1
+  Decorrelation rate for 2nd linear        $$\kappa_2$$                      FE      1
   predictor                                                                              
 
   Autocorrelation for intercepts of 1st    $$\rho_{\beta_1}$$                  FE      1
@@ -1269,16 +1268,16 @@ settings (FE/RE)
 
   Spatial factors for 2nd linear predictor $$\omega_2(s,f)$$                 RE      $$n_{s} \times n_{\omega 2}$$
 
-  Spatio-temporal factors for 1st linear   $$\epsilon_{1}(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
+  Spatio-temporal factors for 1st linear   $$\epsilon_1(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
   predictor                                                                              
 
-  Spatio-temporal factors for 2nd linear   $$\epsilon_{2}(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
+  Spatio-temporal factors for 2nd linear   $$\epsilon_2(s,f,f)$$          RE      $$n_{s} \times n_{\epsilon 1} \times n_{\epsilon 1}^{time}$$
   predictor                                                                              
 
-  Overdispersion factors for 1st linear    $$\eta_{1}(v,f)$$                   RE      $$n_{v} \times n_{\eta 1}$$
+  Overdispersion factors for 1st linear    $$\eta_1(v,f)$$                   RE      $$n_{v} \times n_{\eta 1}$$
   predictor                                                                              
 
-  Overdispersion factors for 2nd linear    $$\eta_{2}(v,f)$$                   RE      $$n_{v} \times n_{\eta 2}$$
+  Overdispersion factors for 2nd linear    $$\eta_2(v,f)$$                   RE      $$n_{v} \times n_{\eta 2}$$
   predictor                                                                              
   -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1287,24 +1286,24 @@ Table 2D -- Variable calculated internally
   -------------------------------------------------------------------------------------------------------------------
   Coefficient name                                 Symbol                       Dimensions
   ------------------------------------------------ ---------------------------- -------------------------------------
-  1st linear predictor                           $$p_{1}(i)$$                 $$n_i$$
+  1st linear predictor                           $$p_1(i)$$                 $$n_i$$
 
-  2nd linear predictor                           $$p_{2}(i)$$                 $$n_i$$
+  2nd linear predictor                           $$p_2(i)$$                 $$n_i$$
 
-  1st link-transformed predictor                 $$r_{1}(i)$$                 $$n_i$$
+  1st link-transformed predictor                 $$r_1(i)$$                 $$n_i$$
 
-  2nd link-transformed predictor                 $$r_{2}(i)$$                 $$n_i$$
+  2nd link-transformed predictor                 $$r_2(i)$$                 $$n_i$$
 
-  Spatio-temporal variation for 1st linear       $$\epsilon_{1}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\epsilon_1(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variationfor 2nd linear        $$\epsilon_{2}(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\epsilon_2(g,c,t)$$   $$n_{g} \times n_{c} \times n_{t}$$
   predictor at each extrapolation-grid cell                                     
 
-  Spatio-temporal variation for 1st linear       $$\epsilon_{1}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variation for 1st linear       $$\epsilon_1(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
-  Spatio-temporal variationfor 2nd linear        $$\epsilon_{2}(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
+  Spatio-temporal variationfor 2nd linear        $$\epsilon_2(i,c,t)$$   $$n_i \times n_{c} \times n_{t}$$
   predictor at each sample                                                      
 
   Spatial variation for 1st linear predictor at  $$\omega_1(g,c)$$          $$n_{g} \times n_{c}$$
@@ -1319,14 +1318,14 @@ Table 2D -- Variable calculated internally
   Spatial variation for 2nd linear predictor at  $$\omega_2(i,c)$$          $$n_i \times n_{c}$$
   each sample                                                                   
 
-  Intercept for 1st linear predictor             $$\beta_{1}(c,t)$$           $$n_{c} \times n_{t}$$
+  Intercept for 1st linear predictor             $$\beta_1(c,t)$$           $$n_{c} \times n_{t}$$
 
-  Intercept for 2^st^ linear predictor             $$\beta_{2}(c,t)$$           $$n_{c} \times n_{t}$$
+  Intercept for 2^st^ linear predictor             $$\beta_2(c,t)$$           $$n_{c} \times n_{t}$$
 
-  Spatial correlation matrix among vertices for    $$\mathbf{R}_{1}$$           $$n_{s} \times n_{s}$$
+  Spatial correlation matrix among vertices for    $$\mathbf{R}_1$$           $$n_{s} \times n_{s}$$
   1st linear predictor                                                        
 
-  Spatial correlation matrix among vertices for    $$\mathbf{R}_{2}$$           $$n_{s} \times n_{s}$$
+  Spatial correlation matrix among vertices for    $$\mathbf{R}_2$$           $$n_{s} \times n_{s}$$
   2nd linear predictor                                                        
 
   Anisotropy matrix                                $$\mathbf{H}$$               $$2 \times 2$$
@@ -1362,10 +1361,10 @@ Table 2E -- Derived quantities
   Rotation matrix for spatio-temporal covariation $$\mathbf{B}_{\epsilon 2}$$   $$n_{c} \times n_{c}$$
   for 2nd linear predictor                                                       
 
-  Rotation matrix for overdispersion covariation  $$\mathbf{B}_{1}$$               $$n_{c} \times n_{c}$$
+  Rotation matrix for overdispersion covariation  $$\mathbf{B}_1$$               $$n_{c} \times n_{c}$$
   for 1st linear predictor                                                       
 
-  Rotation matrix for overdispersion covariation  $$\mathbf{B}_{2}$$               $$n_{c} \times n_{c}$$
+  Rotation matrix for overdispersion covariation  $$\mathbf{B}_2$$               $$n_{c} \times n_{c}$$
   for 2ndlinear predictor                                                        
 
   Rotated loadings matrix for spatial covariation $$L_{\omega 1}^*(c,f)$$        $$n_{c} \times n_{\omega 1}$$
@@ -1380,10 +1379,10 @@ Table 2E -- Derived quantities
   Rotated loadings for spatio-temporal            $$L_{\epsilon 2}^*(c,f)$$   $$n_{c} \times n_{\epsilon 2}$$
   covariation for 2nd linear predictor                                           
 
-  Rotated loadings for overdispersion covariation $$L_{1}^*(c,f)$$               $$n_{c} \times n_{\eta 1}$$
+  Rotated loadings for overdispersion covariation $$L_1^*(c,f)$$               $$n_{c} \times n_{\eta 1}$$
   for 1st linear predictor                                                       
 
-  Rotated loadings for overdispersion covariation $$L_{2}^*(c,f)$$               $$n_{c} \times n_{\eta 2}$$
+  Rotated loadings for overdispersion covariation $$L_2^*(c,f)$$               $$n_{c} \times n_{\eta 2}$$
   for 2nd linear predictor                                                       
 
   Rotated spatial factors for 1st linear        $$\omega_1^*(s,f)$$          $$n_{s} \times n_{\omega 1}$$
@@ -1392,15 +1391,15 @@ Table 2E -- Derived quantities
   Rotated spatial factors for 2nd linear        $$\omega_2^*(s,f)$$          $$n_{s} \times n_{\omega 2}$$
   predictor                                                                        
 
-  Rotated spatio-temporal factors for 1st       $$\epsilon_{1}^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 1st       $$\epsilon_1^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated spatio-temporal factors for 2nd       $$\epsilon_{2}^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
+  Rotated spatio-temporal factors for 2nd       $$\epsilon_2^*(s,f,t)$$   $$n_{s} \times n_{\epsilon 1} \times n_{t}$$
   linear predictor                                                                 
 
-  Rotated overdispersion factors for 1st linear $$\eta_{1}^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
+  Rotated overdispersion factors for 1st linear $$\eta_1^*(v,f)$$            $$n_{v} \times n_{\eta 1}$$
   predictor                                                                        
 
-  Rotated overdispersion factors for 2nd linear $$\eta_{2}^*(v,f)$$            $$n_{v} \times n_{\eta 2}$$
+  Rotated overdispersion factors for 2nd linear $$\eta_2^*(v,f)$$            $$n_{v} \times n_{\eta 2}$$
   predictor                                                                        
   ----------------------------------------------------------------------------------------------------------------------------------
