@@ -168,7 +168,7 @@ are projected as:
 
 $$\omega_{1}^{*}(f) = \mathbf{A}_{i}\omega_{1}(f)$$
 
-where $\omega_{1}^{*}(f )$ is the vector of length $n_{i}$,
+where $\omega_{1}^{*}(f)$ is the vector of length $n_{i}$,
 containing the predicted value $\omega_{1}^{*}( s_{i},f  )$
 for spatial variation in the first linear predictor at every location
 $s_{i}$, and other spatial variables are predicted similarly using
