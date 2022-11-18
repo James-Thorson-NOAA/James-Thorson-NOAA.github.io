@@ -204,8 +204,12 @@ generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-$$\epsilon_{1}( s,c_{1},t ) = \epsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min}$$
-$$\epsilon_{1}( s,c_{1},t ) = \sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\epsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min}$$
+\begin{equation}
+\begin{gathered}
+  \epsilon_{1}( s,c_{1},t ) = \epsilon_{1}^{'}( s,c_{1},t ) & if\ t = t_{\min} \\
+  \epsilon_{1}( s,c_{1},t ) = \sum_{c_{2} = 1}^{n_{c}}{b( c_{1},c_{2} )\epsilon_{1}^{'}( s,c_{2},t - 1 )} & if\ t > t_{\min}
+\end{gathered}
+\end{equation}
 
 Where $b( c_{1},c_{2} )$ is the estimated impact of
 spatio-temporal variation in category $c_{2}$ on spatio-temporal changes
