@@ -102,13 +102,13 @@ Intercepts can instead be treated as a random effect using the
 factor-model formulation, which allows for sharing information among
 years and categories. When treated as random,
 $\beta_{1}( t_{i},f )$ is assigned a normal distribution with
-unit variance, such that $\mathbf{L}_{\beta_1}^{T}\mathbf{L}_{\beta_1}$
+unit variance, such that $L_{\beta_1}^{T}L_{\beta_1}$
 is the covariance among categories for a given process (Thorson et al.
 2015b). When treating intercepts as random, and when there is only one
 category and using one factor ($n_{\beta_1} = 1$), then
-$\mathbf{L}_{\beta_1}$ is a 1x1 matrix (i.e. a scalar) such
-$\mathbf{L}_{\beta_1}^{2}$ is the variance and the absolute value,
-$abs(\mathbf{L}_{\beta_1})$ is the standard deviation for temporal
+$L_{\beta_1}$ is a 1x1 matrix (i.e. a scalar) such
+$L_{\beta_1}^{2}$ is the variance and the absolute value,
+$abs(L_{\beta_1})$ is the standard deviation for temporal
 variation.
 
 By default the model specifies that each intercept $\beta_{1}(c,t)$ and
@@ -194,8 +194,8 @@ Values are then projected as:
 $$\mathbf{\varepsilon}_{1}^{*}( f_{1},f_{2} ) = \mathbf{A}_{i}\mathbf{\varepsilon}_{1}( f_{1},f_{2} )$$
 
 This is then projected across years and categories using loadings
-matrices $\mathbf{L}_{\varepsilon_{t}1}$ and
-$\mathbf{L}_{\varepsilon_{c}2}$:
+matrices $L_{\varepsilon_{t}1}$ and
+$\L_{\varepsilon_{c}2}$:
 
 $$\varepsilon_{1}^{'}(s,c,t) = \sum_{f_{1} = 1}^{n_{\varepsilon_{c}1}}{\sum_{f_{2} = 1}^{n_{\varepsilon_{t}1}}{L_{\varepsilon_{c}1}(c,f_{1})L_{\varepsilon_{t}1}(f_{2},t)\varepsilon_{1}( s,f_{1},f_{2} )}}$$
 
@@ -251,7 +251,7 @@ catchability among a grouping variable (tows or vessels) for each factor
 $f$ (of $n_{\eta 1}$ factors representing overdispersion), and
 $L_{1}(c_{i},f)$ is a loadings matrix that generates covariation in
 catchability among categories for this predictor. All loadings matrices
-are specified similarly to $\mathbf{L}_{\beta_1}$, i.e., where factors
+are specified similarly to $\L_{\beta_1}$, i.e., where factors
 have a variance of one such that $\mathbf{L}^{T}\mathbf{L}$ represents
 the covariance among categories. The main difference is that spatial,
 spatio-temporal, and overdispersion factors can only be specified as
