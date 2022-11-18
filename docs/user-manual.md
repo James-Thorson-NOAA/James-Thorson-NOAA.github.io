@@ -197,7 +197,7 @@ This is then projected across years and categories using loadings
 matrices $L_{\epsilon_{t}1}$ and
 $\L_{\epsilon_{c}2}$:
 
-$$\prime{\epsilon_1}(s,c,t) = \sum_{f_1 = 1}^{n_{\epsilon_{c}1}}{\sum_{f_2 = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_1)L_{\epsilon_{t}1}(f_2,t)\epsilon_1( s,f_1,f_2 )}}$$
+$$\epsilon \prime _1(s,c,t) = \sum_{f_1 = 1}^{n_{\epsilon_{c}1}}{\sum_{f_2 = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_1)L_{\epsilon_{t}1}(f_2,t)\epsilon_1( s,f_1,f_2 )}}$$
 
 Using a factor-decomposition to approximate covariation among years is a
 generalization of empirical orthogonal function (EOF) analysis (Thorson
