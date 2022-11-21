@@ -115,10 +115,13 @@ By default the model specifies that each intercept $\beta_1(c,t)$ and
 $\beta_2(c,t)$ is a fixed effect. However, other settings specify the
 following autocorrelation structure:
 
-$$\beta_1(t,f)\sim\left\{ \begin{matrix}
+$$
+\beta_1(t,f)\sim
+\begin{cases}
 Normal(0,1) & if\ t = t_{\min} \\
-Normal( \rho_{\beta_1}\beta_1(t - 1,f),1 ) & if\ t > t_{\min} \\
-\end{matrix} \right.\ $$
+Normal( \rho_{\beta_1}\beta_1(t - 1,f),1 ) & if\ t > t_{\min}
+\end{cases}
+$$
 
 Where $t_{\min}$ is the index for the first modelled year and
 $\rho_{\beta_1}$ and $\rho_{\beta_2}$ are the estimated degree of
@@ -178,44 +181,47 @@ matrix $\mathbf{A}$.
 
 Regarding spatio-temporal the model by default specifies that each
 vector of spatio-temporal random effects,
-$\epsilon_1( f_1,f_2 )$ and
-$\epsilon_2( f_1,f_2 )$ composed of
-$\epsilon_1( s,f_1,f_2 )$ and
-$\epsilon_2( s,f_1,f_2 )$ across locations $s$, is
+$\varepsilon_1( f_1,f_2 )$ and
+$\varepsilon_2( f_1,f_2 )$ composed of
+$\varepsilon_1( s,f_1,f_2 )$ and
+$\varepsilon_2( s,f_1,f_2 )$ across locations $s$, is
 independent for each factor representing covariation among categories
 ($f_1$) and among years ($f_2$). We describe the process for the
 1st linear predictor, and an identical process is used for the 2nd
 linear predictor (using different subscripts):
 
-$$\epsilon_1( f_1,f_2 )\sim MVN( \bm{0},\bm{R}_1 )$$
+$$\varepsilon_1( f_1,f_2 )\sim MVN( **{0}**,**{R}_1** )$$
 
 Values are then projected as:
 
-$$\epsilon_1^*( f_1,f_2 ) = \mathbf{A}_i\epsilon_1( f_1,f_2 )$$
+$$\varepsilon_1^\star ( f_1,f_2 ) = {A}_i \varepsilon_1 ( f_1,f_2 )$$
 
 This is then projected across years and categories using loadings
-matrices $L_{\epsilon_{t}1}$ and
-$\L_{\epsilon_{c}2}$:
+matrices $L_{\varepsilon_{t}1}$ and
+$L_{\varepsilon_{c}2}$:
 
-$$\epsilon \prime _1(s,c,t) = \sum_{f_1 = 1}^{n_{\epsilon_{c}1}}{\sum_{f_2 = 1}^{n_{\epsilon_{t}1}}{L_{\epsilon_{c}1}(c,f_1)L_{\epsilon_{t}1}(f_2,t)\epsilon_1( s,f_1,f_2 )}}$$
+$$ \varepsilon_1 \prime (s, c, t) = \sum_{f_1=1}^{n_{\varepsilon_c 1}} \sum_{f_2=1}^{n_{\varepsilon_t 1}} L_{\varepsilon_c 1} (c,f_1) L_{\varepsilon_t 1} (f_2, t) \varepsilon_1 (s, f_1, f_2)  $$
 
 Using a factor-decomposition to approximate covariation among years is a
 generalization of empirical orthogonal function (EOF) analysis (Thorson
 et al. 2020). The user can also specify a vector-autoregressive
 structure:
 
-$$\epsilon_1( s,c_1,t ) = \epsilon_1^{'}(s,c_1,t) & \mathrm{if } t = t_{\min}$$
+$$\varepsilon_1 (s,c_1,t ) = 
+\begin{cases} \varepsilon_1^{'}(s,c_1,t) & \mathrm{if } \ t = t_{\min} \\
+\sum_{c_2=1}^{n_c} \b(c_1, c_2) & \mathrm{if } \ t > t_{\min}
+\end{cases} $$
 
 and
 
-$$ \epsilon_1( s,c_1,t ) = \sum_{c_2 = 1}^{n_{c}}{b( c_1,c_2 )\epsilon_1^{'}( s,c_2,t - 1 )} & \mathrm{if } t > t_{\min} $$
+$$ \varepsilon_1( s,c_1,t ) = \sum_{c_2 = 1}^{n_{c}}{b( c_1,c_2 )\varepsilon_1^{'}( s,c_2,t - 1 )} & \mathrm{if } t > t_{\min} $$
 
 Where $b( c_1,c_2 )$ is the estimated impact of
 spatio-temporal variation in category $c_2$ on spatio-temporal changes
 in category $c_1$:
 
 $$b( c_1,c_2 ) = \left\{ \begin{matrix}
-\sum_{f = 1}^{n_{b}}{\chi(c_1,f)\psi(f,c_2)} + \rho_{\epsilon 1}(c_1) & if\ c_1 = c_2 \\
+\sum_{f = 1}^{n_{b}}{\chi(c_1,f)\psi(f,c_2)} + \rho_{\varepsilon 1}(c_1) & if\ c_1 = c_2 \\
 \sum_{f = 1}^{n_{b}}{\chi(c_1,f)\psi(f,c_2)} & if\ c_1 \neq c_2 \\
 \end{matrix} \right.\ $$
 
@@ -227,19 +233,19 @@ low-dimensional subspace and $\mathbf{Χ}$ represents responses within
 that subspace. By default $n_{b} = 0$ corresponding to
 $\mathbf{Χ\Psi = 0}$, and these terms drop out of the model; however,
 they allow a parsimonious representation of species interactions
-(Thorson et al. 2017, 2019). Meanwhile $\rho_{\epsilon 1}(c)$ is the
+(Thorson et al. 2017, 2019). Meanwhile $\rho_{\varepsilon 1}(c)$ is the
 estimated degree of first-order autocorrelation in temporal variation:
 
-1.  *Random walk* -- specifies $\rho_{\epsilon 1}(c) = 1$
+1.  *Random walk* -- specifies $\rho_{\varepsilon 1}(c) = 1$
 
-2.  *Autoregressive* -- estimates $\rho_{\epsilon 1}$ as a single
+2.  *Autoregressive* -- estimates $\rho_{\varepsilon 1}$ as a single
     fixed effect with the same value for all categories
 
 3.  *Individual autoregressive* \-- estimates a separate value of
-    $\rho_{\epsilon 1}(c)$ as a single fixed effect for each category
+    $\rho_{\varepsilon 1}(c)$ as a single fixed effect for each category
 
 and settings are defined identically for specifying
-$\rho_{\epsilon 2}$.
+$\rho_{\varepsilon 2}$.
 
 ### Overdisperison
 
